@@ -10,64 +10,60 @@
     <title><%= product.name %></title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
         .navbar {
             position: fixed;
             top: 0;
-            width: 100%;
-            height: 100px;
+            width: 97%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: white;
-            color: #333;
-            padding: 10px;
-            z-index: 1000;
+            background-color: white; /* Zmieniony kolor tła na biały */
+            color: #333; /* Zmieniony kolor tekstu */
+            padding: 10px; /* Wewnętrzny odstęp */
+            z-index: 1000; /* Ustawienie z-index, aby pasek nawigacyjny był zawsze na wierzchu */
         }
 
         .logo img {
-            width: 100px;
+            width: 100px; /* Ustawienie szerokości logo (dostosuj do własnych preferencji) */
             height: auto;
-        }
-
-        .navbar-title {
-            font-size: 1.5em;
         }
 
         .login-button {
-            background-color: rgba(95, 23, 60, 1);
-            color: rgba(191, 187, 220, 1);
-            border: none;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-family: 'Arial', sans-serif;
-            font-size: 1em;
-            cursor: pointer;
+            /* Dodaj dodatkowe style dla przycisku zaloguj */
+            background-color: rgba(95, 23, 60, 1); /* Kolor tła przycisku */
+            color: rgba(191, 187, 220, 1); /* Kolor tekstu przycisku */
+            border: none; /* Usuń obramowanie */
+            padding: 10px 20px; /* Dostosuj odstępy wewnętrzne */
+            text-decoration: none; /* Usuń podkreślenie tekstu */
+            font-family: 'Arial', sans-serif; /* Ustawienie czcionki */
+            font-size: 1em; /* Dostosuj wielkość czcionki */
+            cursor: pointer; /* Zmiana kształtu kursora na wskaźnik */
+        }
+
+        .navbar-title {
+            font-size: 1.5em; /* Dostosuj wielkość czcionki */
+            margin: 0 auto; /* Ustawienie marginesu na auto w celu centrowania */
         }
 
         .content-container {
-            margin-top: 100px;
-            padding: 20px;
+            margin-top: 60px; /* Dostosuj wartość w zależności od wysokości paska nawigacyjnego */
         }
 
-        h1 {
-            color: #333;
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
+        .product-tile {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+            max-width: 200px;
         }
-
-        p {
-            margin-bottom: 10px;
+        a{
+            color: black;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -82,9 +78,9 @@
         <div class="navbar-title">
             Product Details
         </div>
-        <div class="login-button">
-            <a href="/login">Zaloguj</a>
-        </div>
+        <a href="/login">
+        <div class="login-button">Zaloguj
+        </div></a>
     </div>
 
     <div class="content-container">
