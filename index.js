@@ -1,8 +1,16 @@
+// Importuj Express i EJS
 const express = require('express');
 const { Pool } = require('pg');
+const ejs = require('ejs');
+
 
 const app = express();
-const port = 5000;
+const port = 3000;
+
+// Konfiguracja silnika widoku EJS
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+app.use(express.static('public'));
 
 // Konfiguracja połączenia do bazy danych PostgreSQL
 const pool = new Pool({
@@ -17,7 +25,7 @@ const pool = new Pool({
 app.get('/products', async (req, res) => {
   try {
     const { rows } = await pool.query('SELECT * FROM products');
-    res.json(rows);
+    res.render('products', { products: rows });
   } catch (error) {
     console.error('Error fetching products:', error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -27,7 +35,6 @@ app.get('/products', async (req, res) => {
 app.get('/', (req, res) => {
   res.send('Witaj na mojej stronie!');
 });
-
 
 // Serwer nasłuchujący na porcie 3000
 app.listen(port, () => {

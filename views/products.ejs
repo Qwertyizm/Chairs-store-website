@@ -1,0 +1,41 @@
+<!-- views/products.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <style>
+    /* Dodaj dowolne style CSS, aby dostosować wygląd kafelków */
+    .product-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .product-tile {
+      border: 1px solid #ddd;
+      padding: 10px;
+      margin: 10px;
+      text-align: center;
+      max-width: 200px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Products</h1>
+
+  <div class="product-container">
+    <% products.forEach(product => { %>
+      <div class="product-tile">
+        <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
+        <h2><%= product.name %></h2>
+        <p>Price: <%= product.price %></p>
+        <p>Quantity: <%= product.quantity %></p>
+        <!-- Dodaj inne informacje o produkcie według potrzeb -->
+      </div>
+    <% }); %>
+  </div>
+</body>
+</html>

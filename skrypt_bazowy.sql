@@ -99,7 +99,7 @@ VALUES (
     70.0,
     'modern',
     'metal', 
-    'https://www.craiyon.com/image/od3bZBDJQ1eN6sT3jaA8SQ'
+    'https://pics.craiyon.com/2023-11-04/381f5a364d864a2db25a3f0d24b47c0d.webp'
 );
 
 
@@ -115,7 +115,7 @@ VALUES (
     90.0,
     'postmodern',
     'upholstery', -- Odpowiada polskiemu "tapicerka"
-    'https://www.craiyon.com/image/y9qeGtTQRUuLamxJnRQB9Q'
+    'https://pics.craiyon.com/2023-09-21/b71ca4a1a117455db81562a5b3bed3ff.webp'
 );
 
 INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
@@ -130,5 +130,37 @@ VALUES (
     60.0,
     'modern',
     'leather', -- Ta kolumna może być pusta dla krzeseł
-    'https://www.craiyon.com/image/L8necH2VTGmgTBP68Q5Z5Q'
+    'https://pics.craiyon.com/2023-10-13/1b7e5cda21e64581b6676ab036907826.webp'
 );
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Eateot style chair',
+    80, -- Przykładowa ilość na stanie
+    149.99, -- Przykładowa cena
+    'bathroom',
+    'brown', -- Kolorowe schemat - czerwony, czarny, biały
+    110.0,
+    50.0,
+    60.0,
+    'archaic',
+    'leather', -- Ta kolumna może być pusta dla krzeseł
+    'https://pics.craiyon.com/2023-11-28/bwBbhWQxRoGmGGKoTdfgEQ.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Image of diverse eco-friendly furniture designs',
+    80, -- Przykładowa ilość na stanie
+    200.99, -- Przykładowa cena
+    'bathroom',
+    'beige', -- Kolorowe schemat - czerwony, czarny, biały
+    110.0,
+    50.0,
+    60.0,
+    'futuristic',
+    'leather', -- Ta kolumna może być pusta dla krzeseł
+    'https://pics.craiyon.com/2023-11-25/SFjzYJaQQQ-XaMvOqtps1w.webp'
+);
+
+--psql -d lkea
