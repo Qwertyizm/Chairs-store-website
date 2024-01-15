@@ -22,7 +22,7 @@ CREATE TABLE logins (
 CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    amount INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     category VARCHAR(50),
     colour VARCHAR(50),
@@ -30,16 +30,9 @@ CREATE TABLE products (
     width DECIMAL(6, 2),
     depth DECIMAL(6, 2),
     style VARCHAR(50),
-    wood_type VARCHAR(50)
+    material VARCHAR(50),
+    image VARCHAR(255)
 );
-
-ALTER TABLE products
-ADD COLUMN image VARCHAR(255);
-
-ALTER TABLE products
-RENAME COLUMN wood_type TO material;
-
-
 
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
@@ -82,9 +75,6 @@ FOREIGN KEY (order_id) REFERENCES orders(id);
 ALTER TABLE ordered
 ADD CONSTRAINT fk_ordered_product
 FOREIGN KEY (product_id) REFERENCES products(id);
-
-ALTER TABLE products
-RENAME COLUMN amount TO quantity;
 
 
 INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
