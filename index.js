@@ -32,9 +32,27 @@ app.get('/products', async (req, res) => {
   }
 });
 
+// Zmieniona ścieżka endpointu
+app.get('/product/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { rows } = await pool.query('SELECT * FROM products WHERE id = $1', [productId]);
+    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
+    if (rows.length === 0) {
+      return res.status(404).render('error', { message: 'Product not found' });
+    }
+    res.render('product', { product: rows[0] });
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
+
+
 app.get('/', (req, res) => {
   res.send('Witaj na mojej stronie!');
 });
+
 
 // Serwer nasłuchujący na porcie 3000
 app.listen(port, () => {

@@ -2,40 +2,99 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products</title>
-  <style>
-    /* Dodaj dowolne style CSS, aby dostosować wygląd kafelków */
-    .product-container {
-      display: flex;
-      flex-wrap: wrap;
-    }
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Zaktualizowana ścieżka -->
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white; /* Zmieniony kolor tła na biały */
+            color: #333; /* Zmieniony kolor tekstu */
+            padding: 10px; /* Wewnętrzny odstęp */
+            z-index: 1000; /* Ustawienie z-index, aby pasek nawigacyjny był zawsze na wierzchu */
+        }
 
-    .product-tile {
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin: 10px;
-      text-align: center;
-      max-width: 200px;
-    }
-  </style>
+        .logo img {
+            width: 100px; /* Ustawienie szerokości logo (dostosuj do własnych preferencji) */
+            height: auto;
+        }
+
+        .login-button {
+            /* Dodaj dodatkowe style dla przycisku zaloguj */
+            background-color: rgba(95, 23, 60, 1); /* Kolor tła przycisku */
+            color: rgba(191, 187, 220, 1); /* Kolor tekstu przycisku */
+            border: none; /* Usuń obramowanie */
+            padding: 10px 20px; /* Dostosuj odstępy wewnętrzne */
+            text-decoration: none; /* Usuń podkreślenie tekstu */
+            font-family: 'Arial', sans-serif; /* Ustawienie czcionki */
+            font-size: 1em; /* Dostosuj wielkość czcionki */
+            cursor: pointer; /* Zmiana kształtu kursora na wskaźnik */
+        }
+
+        .navbar-title {
+            font-size: 1.5em; /* Dostosuj wielkość czcionki */
+            margin: 0 auto; /* Ustawienie marginesu na auto w celu centrowania */
+        }
+
+        .content-container {
+            margin-top: 60px; /* Dostosuj wartość w zależności od wysokości paska nawigacyjnego */
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .product-tile {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+            max-width: 200px;
+        }
+    </style>
 </head>
-<body>
-  <h1>Products</h1>
 
-  <div class="product-container">
-    <% products.forEach(product => { %>
-      <div class="product-tile">
-        <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
-        <h2><%= product.name %></h2>
-        <p>Price: <%= product.price %></p>
-        <p>Quantity: <%= product.quantity %></p>
-        <!-- Dodaj inne informacje o produkcie według potrzeb -->
-      </div>
-    <% }); %>
-  </div>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <a href="/">
+                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
+            </a>
+        </div>
+        <div class="navbar-title">
+            Products
+        </div>
+        <div class="login-button">
+            <a href="/login">Zaloguj</a>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <h1>Products</h1>
+
+        <div class="product-container">
+            <% products.forEach(product => { %>
+                <a href="/product/<%= product.id %>">
+                    <div class="product-tile">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
+                        <h2><%= product.name %></h2>
+                        <p>Price: <%= product.price %></p>
+                        <p>Quantity: <%= product.quantity %></p>
+                    </div>
+                </a>
+            <% }); %>
+        </div>
+    </div>
 </body>
+
 </html>

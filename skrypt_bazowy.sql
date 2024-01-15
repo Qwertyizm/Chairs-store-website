@@ -163,4 +163,140 @@ VALUES (
     'https://pics.craiyon.com/2023-11-25/SFjzYJaQQQ-XaMvOqtps1w.webp'
 );
 
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Asante African stool',
+    10,
+    199.99,
+    'living room',
+    'brown',
+    40.0,
+    30.0,
+    30.0,
+    'traditional',
+    'wood',
+    'https://pics.craiyon.com/2023-10-25/eb0c1b88de65486cac526e9bf472f768.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Colorful wooden chair in cylindrical shape',
+    15,
+    149.99,
+    'living room',
+    'multi-color',
+    50.0,
+    40.0,
+    40.0,
+    'modern',
+    'wood',
+    'https://pics.craiyon.com/2023-10-28/4a03da66efe2403bbb1421214408946b.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'White postmodern sofa chair inspired by Japanese house tiles',
+    5,
+    299.99,
+    'living room',
+    'peach',
+    100.0,
+    80.0,
+    90.0,
+    'postmodern',
+    'upholstery',
+    'https://pics.craiyon.com/2023-09-21/e914e642a32d419e98ed0b5c347e296e.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'A wooden bench in a lush green environment',
+    20,
+    79.99,
+    'garden',
+    'natural wood',
+    60.0,
+    120.0,
+    40.0,
+    'rustic',
+    'wood',
+    'https://media.craiyon.com/2023-09-18/40ce5bf8e5544f32a85de15fdfae97c6.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Chair crafted from recycled plastic bottles',
+    30,
+    49.99,
+    'outdoor',
+    'green',
+    80.0,
+    50.0,
+    60.0,
+    'ecofriendly',
+    'recycled plastic',
+    'https://pics.craiyon.com/2023-10-20/47751cbca92a41d5a58e7891ae82b1c8.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Visual representation of a transformable chair',
+    12,
+    129.99,
+    'living room',
+    'gray',
+    90.0,
+    60.0,
+    70.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-09-28/dd4a2445ecb544e882002598319cda69.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Luxury wooden Aztec chair',
+    8,
+    349.99,
+    'living room',
+    'dark brown',
+    110.0,
+    70.0,
+    80.0,
+    'luxury',
+    'exotic wood',
+    'https://pics.craiyon.com/2023-10-11/9b484eb4836c4fac8734d53412ddbc9b.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Photo of a paper chair',
+    18,
+    89.99,
+    'office',
+    'white',
+    120.0,
+    80.0,
+    90.0,
+    'minimalistic',
+    'paper',
+    'https://pics.craiyon.com/2023-09-29/f813bfda887c4d71a26d72fa92fccc27.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Spiky metal bench in a bright studio',
+    15,
+    159.99,
+    'studio',
+    'silver',
+    100.0,
+    120.0,
+    60.0,
+    'industrial',
+    'metal',
+    'https://pics.craiyon.com/2023-12-05/qfS4LiHkQe6MIUKnzky77Q.webp'
+);
+
+
 --psql -d lkea
