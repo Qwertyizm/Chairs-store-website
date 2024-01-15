@@ -2,6 +2,8 @@
 const express = require('express');
 const { Pool } = require('pg');
 const ejs = require('ejs');
+const bodyParser = require('body-parser');
+
 
 
 const app = express();
@@ -10,7 +12,8 @@ const port = 3000;
 // Konfiguracja silnika widoku EJS
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Konfiguracja połączenia do bazy danych PostgreSQL
 const pool = new Pool({
@@ -32,11 +35,35 @@ app.get('/products', async (req, res) => {
   }
 });
 
+// Zmieniona ścieżka endpointu
+app.get('/product/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const { rows } = await pool.query('SELECT * FROM products WHERE id = $1', [productId]);
+    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
+    if (rows.length === 0) {
+      return res.status(404).render('error', { message: 'Product not found' });
+    }
+    res.render('product', { product: rows[0] });
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
+
+
 app.get('/', (req, res) => {
-  res.send('Witaj na mojej stronie!');
+  res.render('index');
+
+});
+
+
+app.get('/login', (req, res) => {
+  res.render('login'); // Utwórz plik views/login.ejs dla widoku logowania
 });
 
 // Serwer nasłuchujący na porcie 3000
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+

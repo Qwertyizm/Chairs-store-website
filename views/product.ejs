@@ -1,4 +1,4 @@
-<!-- views/products.ejs -->
+<!-- views/product.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,8 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Zaktualizowana ścieżka -->
+    <title><%= product.name %></title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
     <style>
         .navbar {
             position: fixed;
@@ -76,29 +76,25 @@
             </a>
         </div>
         <div class="navbar-title">
-            Products
+            Product Details
         </div>
         <a href="/login">
-        <div class="login-button">
-            Zaloguj
+        <div class="login-button">Zaloguj
         </div></a>
     </div>
 
     <div class="content-container">
-        <h1>Products</h1>
-
-        <div class="product-container">
-            <% products.forEach(product => { %>
-                <a href="/product/<%= product.id %>">
-                    <div class="product-tile">
-                        <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
-                        <h2><%= product.name %></h2>
-                        <p>Price: <%= product.price %></p>
-                        <p>Quantity: <%= product.quantity %></p>
-                    </div>
-                </a>
-            <% }); %>
-        </div>
+        <h1><%= product.name %></h1>
+        <img src="<%= product.image %>" alt="<%= product.name %>">
+        <p>Price: <%= product.price %></p>
+        <p>Quantity: <%= product.quantity %></p>
+        <p>Category: <%= product.category %></p>
+        <p>Colour: <%= product.colour %></p>
+        <p>Height: <%= product.height %></p>
+        <p>Width: <%= product.width %></p>
+        <p>Depth: <%= product.depth %></p>
+        <p>Style: <%= product.style %></p>
+        <p>Material: <%= product.material %></p>
     </div>
 </body>
 

@@ -1,27 +1,35 @@
+/* styles.css */
+
+a {
+    color: black; /* Zachowanie koloru niebieskiego dla linków */
+    text-decoration: none; /* Usunięcie podkreślenia dla linków */
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif; /* Zmiana na bezszeryfową czcionkę, np. Arial */
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
 
-#app {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
 h1 {
     color: #333;
+    text-decoration: none; /* Usunięcie podkreślenia dla h1 */
 }
 
-ul {
-    list-style: none;
-    padding: 0;
+
+.product-tile {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    max-width: 200px;
+    color: black; /* Kolor tekstu */
 }
 
-li {
-    margin-bottom: 10px;
+.product-tile img {
+    max-width: 100%;
+    height: auto;
 }
+
+/* Dodatkowe style dla innych elementów w razie potrzeby */
