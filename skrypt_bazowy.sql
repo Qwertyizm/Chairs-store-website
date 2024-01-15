@@ -1,8 +1,11 @@
 CREATE DATABASE lKEA;
-CREATE USER kasia WITH PASSWORD 'haslo';
-ALTER ROLE kasia SET client_encoding TO 'utf8';
-ALTER ROLE kasia SET default_transaction_isolation TO 'read committed';
-ALTER ROLE kasia SET timezone TO 'UTC';
+
+--to już będąc w bazie--
+CREATE USER pg WITH PASSWORD 'pg';
+ALTER ROLE pg SET client_encoding TO 'utf8';
+ALTER ROLE pg SET default_transaction_isolation TO 'read committed';
+ALTER ROLE pg SET timezone TO 'UTC';
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO pg;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
