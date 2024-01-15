@@ -2,17 +2,104 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><%= product.name %></title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= product.name %></title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            color: #333;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+        }
+
+        .navbar-title {
+            font-size: 1.5em;
+        }
+
+        .login-button {
+            background-color: rgba(95, 23, 60, 1);
+            color: rgba(191, 187, 220, 1);
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .content-container {
+            margin-top: 100px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
+
 <body>
-  <h1><%= product.name %></h1>
-  <img src="<%= product.image %>" alt="<%= product.name %>">
-  <p>Price: <%= product.price %></p>
-  <p>Quantity: <%= product.quantity %></p>
-  <!-- Dodaj inne informacje o produkcie według potrzeb -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="/">
+                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
+            </a>
+        </div>
+        <div class="navbar-title">
+            Product Details
+        </div>
+        <div class="login-button">
+            <a href="/login">Zaloguj</a>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <h1><%= product.name %></h1>
+        <img src="<%= product.image %>" alt="<%= product.name %>">
+        <p>Price: <%= product.price %></p>
+        <p>Quantity: <%= product.quantity %></p>
+        <p>Category: <%= product.category %></p>
+        <p>Colour: <%= product.colour %></p>
+        <p>Height: <%= product.height %></p>
+        <p>Width: <%= product.width %></p>
+        <p>Depth: <%= product.depth %></p>
+        <p>Style: <%= product.style %></p>
+        <p>Material: <%= product.material %></p>
+    </div>
 </body>
+
 </html>

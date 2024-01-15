@@ -2,6 +2,8 @@
 const express = require('express');
 const { Pool } = require('pg');
 const ejs = require('ejs');
+const bodyParser = require('body-parser');
+
 
 
 const app = express();
@@ -10,7 +12,8 @@ const port = 3000;
 // Konfiguracja silnika widoku EJS
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
-app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 // Konfiguracja połączenia do bazy danych PostgreSQL
 const pool = new Pool({
@@ -50,11 +53,17 @@ app.get('/product/:id', async (req, res) => {
 
 
 app.get('/', (req, res) => {
-  res.send('Witaj na mojej stronie!');
+  res.render('index');
+
 });
 
+
+app.get('/login', (req, res) => {
+  res.render('login'); // Utwórz plik views/login.ejs dla widoku logowania
+});
 
 // Serwer nasłuchujący na porcie 3000
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
+

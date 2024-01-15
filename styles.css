@@ -1,5 +1,10 @@
 /* styles.css */
 
+a {
+    color: black; /* Zachowanie koloru niebieskiego dla linków */
+    text-decoration: none; /* Usunięcie podkreślenia dla linków */
+}
+
 body {
     font-family: 'Arial', sans-serif; /* Zmiana na bezszeryfową czcionkę, np. Arial */
     margin: 0;
@@ -12,10 +17,6 @@ h1 {
     text-decoration: none; /* Usunięcie podkreślenia dla h1 */
 }
 
-a {
-    color: black; /* Zachowanie koloru niebieskiego dla linków */
-    text-decoration: none; /* Usunięcie podkreślenia dla linków */
-}
 
 .product-tile {
     border: 1px solid #ddd;
