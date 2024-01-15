@@ -23,7 +23,7 @@ async function get_users(){try{
     return result.rows;
 }
 catch (error){
-    console.error('Error crating new user:', error);
+    console.error('Error showing users:', error);
     throw error;
 }
 }
