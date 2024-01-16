@@ -17,14 +17,10 @@ app.set('views', './views');
 
 app.get('/', async (req, res) => {
   res.render('index', {user_cookie:req.signedCookies.user});
-
 });
 
 app.get('/login', (req, res) => {
   res.render('login');
-});
-app.get('/sign_up', (req, res) => {
-  res.render('sign_up');
 });
 
 app.post( '/login', async (req, res) => {
@@ -82,7 +78,9 @@ app.get('/search', async (req, res) => {
 });
 
 app.get('/cart',authorize.authorize_user, async (req, res) => {
-  res.render('user/cart');
+  var id = db_api.get_user_id(req.signedCookies.user);
+  var {products} = db_api.show_cart(id);
+  res.render('user/cart', {user_id: id});
 });
 
 app.get('/settings',authorize.authorize_user, async (req, res) => {
