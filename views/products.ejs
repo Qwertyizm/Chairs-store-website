@@ -164,7 +164,7 @@
             <div class="color-filter">
                 <% colors.forEach(color=> { %>
                     <label>
-                        <input type="checkbox" class="color-checkbox" value="<%= color %>" onclick="filterProducts()">
+                        <input type="checkbox" class="color-checkbox" value="<%= color %>"" onclick="filterProducts()">
                         <span class="color-name">
                             <%= color %>
                         </span>
@@ -184,7 +184,7 @@
                 <a href="/product/<%= product.id %>" class="product-tile" data-name="<%= product.name %>"
                     data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
                     data-height="<%= product.height %>" data-width="<%= product.width %>"
-                    data-depth="<%= product.depth %>" data-color="<%= product.color %>">
+                    data-depth="<%= product.depth %>" data-color="<%= product.colour %>">
                     <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
                     <h2>
                         <%= product.name %>

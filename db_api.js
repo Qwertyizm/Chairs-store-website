@@ -79,7 +79,7 @@ async function get_products(){
 async function get_colors() {
     try {
       const result = await pool.query('SELECT DISTINCT colour FROM products');
-      return result.rows.map(row => row.color);
+      return result.rows.map(row => row.colour);
     } catch (error) {
       console.error('Error fetching colors:', error);
       throw error;
