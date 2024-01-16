@@ -25,6 +25,10 @@ app.get('/', async (req, res) => {
 app.get('/login', (req, res) => {
   res.render('login');
 });
+app.get('/sign_up', (req, res) => {
+  res.render('sign_up');
+});
+
 
 app.post( '/login', async (req, res) => {
   var username = req.body.txtUser;

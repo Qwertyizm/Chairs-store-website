@@ -45,19 +45,27 @@
             justify-content: space-between;
             align-items: center;
             background-color: rgba(191, 187, 220, 1); /* Kolor tła paska nawigacyjnego */
-            color: #333; /* Kolor tekstu na pasku nawigacyjnym */
+            color: rgba(95, 23, 60, 1); /* Kolor tekstu na pasku nawigacyjnym */
             padding: 10px; /* Wewnętrzny odstęp */
             z-index: 1000; /* Ustawienie z-index, aby pasek nawigacyjny był zawsze na wierzchu */
         }
 
         .logo img {
-            width: 80px; /* Dostosuj szerokość logo (zmniejszona) */
+            width: 60px; /* Zmniejszenie szerokości logo */
             height: auto;
         }
 
-        .navbar-title {
-            font-size: 1.5em; /* Dostosuj wielkość czcionki na pasku nawigacyjnym */
-            margin: 0 auto; /* Ustawienie marginesu na auto w celu centrowania */
+        .login-button {
+            /* Dodaj dodatkowe style dla przycisku zaloguj */
+            background-color: rgba(95, 23, 60, 1); /* Kolor tła przycisku */
+            color: rgba(191, 187, 220, 1); /* Kolor tekstu przycisku */
+            border: none; /* Usuń obramowanie */
+            padding: 10px 20px; /* Dostosuj odstępy wewnętrzne */
+            text-decoration: none; /* Usuń podkreślenie tekstu */
+            font-family: 'Arial', sans-serif; /* Ustawienie czcionki */
+            font-size: 1em; /* Dostosuj wielkość czcionki */
+            cursor: pointer; /* Zmiana kształtu kursora na wskaźnik */
+            margin-left: -10px; /* Przesunięcie przycisku o 10px w lewo */
         }
     </style>
 </head>
@@ -70,20 +78,22 @@
                 <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
             </a>
         </div>
-        <div class="navbar-title">
-            Witaj w sklepie lKEA
-        </div>
+        <a href="/login">
+            <div class="login-button">
+                Zaloguj
+            </div>
+        </a>
     </div>
 
     <div id="welcome-container">
         <h1>Witaj w sklepie lKEA</h1>
-        <h2>krzesła na których nie siedziałeś</h2>
+        <h2>krzesła, na których nie siedziałeś</h2>
 
         <!-- Nowy kafelek -->
         <a href="/products">
             <div class="discover-tile">
-                <img src="https://pics.craiyon.com/2023-10-28/4a03da66efe2403bbb1421214408946b.webp" alt="Discover Products">
-                <p>Odkryj nasze produkty</p>
+                <img src="https://pics.craiyon.com/2023-10-28/4a03da66efe2403bbb1421214408946b.webp" alt="Discover Products" style="max-width: 100%; height: auto;">
+                <p style="color: rgba(95, 23, 60, 1);">Odkryj nasze produkty</p>
             </div>
         </a>
     </div>

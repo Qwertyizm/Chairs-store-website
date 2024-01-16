@@ -46,18 +46,30 @@
     <form method="POST">
         <div id='register'>
             <div>
-                Rejestracja
+                Registration
             </div>
             <div>
                 <input type='text' name='txtUser' />
-                <label>Nazwa użytkownika:</label>
+                <label>Username:</label>
+            </div>
+            <div>
+                <input type='text' name='txtEmail' />
+                <label>Email:</label>
+            </div>
+            <div>
+                <input type='text' name='txtName' />
+                <label>Name:</label>
+            </div>
+            <div>
+                <input type='date' name='txtDOB' />
+                <label>Date of Birth:</label>
             </div>
             <div>
                 <input type='password' name='txtPwd' />
-                <label>Hasło:</label>
+                <label>Password:</label>
             </div>
             <div>
-                <button>Zarejestruj</button>
+                <button>Register</button>
             </div>
             <% if ( locals.message ) { %>
                 <div class='message'>
