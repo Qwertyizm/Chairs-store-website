@@ -1,14 +1,92 @@
-<!-- views/index.ejs -->
+<!-- views/home.ejs -->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witaj w sklepie lKEA</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Dodaj ścieżkę do Twojego arkusza stylów, jeśli używasz -->
+    <style>
+        /* ... (poprzednie style) */
+
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+
+        #welcome-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #666;
+        }
+
+        /* Dodany pasek nawigacyjny */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(191, 187, 220, 1); /* Kolor tła paska nawigacyjnego */
+            color: #333; /* Kolor tekstu na pasku nawigacyjnym */
+            padding: 10px; /* Wewnętrzny odstęp */
+            z-index: 1000; /* Ustawienie z-index, aby pasek nawigacyjny był zawsze na wierzchu */
+        }
+
+        .logo img {
+            width: 80px; /* Dostosuj szerokość logo (zmniejszona) */
+            height: auto;
+        }
+
+        .navbar-title {
+            font-size: 1.5em; /* Dostosuj wielkość czcionki na pasku nawigacyjnym */
+            margin: 0 auto; /* Ustawienie marginesu na auto w celu centrowania */
+        }
+    </style>
 </head>
+
 <body>
-  Hello
-  <a href="/products" >produkty</a>
+    <!-- Pasek nawigacyjny -->
+    <div class="navbar">
+        <div class="logo">
+            <a href="/">
+                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
+            </a>
+        </div>
+        <div class="navbar-title">
+            Witaj w sklepie lKEA
+        </div>
+    </div>
+
+    <div id="welcome-container">
+        <h1>Witaj w sklepie lKEA</h1>
+        <h2>krzesła na których nie siedziałeś</h2>
+
+        <!-- Nowy kafelek -->
+        <a href="/products">
+            <div class="discover-tile">
+                <img src="https://pics.craiyon.com/2023-10-28/4a03da66efe2403bbb1421214408946b.webp" alt="Discover Products">
+                <p>Odkryj nasze produkty</p>
+            </div>
+        </a>
+    </div>
 </body>
+
 </html>
