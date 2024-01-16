@@ -8,6 +8,7 @@ const { utimesSync } = require('fs');
 var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser('sgs90890s8g90as8rg90as8g9r8a0srg8'));
+app.use(express.static('static'));
 var port = 5000;
 
 
@@ -92,8 +93,17 @@ app.get('/orders', authorize.authorize_admin, async (req, res) => {
 });
 
 app.get('/products', async (req, res) => {
-  res.render('products',{products:await db_api.get_products()});
+  try {
+    const products = await db_api.get_products();
+    const colors = await db_api.get_colors();
+
+    res.render('products', { products, colors });
+  } catch (error) {
+    console.error('Error fetching products or colors:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
 });
+
 
 app.get('/product/:id', async (req, res) => {
   try {
