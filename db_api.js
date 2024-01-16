@@ -72,13 +72,20 @@ async function get_products(){
 
 //----LOGINS----------------------------
 async function correct_pwd(usr,pwd){
-    var user = await pool.query(`SELECT user FROM Logins where login = '${usr}' and password = '${pwd}'`);
+    var user = await pool.query('SELECT user \
+                                FROM logins \
+                                WHERE login = $1 \
+                                AND password = $2',
+                                [usr,pwr]);
     return user.rowCount>0
     
 }
 
 async function is_admin(user){
-    var role = await pool.query(`SELECT role FROM Logins where login = '${user}'`);
+    var role = await pool.query('SELECT role \
+                                FROM Logins \
+                                WHERE login = $1',
+                                [usr]);
     //console.log(role.rows[0].role);
     return role.rows[0].role == 'admin';
 }
@@ -113,7 +120,6 @@ async function edit_login(id,usr,pwd){
                             SET password=$2, \
                             WHERE logins.id=$3',
                         [id,usr,pwd]);
-        return;
     }
     catch (error){
         console.error("Error updating user's login data:", error);
