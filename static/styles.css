@@ -1,23 +1,3 @@
-/* styles.css */
-
-body {
-    font-family: 'Arial', sans-serif; /* Zmiana na bezszeryfową czcionkę, np. Arial */
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-h1 {
-    color: #333;
-    text-decoration: none; /* Usunięcie podkreślenia dla h1 */
-}
-
-
-
-.product-tile img {
-    max-width: 100%;
-    height: auto;
-}
 
 body {
     font-family: 'Arial', sans-serif;
@@ -27,11 +7,15 @@ body {
     text-align: center;
 }
 
+.product-tile img {
+    max-width: 100%;
+    height: auto;
+}
+
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
-    margin-left: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -67,7 +51,6 @@ body {
     padding: 20px;
 }
 
-
 .product-tile {
     border: 1px solid #ddd;
     padding: 10px;
@@ -75,34 +58,13 @@ body {
     text-align: center;
     max-width: 200px;
 }
-a{
+
+a {
     color: black;
     text-decoration: none;
 }
 
-
-.product-container {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.product-tile {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-    max-width: 200px;
-}
-
-/* ... (poprzednie style) */
-
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-    text-align: center;
-}
+/* Additional styles (if any) */
 
 #welcome-container {
     max-width: 800px;
@@ -120,34 +82,48 @@ h2 {
     color: #666;
 }
 
-/* Dodany pasek nawigacyjny */
-.navbar {
+/* Sort and Filter Bar (if any) */
+.filter-bar {
     position: fixed;
-    top: 0;
-    width: 100%;
+    top: 60px;
+    left: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    z-index: 999;
+}
+
+.filter-container {
+    margin-top: 60px;
+    padding: 20px;
+    background-color: white;
+    position: fixed;
+    z-index: 1000;
+    height: calc(100% - 60px);
+    width: 200px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: rgba(191, 187, 220, 1); /* Kolor tła paska nawigacyjnego */
-    color: rgba(95, 23, 60, 1); /* Kolor tekstu na pasku nawigacyjnym */
-    padding: 10px; /* Wewnętrzny odstęp */
-    z-index: 1000; /* Ustawienie z-index, aby pasek nawigacyjny był zawsze na wierzchu */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: auto;
 }
 
-.logo img {
-    width: 60px; /* Zmniejszenie szerokości logo */
-    height: auto;
+.color-name {
+    display: block;
+    margin-left: 5px;
 }
 
-.login-button {
-    /* Dodaj dodatkowe style dla przycisku zaloguj */
-    background-color: rgba(95, 23, 60, 1); /* Kolor tła przycisku */
-    color: rgba(191, 187, 220, 1); /* Kolor tekstu przycisku */
-    border: none; /* Usuń obramowanie */
-    padding: 10px 20px; /* Dostosuj odstępy wewnętrzne */
-    text-decoration: none; /* Usuń podkreślenie tekstu */
-    font-family: 'Arial', sans-serif; /* Ustawienie czcionki */
-    font-size: 1em; /* Dostosuj wielkość czcionki */
-    cursor: pointer; /* Zmiana kształtu kursora na wskaźnik */
-    margin-left: -10px; /* Przesunięcie przycisku o 10px w lewo */
+.product-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 220px;
+}
+
+.product-tile {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    max-width: 200px;
 }
