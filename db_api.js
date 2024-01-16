@@ -80,7 +80,7 @@ async function get_product(id){
         const {rows} = await pool.query('SELECT * FROM products \
                                         WHERE products.id=$1',
                                         [id]);
-        return rows[0];
+        return rows;
     }
     catch (error){
         console.error('Error showing product',error);
@@ -268,6 +268,19 @@ async function delete_from_ordered(order_id) {
 }
 
 //----CART-----------------------------
+async function show_cart(user_id){
+    try{
+        const {rows} = await pool.query('SELECT * FROM cart\
+                                        WHERE cart.user_id=$1',
+                                        [user_id]);
+        return rows[0];
+    }
+    catch (error){
+        console.error('Error showing cart:', error);
+        throw error;
+    }
+}
+
 async function add_to_cart(user_id, product_id, quantity) {
     try{
         const { rows } = await pool.query('INSERT INTO Cart Values($1, $2, $3)', 
@@ -306,4 +319,28 @@ async function edit_cart(user_id, product_id, quantity) {
     }
 }
 
-module.exports = { get_users, get_products, correct_pwd, is_admin };
+module.exports = { 
+    get_users,
+    new_user,
+    edit_user,
+    delete_user,
+    get_products,
+    get_product,
+    new_product,
+    edit_product,
+    delete_product,
+    correct_pwd,
+    is_admin,
+    new_login,
+    edit_login,
+    delete_login,
+    get_orders,
+    new_order,
+    delete_order,
+    add_to_ordered,
+    delete_from_ordered,
+    add_to_cart,
+    show_cart,
+    delete_from_cart,
+    edit_cart,
+ };
