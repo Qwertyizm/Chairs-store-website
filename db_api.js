@@ -22,7 +22,7 @@ async function get_users(){
     }
 }
 // create new user and return his id
-async function new_user(name,dob,mail,address,pwd){
+async function new_user(name,dob,mail,address){
     try{
         var result=await pool.query('INSERT INTO users (name,dob,email,address) \
                                             values ($1,$2,$3,$4) RETURNING id',
@@ -81,6 +81,57 @@ async function is_admin(user){
     var role = await pool.query(`SELECT role FROM Logins where login = '${user}'`);
     //console.log(role.rows[0].role);
     return role.rows[0].role == 'admin';
+}
+
+// show all logins in database
+async function get_logins(){
+    try{
+        await pool.query('SELECT * FROM logins',[]);
+    }
+    catch (error){
+        console.error('Error showing logins:', error);
+        throw error;
+    }
+}
+// create new login
+async function new_login(id,usr,pwd){
+    try{
+        await pool.query('INSERT INTO logins (user_id,login,password,role) \
+                                        values ($1,$2,$3,$4)',
+                        [id,usr,pwd,'user']);
+    }
+    catch (error){
+        console.error('Error crating new login:', error);
+        throw error;
+    }
+}
+// edit data of a login with given id
+async function edit_login(id,usr,pwd){
+    try{
+        await pool.query('UPDATE logins \
+                            SET login=$1, \
+                            SET password=$2, \
+                            WHERE logins.id=$3',
+                        [id,usr,pwd]);
+        return;
+    }
+    catch (error){
+        console.error("Error updating user's login data:", error);
+        throw error;
+    }
+}
+// remove login of given id
+async function delete_login(id){
+    try{
+        const result=await pool.query('DELETE FROM logins \
+                                        WHERE logins.user_id=$1',
+                                        [id]);
+        return result;
+    }
+    catch (error){
+        console.error("Error removing user's login from database:", error);
+        throw error;
+    }
 }
 
 
