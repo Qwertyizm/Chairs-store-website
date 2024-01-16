@@ -79,9 +79,14 @@ app.get('/search', async (req, res) => {
 });
 
 app.get('/cart',authorize.authorize_user, async (req, res) => {
-  var id = db_api.get_user_id(req.signedCookies.user);
-  var {products} = db_api.show_cart(id);
-  res.render('user/cart', {user_id: id});
+  try{
+    var id = await db_api.get_user_id(req.signedCookies.user);
+    var {products} = await db_api.show_cart(id);
+    console.log(products.length());
+  }catch(err) {
+    console.log(err);
+  }
+  res.render('user/cart', {user_cookie:req.signedCookies.user, user_id: id, products: products});
 });
 
 app.get('/settings',authorize.authorize_user, async (req, res) => {

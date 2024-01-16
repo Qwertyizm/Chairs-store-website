@@ -218,7 +218,7 @@ async function get_user_id(login){
         var {rows} = await pool.query('SELECT user_id FROM Logins \
                             WHERE login = $1',
                             [login]);
-        return rows[0];
+        return rows[0].user_id;
     }
     catch (error) {
         console.error('Error removing use from database:', error);
@@ -296,7 +296,7 @@ async function show_cart(user_id){
         const {rows} = await pool.query('SELECT * FROM cart\
                                         WHERE cart.user_id=$1',
                                         [user_id]);
-        return rows[0];
+        return rows;
     }
     catch (error){
         console.error('Error showing cart:', error);
