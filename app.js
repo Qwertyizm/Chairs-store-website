@@ -84,9 +84,11 @@ app.get('/orders', authorize.authorize_admin, async (req, res) => {
   res.render('admin/orders');
 });
 
-app.get('/products',authorize.authorize_admin, async (req, res) => {
+app.get('/products',authorize.authorize_user, async (req, res) => {
   res.render('products',{products:await db_api.get_products()});
 });
+
+//app.get('/product')
 
 app.get('/users', authorize.authorize_admin, async (req, res) => {
   res.render('admin/users');
