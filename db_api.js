@@ -11,19 +11,19 @@ var pool = new pg.Pool({
 
 //----USERS----------------------------
 // show all users in database
-async function get_users(){
-    try{
-        var result = await pool.query('SELECT * FROM users',[]);        
+async function get_users() {
+    try {
+        var result = await pool.query('SELECT * FROM users', []);
         return result.rows;
     }
-    catch (error){
+    catch (error) {
         console.error('Error showing users:', error);
         throw error;
     }
 }
 // create new user and return his id
-async function new_user(name,dob,mail,address){
-    try{
+async function new_user(name, dob, mail, address, pwd) {
+    try {
         var result = await pool.query('INSERT INTO users (name,dob,email,address) \
                                             VALUES ($1,$2,$3,$4) RETURNING id',
                         [name,dob,mail,address]);
@@ -45,7 +45,7 @@ async function edit_user(id,name,dob,mail,address){
                             WHERE users.id=$5',
                         [name,dob,mail,address,id]);
     }
-    catch (error){
+    catch (error) {
         console.error("Error updating user's data:", error);
         throw error;
     }
@@ -57,7 +57,7 @@ async function delete_user(id){
                             WHERE users.id=$1',
                             [id]);
     }
-    catch (error){
+    catch (error) {
         console.error('Error removing use from database:', error);
         throw error;
     }
@@ -138,90 +138,109 @@ async function delete_product(id){
 }
 
 //----LOGINS----------------------------
-async function correct_pwd(usr,pwd){
-    var user = await pool.query('SELECT user \
-                                FROM logins \
-                                WHERE login = $1 \
-                                AND password = $2',
-                                [usr,pwd]);
-    return user.rowCount>0
-    
+
+
+
+//----ORDERS---------------------------
+async function get_orders(id) {
+    try{
+        const { rows } = await pool.query('SELECT * FROM Orders WHERE user_id = $1', 
+            [id]);
+        return rows;
+    }
+    catch (error) {
+        console.error('Error showing order:', error);
+        throw error;
+    };
 }
 
-async function is_admin(user){
-    var role = await pool.query('SELECT role \
-                                FROM Logins \
-                                WHERE login = $1',
-                                [user]);
-    //console.log(role.rows[0].role);
-    return role.rows[0].role == 'admin';
+async function new_order(user_id, type) {
+    try {
+        await pool.query('INSERT INTO Orders(user_id, date, order_type) Values($1, $2, $3)', 
+            [user_id, Date(Date.now()).toISOString().slice(0, 10), type]);
+        return;
+    }
+    catch (error) {
+        console.error('Error creating new order:', error);
+        throw error;
+    };
 }
 
-// show all logins in database
-async function get_logins(){
-    try{
-        await pool.query('SELECT * FROM logins',[]);
+async function delete_order(order_id) {
+    try {
+        const result = await pool.query('DELETE FROM Orders \
+                                        WHERE order.id=$1',
+            [order_id]);
+        return;
     }
-    catch (error){
-        console.error('Error showing logins:', error);
+    catch (error) {
+        console.error('Error removing order from database:', error);
         throw error;
     }
 }
-// create new login
-async function new_login(id,usr,pwd){
+
+//----ORDERED--------------------------
+async function add_to_ordered(order_id, product_id, quantity) {
     try{
-        await pool.query('INSERT INTO \
-                            logins (user_id,login,password,role) \
-                            VALUES ($1,$2,$3,$4)',
-                        [id,usr,pwd,'user']);
+        const { rows } = await pool.query('INSERT INTO Ordered Values($1, $2, $3)', 
+            [order_id, product_id, quantity]);
+        return rows;
     }
-    catch (error){
-        console.error('Error creating new login:', error);
+    catch  (error) {
+        console.error('Error adding product to order:', error);
         throw error;
     }
 }
-// edit data of a login with given id
-async function edit_login(id,usr,pwd){
+
+async function delete_from_ordered(order_id) {
     try{
-        await pool.query('UPDATE logins \
-                            SET login=$1, \
-                            SET password=$2, \
-                            WHERE logins.id=$3',
-                        [id,usr,pwd]);
+        await pool.query('DELETE FROM Ordered where order_id = $1', 
+            [order_id]);
+        return;
     }
-    catch (error){
-        console.error("Error updating user's login data:", error);
+    catch  (error) {
+        console.error('Error removing from order:', error);
         throw error;
     }
 }
-// remove login of given id
-async function delete_login(id){
+
+//----CART-----------------------------
+async function add_to_cart(user_id, product_id, quantity) {
     try{
-        const result=await pool.query('DELETE FROM logins \
-                                        WHERE logins.user_id=$1',
-                                        [id]);
+        const { rows } = await pool.query('INSERT INTO Cart Values($1, $2, $3)', 
+            [user_id, product_id, quantity]);
+        return rows;
+    }
+    catch  (error) {
+        console.error('Error adding product to cart:', error);
+        throw error;
+    }
+}
+
+async function delete_from_cart(user_id, product_id) {
+    try{
+        await pool.query('DELETE FROM Cart where user_id = $1 and product_id = $2', 
+            [order_id, product_id]);
+        return;
+    }
+    catch  (error) {
+        console.error('Error removing from cart:', error);
+        throw error;
+    }
+}
+async function edit_cart(user_id, product_id, quantity) {
+    try {
+        var result = await pool.query('UPDATE Cart \
+                                        SET quantity = $1 \
+                                        WHERE users.id = $2 \
+                                        and product_id = $3',
+            [user_id, product_id, quantity]);
         return result;
     }
-    catch (error){
-        console.error("Error removing user's login from database:", error);
+    catch (error) {
+        console.error("Error updating cart:", error);
         throw error;
     }
 }
 
-
-//----ORDERS----------------------------
-//----ORDERED----------------------------
-//----CART----------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = {get_users, get_products, correct_pwd, is_admin};
+module.exports = { get_users, get_products, correct_pwd, is_admin };
