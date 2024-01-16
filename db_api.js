@@ -11,34 +11,22 @@ var pool = new pg.Pool({
 
 //----USERS----------------------------
 // show all users in database
-async function get_users(){try{
-    var result=await pool.query('SELECT * FROM users',
-                    [],
-                    (error, results) => {
-                        if (error) {
-                            throw error
-                        }
-                    });
-    
-    return result.rows;
-}
-catch (error){
-    console.error('Error showing users:', error);
-    throw error;
-}
+async function get_users(){
+    try{
+        var result=await pool.query('SELECT * FROM users',[]);        
+        return result.rows;
+    }
+    catch (error){
+        console.error('Error showing users:', error);
+        throw error;
+    }
 }
 // create new user and return his id
 async function new_user(name,dob,mail,address,pwd){
     try{
         var result=await pool.query('INSERT INTO users (name,dob,email,address) \
                                             values ($1,$2,$3,$4) RETURNING id',
-                        [name,dob,mail,address],
-                        (error, results) => {
-                            if (error) {
-                                throw error
-                            }
-                        });
-        
+                        [name,dob,mail,address]);
         return result.rows[0].id;
     }
     catch (error){
@@ -55,12 +43,7 @@ async function edit_user(id,name,dob,mail,address){
                                         SET email=$3, \
                                         SET address=$4 \
                                         WHERE users.id=$5',
-                        [name,dob,mail,address,id],
-                        (error, results) => {
-                            if (error) {
-                                throw error
-                            }
-                        });
+                                    [name,dob,mail,address,id]);
         return result;
     }
     catch (error){
@@ -73,12 +56,7 @@ async function delete_user(id){
     try{
         const result=await pool.query('DELETE FROM users \
                                         WHERE users.id=$1',
-                        [id],
-                        (error, results) => {
-                            if (error) {
-                                throw error
-                            }
-                        });
+                                        [id]);
         return result;
     }
     catch (error){
