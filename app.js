@@ -65,7 +65,7 @@ app.get('/sign_up', async (req, res) => {
 
 app.post('/sign_up', async (req, res) => {
   var name = req.body.txtName;
-  res.redirect(login);
+  res.redirect('/login');
 });
 
 app.get('/search', async (req, res) => {
