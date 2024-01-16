@@ -20,12 +20,6 @@
             background-color: #f4f4f4;
         }
 
-        h1 {
-            color: #333;
-            text-decoration: none;
-            /* Usunięcie podkreślenia dla h1 */
-        }
-
 
 
         .product-tile img {
@@ -118,37 +112,75 @@
                 <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
             </a>
         </div>
+
         <div class="navbar-title">
             Products
         </div>
+
+        <div class="sort-dropdown">
+            <label for="sort">Sort by: </label>
+            <select id="sort" onchange="sortProducts()">
+                <option value="name">By name</option>
+                <option value="price">By price</option>
+                <option value="quantity">By quantity</option>
+                <option value="height">By height</option>
+                <option value="width">By width</option>
+                <option value="depth">By depth</option>
+            </select>
+        </div>
+
         <a href="/login">
             <div class="login-button">
-                Zaloguj
+                Log in
             </div>
         </a>
     </div>
 
     <div class="content-container">
-        <h1>Products</h1>
 
         <div class="product-container">
-            <% products.forEach(product=> { %>
-                <a href="/product/<%= product.id %>">
-                    <div class="product-tile">
-                        <img src="<%= product.image %>" alt="<%= product.name %>"
-                            style="max-width: 100%; height: auto;">
-                        <h2>
-                            <%= product.name %>
-                        </h2>
-                        <p>Price: <%= product.price %>
-                        </p>
-                        <p>Quantity: <%= product.quantity %>
-                        </p>
-                    </div>
+            <% products.forEach(product => { %>
+                <a href="/product/<%= product.id %>" class="product-tile" data-name="<%= product.name %>"
+                    data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
+                    data-height="<%= product.height %>" data-width="<%= product.width %>" data-depth="<%= product.depth %>">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
+                    <h2><%= product.name %></h2>
+                    <p>Price: <%= product.price %></p>
+                    <p>Quantity: <%= product.quantity %></p>
                 </a>
-                <% }); %>
+            <% }); %>
         </div>
     </div>
+
+    <script>
+        function sortProducts() {
+            var attribute = document.getElementById('sort').value;
+            var productsContainer = document.querySelector('.product-container');
+            var products = Array.from(productsContainer.children);
+
+            products.sort(function (a, b) {
+                var aValue = a.getAttribute(`data-${attribute}`);
+                var bValue = b.getAttribute(`data-${attribute}`);
+
+                if (isNaN(aValue) || isNaN(bValue)) {
+                    // If values are not numeric, perform string comparison
+                    return aValue.localeCompare(bValue);
+                } else {
+                    // If values are numeric, perform numeric comparison
+                    return parseFloat(aValue) - parseFloat(bValue);
+                }
+            });
+
+            // Remove existing products from container
+            productsContainer.innerHTML = '';
+
+            // Append sorted products to container
+            products.forEach(function (product) {
+                productsContainer.appendChild(product);
+            });
+        }
+    </script>
 </body>
+
 
 </html>
