@@ -84,11 +84,24 @@ app.get('/orders', authorize.authorize_admin, async (req, res) => {
   res.render('admin/orders');
 });
 
-app.get('/products',authorize.authorize_user, async (req, res) => {
+app.get('/products', async (req, res) => {
   res.render('products',{products:await db_api.get_products()});
 });
 
-//app.get('/product')
+app.get('/product/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const rows=db_api.get_products(productId);
+    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
+    if (rows.length === 0) {
+      return res.status(404).render('error', { message: 'Product not found' });
+    }
+    res.render('product', { product: rows[0] });
+  } catch (error) {
+    console.error('Error fetching product:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
 
 app.get('/users', authorize.authorize_admin, async (req, res) => {
   res.render('admin/users');
