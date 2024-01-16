@@ -95,8 +95,17 @@ app.get('/orders', authorize.authorize_admin, async (req, res) => {
 });
 
 app.get('/products', async (req, res) => {
-  res.render('products',{products:await db_api.get_products()});
+  try {
+    const products = await db_api.get_products();
+    const colors = await db_api.get_colors();
+
+    res.render('products', { products, colors });
+  } catch (error) {
+    console.error('Error fetching products or colors:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
 });
+
 
 app.get('/product/:id', async (req, res) => {
   try {

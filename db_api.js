@@ -74,6 +74,17 @@ async function get_products(){
         throw error;
     }
 }
+
+async function get_colors() {
+    try {
+      const result = await pool.query('SELECT DISTINCT colour FROM products');
+      return result.rows.map(row => row.color);
+    } catch (error) {
+      console.error('Error fetching colors:', error);
+      throw error;
+    }
+  }
+  
 // show product of given id
 async function get_product(id){
     try{
@@ -343,4 +354,5 @@ module.exports = {
     show_cart,
     delete_from_cart,
     edit_cart,
+    get_colors,
  };
