@@ -91,7 +91,7 @@ app.get('/products', async (req, res) => {
 app.get('/product/:id', async (req, res) => {
   try {
     const productId = req.params.id;
-    const rows=db_api.get_products(productId);
+    const rows=await db_api.get_product(productId);
     // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
     if (rows.length === 0) {
       return res.status(404).render('error', { message: 'Product not found' });
