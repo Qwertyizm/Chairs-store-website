@@ -47,7 +47,7 @@ CREATE TABLE orders (
 CREATE TABLE ordered (
     order_id INTEGER REFERENCES orders(id) NOT NULL,
     product_id INTEGER REFERENCES products(id) NOT NULL,
-    amount INTEGER NOT NULL,
+    quantity INTEGER NOT NULL,
     PRIMARY KEY (order_id, product_id)
 );
 
@@ -55,7 +55,7 @@ CREATE TABLE cart (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) NOT NULL,
     product_id INTEGER REFERENCES products(id) NOT NULL,
-    amount INTEGER NOT NULL
+    quantity INTEGER NOT NULL
 );
 
 

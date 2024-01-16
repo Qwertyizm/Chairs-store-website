@@ -13,7 +13,7 @@ var pool = new pg.Pool({
 // show all users in database
 async function get_users(){
     try{
-        var result=await pool.query('SELECT * FROM users',[]);        
+        var result = await pool.query('SELECT * FROM users',[]);        
         return result.rows;
     }
     catch (error){
@@ -24,7 +24,7 @@ async function get_users(){
 // create new user and return his id
 async function new_user(name,dob,mail,address,pwd){
     try{
-        var result=await pool.query('INSERT INTO users (name,dob,email,address) \
+        var result = await pool.query('INSERT INTO users (name,dob,email,address) \
                                             values ($1,$2,$3,$4) RETURNING id',
                         [name,dob,mail,address]);
         return result.rows[0].id;
@@ -37,7 +37,7 @@ async function new_user(name,dob,mail,address,pwd){
 // edit data of a user with given id
 async function edit_user(id,name,dob,mail,address){
     try{
-        var result=await pool.query('UPDATE users \
+        var result = await pool.query('UPDATE users \
                                         SET name=$1, \
                                         SET dob=$2, \
                                         SET email=$3, \
@@ -54,7 +54,7 @@ async function edit_user(id,name,dob,mail,address){
 // remove user of given id
 async function delete_user(id){
     try{
-        const result=await pool.query('DELETE FROM users \
+        const result = await pool.query('DELETE FROM users \
                                         WHERE users.id=$1',
                                         [id]);
         return result;
