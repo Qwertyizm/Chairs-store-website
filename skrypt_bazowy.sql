@@ -6,6 +6,7 @@ ALTER ROLE pg SET client_encoding TO 'utf8';
 ALTER ROLE pg SET default_transaction_isolation TO 'read committed';
 ALTER ROLE pg SET timezone TO 'UTC';
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO pg;
+GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO pg;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,

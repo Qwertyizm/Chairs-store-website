@@ -17,9 +17,7 @@ app.set('views', './views');
 
 
 app.get('/', async (req, res) => {
- // const rows=await db_api.show_users();
-  //res.render('index',{rows:rows});
-  res.render('index');
+  res.render('index', {user_cookie:req.signedCookies.user});
 
 });
 
@@ -29,7 +27,6 @@ app.get('/login', (req, res) => {
 app.get('/sign_up', (req, res) => {
   res.render('sign_up');
 });
-
 
 app.post( '/login', async (req, res) => {
   var username = req.body.txtUser;
@@ -57,6 +54,7 @@ app.post( '/login', async (req, res) => {
 
 app.get( '/logout', authorize.authorize_user, (req, res) => {
   res.cookie('user', '', { maxAge: -1 } );
+  res.cookie('role', '', { maxAge: -1 } );
   res.redirect('/')
 });
 
@@ -65,7 +63,18 @@ app.get('/sign_up', async (req, res) => {
 });
 
 app.post('/sign_up', async (req, res) => {
+  var username = req.body.txtUser;
+  var email = req.body.txtEmail;
   var name = req.body.txtName;
+  var dob = req.body.txtDOB;
+  var address = req.body.txtAddress;
+  var pwd = req.body.txtPwd;
+  try {
+    var id = await db_api.new_user(name, dob, email, address);
+    await db_api.new_login(id, username, pwd);
+  }
+  catch (err) {
+  }
   res.redirect('/login');
 });
 

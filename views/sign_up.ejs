@@ -49,23 +49,24 @@
                 Registration
             </div>
             <div>
-                <input type='text' name='txtUser' />
+                <input type='text' name='txtUser' minlength=6 required="true" />
                 <label>Username:</label>
             </div>
             <div>
-                <input type='text' name='txtEmail' />
+                <input type='email' name='txtEmail' required="true"/>
                 <label>Email:</label>
             </div>
             <div>
-                <input type='text' name='txtName' />
+                <input type='text' name='txtName' required="true" pattern="[a-zA-Z0-9!@#$%^&*:;,.]*" />
+
                 <label>Name:</label>
             </div>
             <div>
-                <input type='date' name='txtDOB' />
+                <input type='date' name='txtDOB' required="true"/>
                 <label>Date of Birth:</label>
             </div>
             <div>
-                <input type='password' name='txtPwd' />
+                <input type='password' name='txtPwd' minlength=8 required="true"/>
                 <label>Password:</label>
             </div>
             <div>

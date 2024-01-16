@@ -78,11 +78,19 @@
                 <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
             </a>
         </div>
-        <a href="/login">
-            <div class="login-button">
-                Zaloguj
-            </div>
-        </a>
+            <% if (!user_cookie) { %>
+                <a href="/login">
+                    <div class="login-button">
+                        Log in
+                    </div>
+                </a>
+            <% } else { %>
+                <a href="/logout">
+                    <div class="login-button">
+                        Log out
+                    </div>
+                </a>
+            <% } %>
     </div>
 
     <div id="welcome-container">
