@@ -76,7 +76,7 @@ async function correct_pwd(usr,pwd){
                                 FROM logins \
                                 WHERE login = $1 \
                                 AND password = $2',
-                                [usr,pwr]);
+                                [usr,pwd]);
     return user.rowCount>0
     
 }
@@ -85,7 +85,7 @@ async function is_admin(user){
     var role = await pool.query('SELECT role \
                                 FROM Logins \
                                 WHERE login = $1',
-                                [usr]);
+                                [user]);
     //console.log(role.rows[0].role);
     return role.rows[0].role == 'admin';
 }
