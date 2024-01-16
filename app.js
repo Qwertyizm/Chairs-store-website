@@ -8,6 +8,7 @@ const { utimesSync } = require('fs');
 var app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser('sgs90890s8g90as8rg90as8g9r8a0srg8'));
+app.use(express.static('static'));
 var port = 5000;
 
 
