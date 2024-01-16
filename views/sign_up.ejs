@@ -1,0 +1,71 @@
+<!-- register.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        html, body, form {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #register {
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        #register div {
+            overflow: auto;
+        }
+
+        #register input {
+            float: right;
+        }
+
+        button {
+            clear: both;
+        }
+
+        .message {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="POST">
+        <div id='register'>
+            <div>
+                Rejestracja
+            </div>
+            <div>
+                <input type='text' name='txtUser' />
+                <label>Nazwa użytkownika:</label>
+            </div>
+            <div>
+                <input type='password' name='txtPwd' />
+                <label>Hasło:</label>
+            </div>
+            <div>
+                <button>Zarejestruj</button>
+            </div>
+            <% if ( locals.message ) { %>
+                <div class='message'>
+                    <%= locals.message %>
+                </div>
+            <% } %>
+        </div>
+    </form>
+</body>
+
+</html>
