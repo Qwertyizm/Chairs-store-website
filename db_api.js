@@ -62,6 +62,7 @@ async function delete_user(id){
         throw error;
     }
 }
+
 //----PRODUCTS----------------------------
 // show all products in database
 async function get_products(){
@@ -212,7 +213,18 @@ async function delete_login(id){
     }
 }
 
-
+async function get_user_id(login){
+    try{
+        var {rows} = await pool.query('SELECT user_id FROM Logins \
+                            WHERE login = $1',
+                            [login]);
+        return rows[0];
+    }
+    catch (error) {
+        console.error('Error removing use from database:', error);
+        throw error;
+    }
+}
 
 
 //----ORDERS---------------------------
@@ -345,6 +357,7 @@ module.exports = {
     new_login,
     edit_login,
     delete_login,
+    get_user_id,
     get_orders,
     new_order,
     delete_order,
