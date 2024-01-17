@@ -12,19 +12,12 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="logo">
-            <a href="/">
-                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
-            </a>
-        </div>
+    <%- include('navbar', { user_cookie: user_cookie }) %>
+
         <div class="navbar-title">
             Product Details
         </div>
-        <a href="/login">
-        <div class="login-button">Zaloguj
-        </div></a>
-    </div>
+
 
     <div class="content-container">
         <h1><%= product.name %></h1>

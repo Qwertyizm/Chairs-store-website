@@ -240,10 +240,10 @@ async function get_orders(id) {
     };
 }
 
-async function new_order(user_id, type) {
+async function new_order(user_id, date, type) {
     try {
         await pool.query('INSERT INTO Orders(user_id, date, order_type) Values($1, $2, $3)', 
-            [user_id, Date(Date.now()).toISOString().slice(0, 10), type]);
+            [user_id, date, type]);
         return;
     }
     catch (error) {
@@ -293,8 +293,10 @@ async function delete_from_ordered(order_id) {
 //----CART-----------------------------
 async function show_cart(user_id){
     try{
-        const {rows} = await pool.query('SELECT * FROM cart\
-                                        WHERE cart.user_id=$1',
+        const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image \
+                                        FROM cart, products\
+                                        WHERE user_id=$1\
+                                        and cart.id=products.id',
                                         [user_id]);
         return rows;
     }
@@ -319,6 +321,17 @@ async function add_to_cart(user_id, product_id, quantity) {
 async function delete_from_cart(user_id, product_id) {
     try{
         await pool.query('DELETE FROM Cart where user_id = $1 and product_id = $2', 
+            [order_id, product_id]);
+        return;
+    }
+    catch  (error) {
+        console.error('Error removing from cart:', error);
+        throw error;
+    }
+}
+async function clear_cart(user_id, product_id) {
+    try{
+        await pool.query('DELETE FROM Cart where user_id = $1', 
             [order_id, product_id]);
         return;
     }
@@ -366,6 +379,7 @@ module.exports = {
     add_to_cart,
     show_cart,
     delete_from_cart,
+    clear_cart,
     edit_cart,
     get_colors,
  };

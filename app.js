@@ -69,7 +69,7 @@ app.post('/sign_up', async (req, res) => {
     var id = await db_api.new_user(name, dob, email, address);
     await db_api.new_login(id, username, pwd);
   }
-  catch (err) {
+    catch (err) {
   }
   res.redirect('/login');
 });
@@ -81,12 +81,45 @@ app.get('/search', async (req, res) => {
 app.get('/cart',authorize.authorize_user, async (req, res) => {
   try{
     var id = await db_api.get_user_id(req.signedCookies.user);
-    var {products} = await db_api.show_cart(id);
-    console.log(products.length());
+    var products = await db_api.show_cart(id);
+    res.render('user/cart', {products: products, user_cookie: req.signedCookies.user});
   }catch(err) {
     console.log(err);
   }
-  res.render('user/cart', {user_cookie:req.signedCookies.user, user_id: id, products: products});
+});
+
+app.post('/cart/clear',authorize.authorize_user, async (req, res) => {
+  try{
+    var id = await db_api.get_user_id(req.signedCookies.user);
+    await db_api.clear_cart(id);
+    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
+  }catch(err) {
+    console.log(err);
+  }
+});
+
+app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
+  try{
+    var id = await db_api.get_user_id(req.signedCookies.user);
+    var date = Date(Date.now()).toISOString().slice(0, 10);
+    await db_api.new_order(id, date, )
+    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
+  }catch(err) {
+    console.log(err);
+  }
+});
+
+// to do
+app.get('/order_confirm',authorize.authorize_user, async (req, res) => {
+  try{
+    var id = await db_api.get_user_id(req.signedCookies.user);
+    var date = Date(Date.now()).toISOString().slice(0, 10);
+    var type = "in_store"; // wybor uzytkownika w formularzu
+    await db_api.new_order(id, date, type);
+    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
+  }catch(err) {
+    console.log(err);
+  }
 });
 
 app.get('/settings',authorize.authorize_user, async (req, res) => {
@@ -102,7 +135,7 @@ app.get('/products', async (req, res) => {
     const products = await db_api.get_products();
     const colors = await db_api.get_colors();
 
-    res.render('products', { products, colors });
+    res.render('products', { products, colors, user_cookie: req.signedCookies.user });
   } catch (error) {
     console.error('Error fetching products or colors:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
@@ -118,7 +151,7 @@ app.get('/product/:id', async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).render('error', { message: 'Product not found' });
     }
-    res.render('product', { product: rows[0] });
+    res.render('product', { product: rows[0], user_cookie: req.signedCookies.user });
   } catch (error) {
     console.error('Error fetching product:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
