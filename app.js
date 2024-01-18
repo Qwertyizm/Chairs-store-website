@@ -74,8 +74,6 @@ app.post('/sign_up', async (req, res) => {
   res.redirect('/login');
 });
 
-
-
 app.get('/cart', authorize.authorize_user, async (req, res) => {
   try {
     var id = await db_api.get_user_id(req.signedCookies.user);
@@ -87,8 +85,6 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
 });
 
 app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
-  try{
-app.post('/cart/clear', authorize.authorize_user, async (req, res) => {
   try {
     var id = await db_api.get_user_id(req.signedCookies.user);
     await db_api.clear_cart(id);
@@ -188,18 +184,11 @@ app.get('/search', async (req, res) => {
   }
 });
 
-
-
-
-
-
 app.get('/product/:id', async (req, res) => {
   try {
     const username=req.signedCookies.user;
     const productId = req.params.id;
-    const rows=await db_api.get_product(productId);
     const rows = await db_api.get_product(productId);
-    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
     if (rows.length === 0) {
       return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
     }
