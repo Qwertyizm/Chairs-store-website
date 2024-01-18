@@ -61,7 +61,8 @@ body {
 }
 
 .submit-button {
-    background-color: rgb(88, 20, 176);
+    background-color: rgba(95, 23, 60, 1);
+
     color: rgb(240, 240, 245);
     padding: 10px 180px;
     text-decoration: none;
@@ -162,4 +163,21 @@ h2 {
 .search-button img {
     max-width: 30px; /* Ustaw maksymalną szerokość na 20px */
     height: auto; /* Zachowaj proporcje */
+}
+
+/* styles.css */
+
+.add-to-cart-button {
+    background-color: rgba(95, 23, 60, 1);
+
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+.add-to-cart-button:hover {
+    background-color: #45a049; /* Darker green on hover */
 }

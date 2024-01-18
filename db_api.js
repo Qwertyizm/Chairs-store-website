@@ -314,7 +314,7 @@ async function show_cart(user_id){
         const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image \
                                         FROM cart, products\
                                         WHERE user_id=$1\
-                                        and cart.id=products.id',
+                                        and cart.product_id=products.id',
                                         [user_id]);
         return rows;
     }
