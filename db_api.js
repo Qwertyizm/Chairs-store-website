@@ -1,5 +1,6 @@
 const { error } = require('console');
 var pg = require('pg');
+var bcrypt = require('bcrypt');
 
 var pool = new pg.Pool({
     host: 'localhost',
@@ -151,9 +152,8 @@ async function delete_product(id){
 
 //----LOGINS----------------------------
 async function correct_pwd(usr,pwd){
-    var user = await pool.query(`SELECT user FROM Logins where login = '${usr}' and password = '${pwd}'`);
-    return user.rowCount>0
-    
+    const {rows} = await pool.query(`SELECT password FROM Logins where login = $1`,[usr]);
+    return await bcrypt.compare(pwd,rows[0].password);
 }
 
 async function is_admin(user){
@@ -175,9 +175,10 @@ async function get_logins(){
 // create new login
 async function new_login(id,usr,pwd){
     try{
+        const hash= await bcrypt.hash(pwd,12);
         await pool.query('INSERT INTO logins (user_id,login,password,role) \
                                         values ($1,$2,$3,$4)',
-                        [id,usr,pwd,'user']);
+                        [id,usr,hash,'user']);
     }
     catch (error){
         console.error('Error crating new login:', error);
