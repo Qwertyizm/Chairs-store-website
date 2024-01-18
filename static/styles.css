@@ -146,3 +146,20 @@ h2 {
     text-align: center;
     max-width: 200px;
 }
+
+.search-container {
+    margin-right: 20px; /* Dodaj margines dla estetyki */
+}
+
+
+.search-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.search-button img {
+    max-width: 30px; /* Ustaw maksymalną szerokość na 20px */
+    height: auto; /* Zachowaj proporcje */
+}

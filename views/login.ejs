@@ -5,70 +5,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Zaktualizowana ścieżka -->
     <style>
-        html,
-        body,
-        form {
-            height: 100%;
-            overflow: hidden;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
         }
 
-        form {
+        .form-container {
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
         #login {
             padding: 20px;
-            border: 1px solid black;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         #login div {
-            overflow: auto;
+            margin-bottom: 15px;
         }
 
         #login input {
-            float: right;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
         button {
-            clear: both;
+            background-color: rgba(95, 23, 60, 1);
+            color: rgba(191, 187, 220, 1);
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            font-family: 'Arial', sans-serif;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+            color: rgba(95, 23, 60, 1);
+            margin-left: 10px;
         }
 
         .message {
             color: red;
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
-    <form method="POST">
-        <div id='login'>
+    <div class="navbar">
+        <div class="logo">
+            <a href="/">
+                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
+            </a>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form method="POST" id="login">
             <div>
-                Login
+                <label for="txtUser">Username:</label>
+                <input type="text" name="txtUser" id="txtUser" required>
             </div>
             <div>
-                <input type='text' name='txtUser' />
-                <label>Username:</label>
-            </div>
-            <div>
-                <input type='password' name='txtPwd' />
-                <label>Password:</label>
+                <label for="txtPwd">Password:</label>
+                <input type="password" name="txtPwd" id="txtPwd" required>
             </div>
             <div>
                 <button type="submit">Login</button>
-                <a href="sign_up">
-                    <button type="button">Sign Up</button>
-                </a>
+                <a href="/sign_up">Sign Up</a>
             </div>
-            <% if ( locals.message ) { %>
+            <% if (locals.message) { %>
                 <div class='message'>
                     <%= locals.message %>
                 </div>
             <% } %>
-        </div>
-    </form>
+        </form>
+    </div>
 </body>
 
 </html>
