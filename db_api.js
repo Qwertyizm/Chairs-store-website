@@ -150,6 +150,23 @@ async function delete_product(id){
     }
 }
 
+
+async function searchProducts(searchTerm) {
+    try {
+      const query = {
+        text: 'SELECT * FROM products WHERE name ~ $1',
+        values: [searchTerm],
+      };
+  
+      const result = await pool.query(query);
+      return result.rows;
+    } catch (error) {
+      console.error('Error in searchProducts:', error);
+      throw error;
+    }
+  }
+  
+
 //----LOGINS----------------------------
 async function correct_pwd(usr,pwd){
     const {rows} = await pool.query(`SELECT password FROM Logins where login = $1`,[usr]);
@@ -297,7 +314,7 @@ async function show_cart(user_id){
         const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image \
                                         FROM cart, products\
                                         WHERE user_id=$1\
-                                        and cart.id=products.id',
+                                        and cart.product_id=products.id',
                                         [user_id]);
         return rows;
     }
@@ -383,4 +400,5 @@ module.exports = {
     clear_cart,
     edit_cart,
     get_colors,
+    searchProducts,
  };
