@@ -30,12 +30,19 @@
 
                 <div class="quantity-options">
                     <input type='number' name='Quantity' id="quantityInput" required="true" value="<%= product.quantity %>" min="1" />
-                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="change">ok</button>
-                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="delete">delete</button>
+                    <a href ="/cart/delete/<%= product.id %>"> delete </button>
                 </div>
             </div>
         <% }); %>
 
+
+        <a href="/cart/save">
+            <div class="submit-button">
+                Save changes
+            </div>
+        </a>
+
+        <div class="break"></div>
         <a href="cart/submit">
             <div class="submit-button">
                 Submit
@@ -44,38 +51,17 @@
 
         <div class="break"></div>
 
-        <a href="cart/clear">
+        <a href="/cart/clear">
             <div class="submit-button">
                 Clear all
             </div>
         </a>
-
-        
-
     </div>
 
 </body>
 </html>
 
 <script>
-    var quantityButtons = document.querySelectorAll('.adjust-quantity');
-
-    quantityButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var product_id = button.getAttribute('data-product-id');
-            var action = button.getAttribute('data-action');
-
-            if (action == 'delete') {
-                db_api.delete_from_cart(user_cookie, product_id);
-                console.log("k")
-            } 
-            else{
-                db_api.edit_cart(user_cookie, product_id, 9);
-            }
-
-        });
-    });
-
 
     var quantityInput = document.getElementById('quantityInput');
 

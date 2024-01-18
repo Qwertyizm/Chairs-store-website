@@ -297,12 +297,29 @@ async function show_cart(user_id){
         const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image \
                                         FROM cart, products\
                                         WHERE user_id=$1\
-                                        and cart.id=products.id',
+                                        and cart.product_id=products.id',
                                         [user_id]);
         return rows;
     }
     catch (error){
         console.error('Error showing cart:', error);
+        throw error;
+    }
+}
+
+async function get_quantity_from_cart(user_id, product_id) {
+    try{
+        const { rows } = await pool.query('SELECT qantity FROM Cart\
+                                            WHERE user_id = $1\
+                                            and product_id = $2',
+                                            [user_id, product_id]);
+        if (rows){
+            return rows[0].quantity;
+        } 
+        return 0;
+    }
+    catch  (error) {
+        console.error('Error adding product to cart:', error);
         throw error;
     }
 }
@@ -322,7 +339,7 @@ async function add_to_cart(user_id, product_id, quantity) {
 async function delete_from_cart(user_id, product_id) {
     try{
         await pool.query('DELETE FROM Cart where user_id = $1 and product_id = $2', 
-            [order_id, product_id]);
+            [user_id, product_id]);
         return;
     }
     catch  (error) {
@@ -330,10 +347,10 @@ async function delete_from_cart(user_id, product_id) {
         throw error;
     }
 }
-async function clear_cart(user_id, product_id) {
+async function clear_cart(user_id) {
     try{
         await pool.query('DELETE FROM Cart where user_id = $1', 
-            [order_id, product_id]);
+            [user_id]);
         return;
     }
     catch  (error) {
@@ -377,6 +394,7 @@ module.exports = {
     delete_order,
     add_to_ordered,
     delete_from_ordered,
+    get_quantity_from_cart,
     add_to_cart,
     show_cart,
     delete_from_cart,

@@ -88,11 +88,46 @@ app.get('/cart',authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.post('/cart/clear',authorize.authorize_user, async (req, res) => {
+app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
   try{
     var id = await db_api.get_user_id(req.signedCookies.user);
     await db_api.clear_cart(id);
-    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
+    res.redirect('/cart');
+  }catch(err) {
+    console.log(err);
+  }
+});
+
+app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
+  try{
+    var product_id = req.params.id;
+    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    var quantity = await db_api.get_quantity_from_cart(user_id, product_id);
+
+    if (quantity){
+      await db_api.edit_cart(user_id, product_id, qantity + 1);
+    }
+    else{
+      await db_api.add_to_cart(user_id, product_id, 1);
+    }
+    var returnUrl = req.query.returnUrl;
+    if(returnUrl){
+      res.redirect(returnUrl);
+    }
+    else{
+      res.redirect('/');
+    }
+  }catch(err) {
+    console.log(err);
+  }
+});
+
+app.get('/cart/delete/:id',authorize.authorize_user, async (req, res) => {
+  try{
+    var product_id = req.params.id;
+    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    await db_api.delete_from_cart(user_id, product_id);
+    res.redirect('/cart');
   }catch(err) {
     console.log(err);
   }
@@ -147,7 +182,6 @@ app.get('/product/:id', async (req, res) => {
   try {
     const productId = req.params.id;
     const rows=await db_api.get_product(productId);
-    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
     if (rows.length === 0) {
       return res.status(404).render('error', { message: 'Product not found' });
     }

@@ -56,7 +56,7 @@ CREATE TABLE cart (
     user_id INTEGER REFERENCES users(id) NOT NULL,
     product_id INTEGER REFERENCES products(id) NOT NULL,
     quantity INTEGER NOT NULL
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (user_id, product_id)
 );
 
 
