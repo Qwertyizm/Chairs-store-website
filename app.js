@@ -145,21 +145,26 @@ app.get('/products', async (req, res) => {
 
 app.get('/product/:id', async (req, res) => {
   try {
+    const username=req.signedCookies.user;
     const productId = req.params.id;
     const rows=await db_api.get_product(productId);
     // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
     if (rows.length === 0) {
-      return res.status(404).render('error', { message: 'Product not found' });
+      return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
     }
-    res.render('product', { product: rows[0], user_cookie: req.signedCookies.user });
+    res.render('product', { product: rows[0], user_cookie: username });
   } catch (error) {
     console.error('Error fetching product:', error);
-    res.status(500).render('error', { message: 'Internal Server Error' });
+    res.status(500).render('error', { message: 'Internal Server Error', user_cookie: username });
   }
 });
 
 app.get('/users', authorize.authorize_admin, async (req, res) => {
   res.render('admin/users');
+});
+
+app.use(async (req,res,next)=>{
+  res.render('404',{url:req.url,user_cookie: req.signedCookies.user});
 });
 
 http.createServer(app).listen(3000);

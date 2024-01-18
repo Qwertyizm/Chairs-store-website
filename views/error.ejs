@@ -1,0 +1,33 @@
+<!-- views/error.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css"> <!-- Zaktualizowana ścieżka -->
+</head>
+
+<body>
+    <%- include('navbar', { user_cookie: locals.user_cookie, title: "Error" }) %>
+
+        <div class="content-container">
+            <% if ( locals.message ) { %>
+                <div class='message'>
+                    <%= locals.message %>
+                </div>
+            <% } else{ %>
+                <div class='message'>
+                    This shouldn't show up.
+                </div>
+            <% } %>
+        </div>
+
+    <div> Gratulacje, coś popsułeś!!!!</div>
+</body>
+
+
+</html>
