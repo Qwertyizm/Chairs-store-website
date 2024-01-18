@@ -26,13 +26,12 @@
                 <a href="/product/<%= product.id %>" style="display: block">
                     <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto;">
                     <h2><%= product.name %></h2>
-                    <p>Quantity: <span class="current-quantity"><%= product.quantity %></span></p>
                 </a>
 
                 <div class="quantity-options">
-                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="decrease">-</button>
-                    <span class="current-quantity"><%= product.quantity %></span>
-                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="increase">+</button>
+                    <input type='number' name='Quantity' id="quantityInput" required="true" value="<%= product.quantity %>" min="1" />
+                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="change">ok</button>
+                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="delete">delete</button>
                 </div>
             </div>
         <% }); %>
@@ -56,5 +55,41 @@
     </div>
 
 </body>
-
 </html>
+
+<script>
+    var quantityButtons = document.querySelectorAll('.adjust-quantity');
+
+    quantityButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var product_id = button.getAttribute('data-product-id');
+            var action = button.getAttribute('data-action');
+
+            if (action == 'delete') {
+                db_api.delete_from_cart(user_cookie, product_id);
+                console.log("k")
+            } 
+            else{
+                db_api.edit_cart(user_cookie, product_id, 9);
+            }
+
+        });
+    });
+
+
+    var quantityInput = document.getElementById('quantityInput');
+
+// Dodaj obsługę zdarzenia klawisza
+quantityInput.addEventListener('keyup', function(event) {
+    // Sprawdź, czy naciśnięty klawisz to "Enter" (kod klawisza 13)
+    if (event.key === 'Enter' || event.keyCode === 13) {
+        // Pobierz wartość z pola input
+        var newQuantity = quantityInput.value;
+
+        // Wyświetl wartość w konsoli (możesz dostosować to do swoich potrzeb)
+        console.log('New Quantity:', newQuantity);
+
+        // Tutaj możesz dodać kod obsługi nowej wartości, np. wysłać ją na serwer
+    }
+});
+</script>
