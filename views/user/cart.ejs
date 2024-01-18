@@ -1,0 +1,60 @@
+<!-- views/cart.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witaj w sklepie lKEA</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+
+    <style>
+        .nowa_klasa {
+            display: block;
+            margin-bottom: 20px; /* Add margin to separate each product */
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../navbar', { user_cookie: user_cookie }) %>
+    <div class="content-container">
+        <% products.forEach(product => { %>
+            <div class="nowa_klasa" data-name="<%= product.name %>">
+                <a href="/product/<%= product.id %>" style="display: block">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto;">
+                    <h2><%= product.name %></h2>
+                    <p>Quantity: <span class="current-quantity"><%= product.quantity %></span></p>
+                </a>
+
+                <div class="quantity-options">
+                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="decrease">-</button>
+                    <span class="current-quantity"><%= product.quantity %></span>
+                    <button class="adjust-quantity" data-product-id="<%= product.id %>" data-action="increase">+</button>
+                </div>
+            </div>
+        <% }); %>
+
+        <a href="cart/submit">
+            <div class="submit-button">
+                Submit
+            </div>
+        </a>
+
+        <div class="break"></div>
+
+        <a href="cart/clear">
+            <div class="submit-button">
+                Clear all
+            </div>
+        </a>
+
+        
+
+    </div>
+
+</body>
+
+</html>
