@@ -22,7 +22,10 @@
         <div class="navbar-title">
             Products
         </div>
-
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search...">
+            <button onclick="searchProducts()">Search</button>
+        </div>
         <div class="sort-dropdown">
             <label for="sort">Sort by: </label>
             <select id="sort" onchange="sortProducts()">
@@ -34,6 +37,7 @@
                 <option value="depth">By depth</option>
             </select>
         </div>
+        
 
         <a href="/login">
             <div class="login-button">
@@ -127,6 +131,13 @@
                 }
             });
         }
+        function searchProducts() {
+            var searchInput = document.getElementById('searchInput').value;
+
+            // Przekieruj użytkownika do nowego adresu URL, aby uruchomić wyszukiwanie
+            window.location.href = '/search?search=' + searchInput;
+        }
+
     </script>
 </body>
 

@@ -150,6 +150,23 @@ async function delete_product(id){
     }
 }
 
+
+async function searchProducts(searchTerm) {
+    try {
+      const query = {
+        text: 'SELECT * FROM products WHERE name ~ $1',
+        values: [searchTerm],
+      };
+  
+      const result = await pool.query(query);
+      return result.rows;
+    } catch (error) {
+      console.error('Error in searchProducts:', error);
+      throw error;
+    }
+  }
+  
+
 //----LOGINS----------------------------
 async function correct_pwd(usr,pwd){
     const {rows} = await pool.query(`SELECT password FROM Logins where login = $1`,[usr]);
@@ -401,4 +418,5 @@ module.exports = {
     clear_cart,
     edit_cart,
     get_colors,
+    searchProducts,
  };

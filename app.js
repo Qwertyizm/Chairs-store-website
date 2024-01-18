@@ -17,45 +17,45 @@ app.set('views', './views');
 
 
 app.get('/', async (req, res) => {
-  res.render('index', {user_cookie:req.signedCookies.user});
+  res.render('index', { user_cookie: req.signedCookies.user });
 });
 
 app.get('/login', (req, res) => {
   res.render('login');
 });
 
-app.post( '/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   var username = req.body.txtUser;
   var pwd = req.body.txtPwd;
-  if (await db_api.correct_pwd(username, pwd) ) {
-    res.cookie('user',username,{signed:true});
-    if( await db_api.is_admin(username)){
-      res.cookie('role','admin',{signed:true});
+  if (await db_api.correct_pwd(username, pwd)) {
+    res.cookie('user', username, { signed: true });
+    if (await db_api.is_admin(username)) {
+      res.cookie('role', 'admin', { signed: true });
     }
-    else{
-      res.cookie('role','user',{signed:true});
+    else {
+      res.cookie('role', 'user', { signed: true });
     }
     var returnUrl = req.query.returnUrl;
-    if(returnUrl){
+    if (returnUrl) {
       res.redirect(returnUrl);
     }
-    else{
+    else {
       res.redirect('/');
     }
   } else {
-    res.render( 'login', { message : "Zła nazwa logowania lub hasło" }
+    res.render('login', { message: "Zła nazwa logowania lub hasło" }
     );
   }
 });
 
-app.get( '/logout', authorize.authorize_user, (req, res) => {
-  res.cookie('user', '', { maxAge: -1 } );
-  res.cookie('role', '', { maxAge: -1 } );
+app.get('/logout', authorize.authorize_user, (req, res) => {
+  res.cookie('user', '', { maxAge: -1 });
+  res.cookie('role', '', { maxAge: -1 });
   res.redirect('/')
 });
 
 app.get('/sign_up', async (req, res) => {
-  res.render('sign_up');
+  res.render('sign_up', { user_cookie: req.signedCookies.user });
 });
 
 app.post('/sign_up', async (req, res) => {
@@ -69,27 +69,27 @@ app.post('/sign_up', async (req, res) => {
     var id = await db_api.new_user(name, dob, email, address);
     await db_api.new_login(id, username, pwd);
   }
-    catch (err) {
+  catch (err) {
   }
   res.redirect('/login');
 });
 
-app.get('/search', async (req, res) => {
-  res.render('search');
-});
 
-app.get('/cart',authorize.authorize_user, async (req, res) => {
-  try{
+
+app.get('/cart', authorize.authorize_user, async (req, res) => {
+  try {
     var id = await db_api.get_user_id(req.signedCookies.user);
     var products = await db_api.show_cart(id);
-    res.render('user/cart', {products: products, user_cookie: req.signedCookies.user});
-  }catch(err) {
+    res.render('user/cart', { products: products, user_cookie: req.signedCookies.user });
+  } catch (err) {
     console.log(err);
   }
 });
 
 app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
   try{
+app.post('/cart/clear', authorize.authorize_user, async (req, res) => {
+  try {
     var id = await db_api.get_user_id(req.signedCookies.user);
     await db_api.clear_cart(id);
     res.redirect('/cart');
@@ -137,28 +137,28 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
   try{
     var id = await db_api.get_user_id(req.signedCookies.user);
     var date = Date(Date.now()).toISOString().slice(0, 10);
-    await db_api.new_order(id, date, )
-    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
-  }catch(err) {
+    await db_api.new_order(id, date,)
+    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
+  } catch (err) {
     console.log(err);
   }
 });
 
 // to do
-app.get('/order_confirm',authorize.authorize_user, async (req, res) => {
-  try{
+app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
+  try {
     var id = await db_api.get_user_id(req.signedCookies.user);
     var date = Date(Date.now()).toISOString().slice(0, 10);
     var type = "in_store"; // wybor uzytkownika w formularzu
     await db_api.new_order(id, date, type);
-    res.render('user/cart', {products: {}, user_cookie: req.signedCookies.user});
-  }catch(err) {
+    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
+  } catch (err) {
     console.log(err);
   }
 });
 
-app.get('/settings',authorize.authorize_user, async (req, res) => {
-    res.render('user/settings');
+app.get('/settings', authorize.authorize_user, async (req, res) => {
+  res.render('user/settings');
 });
 
 app.get('/orders', authorize.authorize_admin, async (req, res) => {
@@ -176,12 +176,29 @@ app.get('/products', async (req, res) => {
     res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
+app.get('/search', async (req, res) => {
+  try {
+    const searchTerm = req.query.search; // Assuming you are getting the search term from the query parameter
+    const searchResults = await db_api.searchProducts(searchTerm);
+
+    res.render('search', { searchTerm, searchResults, user_cookie: req.signedCookies.user });
+  } catch (error) {
+    console.error('Error fetching search results:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
+
+
+
+
 
 
 app.get('/product/:id', async (req, res) => {
   try {
     const productId = req.params.id;
     const rows=await db_api.get_product(productId);
+    const rows = await db_api.get_product(productId);
+    // Jeżeli nie znaleziono produktu, możesz obsłużyć to dowolnym sposobem, np. przekierowanie na stronę błędu.
     if (rows.length === 0) {
       return res.status(404).render('error', { message: 'Product not found' });
     }
