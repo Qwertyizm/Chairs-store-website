@@ -10,22 +10,24 @@
     <title>Confirm Order</title>
     <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
+
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "Confirm Your Order" }) %>
 
     <div class="content-container">
-        <h2>Your Cart</h2>
         <% if (cart.length === 0) { %>
             <p>Your cart is empty.</p>
         <% } else { %>
             <ul>
-                <% cart.forEach(item => { %>
-                    <li>
-                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: <%= item.product.price %> zł
-                    </li>
+                <% cart.forEach(product => { %>
+                    <div class="product-container-2" data-name="<%= product.name %>">
+                        <a href="/product/<%= product.id %>" style="display: block">
+                            <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto; margin-bottom: 10px;">
+                            <h2> <%= product.name %> <br> Quantity: <%= product.quantity %> <br> Price: <%= product.price %> zł</h2>
+                        </a>
+                    </div>
                 <% }); %>
             </ul>
-            <button class="confirm-order-button">Confirm Order</button>
         <% } %>
     </div>
 
@@ -34,21 +36,64 @@
         <button id="inStoreButton" class="in-store-button">In Store</button>
         <button id="courierButton" class="courier-button">Courier</button>
     </div>
+    <br>
+    <div>
+        <button class="confirm-order-button" id="confirmOrderButton">Confirm Order</button>
+        <br>
+        <p>Total Price: 
+            <span id="totalPrice">
+                <%= cart.reduce((acc, product) => acc + (product.price * product.quantity), 0) %>
+            </span> zł
+        </p>
+        <br>
+    </div>
 
     <script>
-        const inStoreButton = document.getElementById('inStoreButton');
-        const courierButton = document.getElementById('courierButton');
+        document.addEventListener('DOMContentLoaded', function () {
+            const inStoreButton = document.getElementById('inStoreButton');
+            const courierButton = document.getElementById('courierButton');
+            const confirmOrderButton = document.getElementById('confirmOrderButton');
+    
+            inStoreButton.addEventListener('click', () => {
+                inStoreButton.classList.add('active');
+                courierButton.classList.remove('active');
+            });
+    
+            courierButton.addEventListener('click', () => {
+                courierButton.classList.add('active');
+                inStoreButton.classList.remove('active');
+            });
 
-        inStoreButton.addEventListener('click', () => {
-            inStoreButton.classList.add('active');
-            courierButton.classList.remove('active');
-        });
+            confirmOrderButton.addEventListener('click', async () => {
+                const selectedDeliveryMethod = inStoreButton.classList.contains('active') ? 'In Store' : 'Courier';
+                
+                // Check if quantities are valid
+                if (selectedDeliveryMethod === 'In Store' || selectedDeliveryMethod === 'Courier') {
+                    // Perform the place_order action
+                    try {
+                        await fetch('/place_order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                deliveryMethod: selectedDeliveryMethod,
+                            }),
+                        });
 
-        courierButton.addEventListener('click', () => {
-            courierButton.classList.add('active');
-            inStoreButton.classList.remove('active');
+                        // Redirect to the order view
+                        window.location.href = `/order?delivery=${selectedDeliveryMethod}`;
+                    } catch (error) {
+                        console.error('Error placing order:', error);
+                        alert('Error placing order. Please try again.');
+                    }
+                } else {
+                    alert('Invalid quantities or delivery method');
+                }
+            });
         });
     </script>
+    
 </body>
 
 
