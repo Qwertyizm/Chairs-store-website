@@ -187,7 +187,7 @@ app.get('/products', async (req, res) => {
     const products = await db_api.get_products();
     const colors = await db_api.get_colors();
 
-    res.render('products', { products, colors, user_cookie: req.signedCookies.user, url: req.url });
+    res.render('products', { products, colors, user_cookie: req.signedCookies.user, url: req.url, user_role:req.signedCookies.role });
   } catch (error) {
     console.error('Error fetching products or colors:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
