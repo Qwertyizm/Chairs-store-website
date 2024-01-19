@@ -133,8 +133,19 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
   try{
     var id = await db_api.get_user_id(req.signedCookies.user);
     var date = Date(Date.now()).toISOString().slice(0, 10);
+    var products = await db_api.show_cart(id);
     await db_api.new_order(id, date,)
     res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get('/cart/submit',authorize.authorize_user, async (req, res) => {
+  try{
+    var id = await db_api.get_user_id(req.signedCookies.user);
+    var products = await db_api.show_cart(id);
+    res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user });
   } catch (err) {
     console.log(err);
   }

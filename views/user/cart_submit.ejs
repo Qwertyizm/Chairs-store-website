@@ -1,0 +1,40 @@
+<!-- views/cart_submit.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+
+<body>
+    <%- include('../navbar', { user_cookie: user_cookie }) %>
+
+    <div class="content-container">
+        <h2>Your Cart</h2>
+        <% if (cart.length === 0) { %>
+            <p>Your cart is empty.</p>
+        <% } else { %>
+            <ul>
+                <% cart.forEach(item => { %>
+                    <li>
+                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: <%= item.product.price %> zł
+                    </li>
+                <% }); %>
+            </ul>
+            <button class="confirm-order-button">Confirm Order</button>
+        <% } %>
+    </div>
+
+    <div class="delivery-method-container">
+        <h3>Choose Delivery Method</h3>
+        <button class="in-store-button">In Store</button>
+        <button class="courier-button">Courier</button>
+    </div>
+</body>
+
+</html>
