@@ -1,4 +1,3 @@
-<!--views.ejs-->
 <!-- views/error.ejs -->
 
 <!DOCTYPE html>
@@ -15,7 +14,11 @@
 <body>
     <%- include('navbar', { user_cookie: user_cookie, title: "Error 404" }) %>
     <div class="content-container">
-        Strona <%= locals.url %> nie została znaleziona.
+        <% if(locals.url){ %>
+            Strona <%= locals.url %> nie została znaleziona.
+        <% } else { %>
+            <%=locals.message%>
+        <% } %>
     </div>
 </body>
 

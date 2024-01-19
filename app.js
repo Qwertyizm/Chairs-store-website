@@ -212,7 +212,7 @@ app.get('/product/:id', async (req, res) => {
     if (rows.length === 0) {
       return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
     }
-    res.render('product', { product: rows[0], user_cookie: username, url: req.url });
+    res.render('product', { product: rows[0], user_cookie: username, url: req.url, user_role:req.signedCookies.role  });
   } catch (error) {
     console.error('Error fetching product:', error);
     res.status(500).render('error', { message: 'Internal Server Error', user_cookie: username });
