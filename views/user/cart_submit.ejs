@@ -10,7 +10,6 @@
     <title>Confirm Order</title>
     <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
-
 <body>
     <%- include('../navbar', { user_cookie: user_cookie }) %>
 
@@ -32,9 +31,25 @@
 
     <div class="delivery-method-container">
         <h3>Choose Delivery Method</h3>
-        <button class="in-store-button">In Store</button>
-        <button class="courier-button">Courier</button>
+        <button id="inStoreButton" class="in-store-button">In Store</button>
+        <button id="courierButton" class="courier-button">Courier</button>
     </div>
+
+    <script>
+        const inStoreButton = document.getElementById('inStoreButton');
+        const courierButton = document.getElementById('courierButton');
+
+        inStoreButton.addEventListener('click', () => {
+            inStoreButton.classList.add('active');
+            courierButton.classList.remove('active');
+        });
+
+        courierButton.addEventListener('click', () => {
+            courierButton.classList.add('active');
+            inStoreButton.classList.remove('active');
+        });
+    </script>
 </body>
+
 
 </html>
