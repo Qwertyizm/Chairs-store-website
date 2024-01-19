@@ -154,8 +154,8 @@ async function delete_product(id){
 async function searchProducts(searchTerm) {
     try {
       const query = {
-        text: 'SELECT * FROM products WHERE name ~ $1',
-        values: [searchTerm],
+        text: 'SELECT * FROM products WHERE name ILIKE $1',
+        values: [`%${searchTerm}%`],  // Adding '%' for wildcard matching
       };
   
       const result = await pool.query(query);
@@ -165,6 +165,7 @@ async function searchProducts(searchTerm) {
       throw error;
     }
   }
+  
   
 
 //----LOGINS----------------------------
@@ -308,6 +309,76 @@ async function delete_from_ordered(order_id) {
     }
 }
 
+//-----------------------------
+async function place_order(user_id, delivery_method) {
+    try {
+        // Create a new order for the user
+        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
+        const orderResult = await new_order(user_id, currentDate, delivery_method);
+        const orderId = orderResult.rows[0].id;
+
+        // Get the items from the user's cart
+        const cartItems = await show_cart(user_id);
+
+        // Add each item from the cart to the ordered table
+        for (const item of cartItems) {
+            await add_to_ordered(orderId, item.id, item.quantity);
+
+            // Update the product quantity in the products table (subtract the ordered quantity)
+            const remainingQuantity = item.quantity;
+            await pool.query('UPDATE products SET quantity = quantity - $1 WHERE id = $2', [remainingQuantity, item.id]);
+        }
+
+        // Clear the user's cart after placing the order
+        await clear_cart(user_id);
+
+        return orderId;
+    } catch (error) {
+        console.error('Error placing order:', error);
+        throw error;
+    }
+}
+
+async function get_order_details(userId) {
+    try {
+      // Fetch order details from your database
+      const orderQuery = {
+        text: 'SELECT * FROM orders WHERE user_id = $1',
+        values: [userId],
+      };
+  
+      const orderResult = await pool.query(orderQuery);
+  
+      if (orderResult.rows.length === 0) {
+        // No order found for the user
+        return null;
+      }
+  
+      const orderId = orderResult.rows[0].id;
+  
+      // Fetch ordered items for the order
+      const orderedItemsQuery = {
+        text: 'SELECT products.*, ordered.quantity FROM ordered JOIN products ON ordered.product_id = products.id WHERE ordered.order_id = $1',
+        values: [orderId],
+      };
+  
+      const orderedItemsResult = await pool.query(orderedItemsQuery);
+  
+      const orderDetails = {
+        orderId: orderId,
+        user_id: userId,
+        date: orderResult.rows[0].date,
+        order_type: orderResult.rows[0].order_type,
+        items: orderedItemsResult.rows,
+      };
+  
+      return orderDetails;
+    } catch (error) {
+      console.error('Error fetching order details:', error);
+      throw error;
+    }
+  }
+
 //----CART-----------------------------
 async function show_cart(user_id){
     try{
@@ -411,6 +482,8 @@ module.exports = {
     delete_order,
     add_to_ordered,
     delete_from_ordered,
+    place_order,
+    get_order_details,
     get_quantity_from_cart,
     add_to_cart,
     show_cart,

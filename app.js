@@ -215,6 +215,22 @@ app.get('/users', authorize.authorize_admin, async (req, res) => {
   res.render('admin/users');
 });
 
+
+
+//order
+app.get('/order', authorize.authorize_user, async (req, res) => {
+  try {
+
+    const id=db_api.get_user_id(req.signedCookies.user);
+    const order = await db_api.get_order_details(id); // You should replace this with your actual method to fetch order details
+
+    res.render('order', { order, user_cookie: req.signedCookies.user,delivery_form: req.query.delivery});
+  } catch (error) {
+    console.error('Error fetching order details:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
+
 app.use(async (req,res,next)=>{
   res.render('404',{url:req.url,user_cookie: req.signedCookies.user});
 });
@@ -222,18 +238,4 @@ app.use(async (req,res,next)=>{
 http.createServer(app).listen(3000);
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
-});
-
-//order
-app.get('/order', authorize.authorize_user, async (req, res) => {
-  try {
-    // Fetch order details from your database or any other source
-    // For now, let's assume you have the order details stored in a variable named 'order'
-    const order = await db_api.getOrderDetails(req.signedCookies.user); // You should replace this with your actual method to fetch order details
-
-    res.render('order', { order, user_cookie: req.signedCookies.user });
-  } catch (error) {
-    console.error('Error fetching order details:', error);
-    res.status(500).render('error', { message: 'Internal Server Error' });
-  }
 });
