@@ -12,12 +12,25 @@
             </div>
         <% } %>
 
+        <div style="display:flex; gap: 1rem;">
         <% if(locals.searchContainer){ %>
-            <%- searchContainer %>
+            <div style="display:grid;place-content:center">
+                <%- searchContainer %>
+            </div>
         <% } %>
 
         <% if(locals.sortDropdown){ %>
-            <%- sortDropdown %>
+            <div class="sort-dropdown" style="display:grid;place-content: center; grid-template-columns: 1fr 1fr;">
+                <label for="sort">Sort by: </label>
+                <select id="sort" onchange="sortProducts()">
+                <option value="name">By name</option>
+                <option value="price">By price</option>
+                <option value="quantity">By quantity</option>
+                <option value="height">By height</option>
+                <option value="width">By width</option>
+                <option value="depth">By depth</option>
+                </select>
+            </div>
         <% } %>
 
         <% if (!user_cookie) { %>
@@ -27,18 +40,19 @@
                 </div>
             </a>
         <% } else { %>
-            <div style="display:flex; left: 81%;border: 1px solid #ccc; padding: 10px; border-radius: 5px; background-color: #9a758a; font-weight: bold;">
-                <%= user_cookie %>
-            </div>
-
-            <a href="/cart" style="display: flex">
-                <img src="../Koszyk.png" alt="Cart" height="60">
-            </a>
-
-            <a href="/logout">
-                <div class="login-button">
-                    Log out
+                <div style="border: 1px solid #ccc; border-radius: 5px; background-color: #9a758a; font-weight: bold;display: grid;place-content: center;padding:10px">
+                    <%= user_cookie %>
                 </div>
-            </a>
+
+                <a href="/cart">
+                    <img src="../Koszyk.png" alt="Cart" height="60">
+                </a>
+
+                <a href="/logout" style="display:grid;place-content: center;">
+                    <div class="login-button">
+                        Log out
+                    </div>
+                </a>
         <% } %>
+        </div>
     </div>
