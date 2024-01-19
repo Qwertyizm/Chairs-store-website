@@ -14,7 +14,10 @@ var pool = new pg.Pool({
 // show all users in database
 async function get_users() {
     try {
-        const {rows} = await pool.query('SELECT * FROM users', []);
+        const {rows} = await pool.query('SELECT users.*, logins.login\
+                                        FROM Users, Logins\
+                                        WHERE users.id = logins.user_id\
+                                        and logins.role = "user"', []);
         return rows;
     }
     catch (error) {

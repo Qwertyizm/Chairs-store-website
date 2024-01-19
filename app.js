@@ -218,9 +218,6 @@ app.get('/product/:id', async (req, res) => {
   }
 });
 
-app.get('/users', authorize.authorize_admin, async (req, res) => {
-  res.render('admin/users');
-});
 
 
 
@@ -307,17 +304,35 @@ app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
 }
 });
 
-app.get('/admin/delete/:id',authorize.authorize_admin, (req, res) => {
-  res.render('admin/modify', { user_cookie: req.cookies.user });
+app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
+  try{
+    var product_id = req.params.id;
+    await db_api.delete_product(product_id);
+    res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.render('error', { message: 'Error adding product' });
+  }
 });
 
-app.get('/admin/users',authorize.authorize_admin, (req, res) => {
-  var users = db_api.
-  res.render('admin/modify', { user_cookie: req.cookies.user });
+app.get('/users',authorize.authorize_admin, async (req, res) => {
+  try{
+    var users = await db_api.get_users();
+    res.render('admin/users', { user_cookie: req.signedCookies.user, users: users });
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.render('error', { message: 'Error adding product' });
+  }
 });
 
-app.get('/admin/orders',authorize.authorize_admin, (req, res) => {
-  res.render('admin/modify', { user_cookie: req.cookies.user });
+app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
+  try{
+    var orders = await db_api.get_orders();
+    res.render('admin/orders', { user_cookie: req.signedCookies.user, orders : orders });
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.render('error', { message: 'Error adding product' });
+  }
 });
 
 
