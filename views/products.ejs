@@ -12,39 +12,27 @@
 </head>
 
 <body>
-    <div class="navbar">
-        <div class="logo">
-            <a href="/">
-                <img src="https://i.imgur.com/wMlNUW0.png" alt="Logo">
-            </a>
-        </div>
-
-        <div class="navbar-title">
-            Products
-        </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Search...">
-            <button onclick="searchProducts()">Search</button>
-        </div>
-        <div class="sort-dropdown">
-            <label for="sort">Sort by: </label>
-            <select id="sort" onchange="sortProducts()">
-                <option value="name">By name</option>
-                <option value="price">By price</option>
-                <option value="quantity">By quantity</option>
-                <option value="height">By height</option>
-                <option value="width">By width</option>
-                <option value="depth">By depth</option>
-            </select>
-        </div>
+    <%- include('navbar', {
+        user_cookie: user_cookie,
+        title: "Product Details",
+        searchContainer: '<div class="search-container">' +
+            '<input type="text" id="searchInput" placeholder="Search...">' +
+            '<button onclick="searchProducts()">Search</button>' +
+            '</div>',
+        sortDropdown: '<div class="sort-dropdown" style="margin-right: 230px;">' +
+            '<label for="sort">Sort by: </label>' +
+            '<select id="sort" onchange="sortProducts()">' +
+            '<option value="name">By name</option>' +
+            '<option value="price">By price</option>' +
+            '<option value="quantity">By quantity</option>' +
+            '<option value="height">By height</option>' +
+            '<option value="width">By width</option>' +
+            '<option value="depth">By depth</option>' +
+            '</select>' +
+            '</div>'
+    }) %>
         
-
-        <a href="/login">
-            <div class="login-button">
-                Log in
-            </div>
-        </a>
-    </div>
+    
     <div class="filter-container">
         <h3>Filter</h3>
         <p>By Colour</p>

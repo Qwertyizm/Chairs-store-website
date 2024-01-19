@@ -11,6 +11,15 @@
                 <%= title %>
             </div>
         <% } %>
+
+        <% if(locals.searchContainer){ %>
+            <%- searchContainer %>
+        <% } %>
+
+        <% if(locals.sortDropdown){ %>
+            <%- sortDropdown %>
+        <% } %>
+
         <% if (!user_cookie) { %>
             <a href="/login">
                 <div class="login-button">

@@ -140,6 +140,19 @@ h2 {
     margin-left: 220px;
 }
 
+.product-container-2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Wyśrodkuj elementy w osi X */
+    padding: 20px;
+    box-sizing: border-box;
+    border: 3px solid #7c1966;
+    margin-top: 50px;
+    margin-left: 20px; /* Zmniejsz odstęp z lewej strony */
+    margin-right: 20px; /* Zmniejsz odstęp z prawej strony */
+    margin-bottom: 20px; /* Dodaj margines na dole dla estetyki */
+}
+
 .product-tile {
     border: 1px solid #ddd;
     padding: 10px;
@@ -180,4 +193,16 @@ h2 {
 
 .add-to-cart-button:hover {
     background-color: #45a049; /* Darker green on hover */
+}
+
+.delete-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #a185d5; /* Kolor tła przycisku */
+    color: #fff; /* Kolor tekstu przycisku */
+    border: 1px solid #5a0368; /* Grubość i kolor obramowania */
+    border-radius: 5px; /* Zaokrąglenie rogów */
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s; /* Animacja zmiany koloru */
 }

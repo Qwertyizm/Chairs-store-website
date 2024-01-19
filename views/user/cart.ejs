@@ -22,19 +22,18 @@
     <%- include('../navbar', { user_cookie: user_cookie }) %>
     <div class="content-container">
         <% products.forEach(product => { %>
-            <div class="nowa_klasa" data-name="<%= product.name %>">
+            <div class="product-container-2" data-name="<%= product.name %>">
                 <a href="/product/<%= product.id %>" style="display: block">
-                    <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto;">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto; margin-bottom: 10px;">
                     <h2><%= product.name %></h2>
                 </a>
 
                 <div class="quantity-options">
                     <input type='number' name='Quantity' id="quantityInput" required="true" value="<%= product.quantity %>" min="1" />
-                    <a href ="/cart/delete/<%= product.id %>"> delete </button>
+                    <a href ="/cart/delete/<%= product.id %>" class="delete-button"> delete </a>
                 </div>
             </div>
         <% }); %>
-
 
         <a href="/cart/save">
             <div class="submit-button">
@@ -65,8 +64,7 @@
 
     var quantityInput = document.getElementById('quantityInput');
 
-// Dodaj obsługę zdarzenia klawisza
-quantityInput.addEventListener('keyup', function(event) {
+    quantityInput.addEventListener('keyup', function(event) {
     // Sprawdź, czy naciśnięty klawisz to "Enter" (kod klawisza 13)
     if (event.key === 'Enter' || event.keyCode === 13) {
         // Pobierz wartość z pola input
