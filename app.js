@@ -242,15 +242,15 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     var type = req.query.delivery;
     var order_id = await db_api.new_order(id, date, type);
     var products = await db_api.show_cart(id);
+    var price = 0;
     await db_api.clear_cart(id);
     products.forEach(async (product) => {
       await db_api.add_to_ordered(order_id, product.id, product.quantity);
-      await db_api.edit_product(order_id, product.id, product.quantity);
-      await db_api.decrease_product_quantity(product.id, product.amount);
+      await db_api.decrease_product_quantity(product.id, product.quantity);
+      price += product.price;
     });
     var order_details = await db_api.get_order_details(order_id);
-    const order = await db_api.get_order_details(order_id); 
-    res.render('user/order', { order : order_details, products, user_cookie: req.signedCookies.user});
+    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
   } catch (err) {
     console.log(err);
   }
