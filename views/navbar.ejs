@@ -15,7 +15,10 @@
         <div style="display:flex; gap: 1rem;">
         <% if(locals.searchContainer){ %>
             <div style="display:grid;place-content:center">
-                <%- searchContainer %>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <button onclick="searchProducts()">Search</button>
+                </div>
             </div>
         <% } %>
 

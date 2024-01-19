@@ -27,25 +27,29 @@ app.get('/login', (req, res) => {
 app.post('/login', async (req, res) => {
   var username = req.body.txtUser;
   var pwd = req.body.txtPwd;
-  if (await db_api.correct_pwd(username, pwd)) {
-    res.cookie('user', username, { signed: true });
-    res.cookie('id', await db_api.get_user_id(username), { signed: true });
-    if (await db_api.is_admin(username)) {
-      res.cookie('role', 'admin', { signed: true });
+  try{
+    if (await db_api.correct_pwd(username, pwd)) {
+      res.cookie('user', username, { signed: true });
+      res.cookie('id', await db_api.get_user_id(username), { signed: true });
+      if (await db_api.is_admin(username)) {
+        res.cookie('role', 'admin', { signed: true });
+      }
+      else {
+        res.cookie('role', 'user', { signed: true });
+      }
+      var returnUrl = req.query.returnUrl;
+      if (returnUrl) {
+        res.redirect(returnUrl);
+      }
+      else {
+        res.redirect('/');
+      }
+    } else {
+      res.render('login', { message: "Zła nazwa logowania lub hasło" }
+      );
     }
-    else {
-      res.cookie('role', 'user', { signed: true });
-    }
-    var returnUrl = req.query.returnUrl;
-    if (returnUrl) {
-      res.redirect(returnUrl);
-    }
-    else {
-      res.redirect('/');
-    }
-  } else {
-    res.render('login', { message: "Zła nazwa logowania lub hasło" }
-    );
+  }catch(error){
+    res.render('error',{message: "Server "})
   }
 });
 

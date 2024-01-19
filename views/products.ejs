@@ -15,10 +15,7 @@
     <%- include('navbar', {
         user_cookie: user_cookie,
         title: "Product Details",
-        searchContainer: '<div class="search-container">' +
-            '<input type="text" id="searchInput" placeholder="Search...">' +
-            '<button onclick="searchProducts()">Search</button>' +
-            '</div>',
+        searchContainer: true,
         sortDropdown: true,
     }) %>
         
