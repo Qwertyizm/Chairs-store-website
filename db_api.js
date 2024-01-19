@@ -186,7 +186,7 @@ async function searchProducts(searchTerm) {
 
 //----LOGINS----------------------------
 // check password of given login
-async function correct_pwd(uesr,pwd){
+async function correct_pwd(user,pwd){
     try{
         const {rows} = await pool.query(`SELECT password FROM Logins where login = $1`,[user]);
         if(rows.length<=0){
