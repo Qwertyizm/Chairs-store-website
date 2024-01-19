@@ -43,7 +43,7 @@ body {
 }
 
 .navbar-title {
-    font-size: 1.5em;
+    font-size: 2em;
     margin: 0 auto;
 }
 
@@ -253,4 +253,8 @@ h2 {
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Cursor on hover */
     font-size: 16px; /* Font size */
+}
+
+p{
+    margin:8px;
 }

@@ -15,22 +15,26 @@
     <%- include('navbar', { user_cookie: user_cookie , title: "Product Details"}) %>
 
     <div class="content-container">
-        <h1><%= product.name %></h1>
-        <img src="<%= product.image %>" alt="<%= product.name %>">
-        <p>Price: <%= product.price %> zł</p>
-        <p>Quantity: <%= product.quantity %></p>
-        <p>Category: <%= product.category %></p>
-        <p>Colour: <%= product.colour %></p>
-        <p>Height: <%= product.height %></p>
-        <p>Width: <%= product.width %></p>
-        <p>Depth: <%= product.depth %></p>
-        <p>Style: <%= product.style %></p>
-        <p>Material: <%= product.material %></p>
+        <div style="display:flex;">
+            <img src="<%= product.image %>" alt="<%= product.name %>" style="max-height: 50%;max-width:50%;object-fit: contain;">
+            <div style="width:50vw;display:flex; place-content: center;flex-direction: column;justify-content: flex-start; gap:0px;">
+                <h1><%= product.name %></h1>
+                <p>Price: <%= product.price %> zł</p>
+                <p>Quantity: <%= product.quantity %></p>
+                <p>Category: <%= product.category %></p>
+                <p>Colour: <%= product.colour %></p>
+                <p>Height: <%= product.height %></p>
+                <p>Width: <%= product.width %></p>
+                <p>Depth: <%= product.depth %></p>
+                <p>Style: <%= product.style %></p>
+                <p>Material: <%= product.material %></p>
 
-        
-        <a href = "/cart/add/<%= product.id %>?returnUrl=<%= url %>" >
-        <button class="add-to-cart-button" action="post">Add to Cart</button>
-        </a>
+                
+                <a href = "/cart/add/<%= product.id %>?returnUrl=<%= url %>" >
+                    <button class="add-to-cart-button" action="post">Add to Cart</button>
+                </a>
+            </div>
+        </div>
     </div>
 </body>
 
