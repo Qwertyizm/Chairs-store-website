@@ -108,7 +108,6 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
     }
     var returnUrl = req.query.returnUrl;
     if(returnUrl){
-      console.log(returnUrl);
       res.redirect("" + returnUrl);
     }
     else{
@@ -137,6 +136,21 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
     var products = await db_api.show_cart(id);
     await db_api.new_order(id, date,)
     res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get('/cart/save',authorize.authorize_user, async (req, res) => {
+  try{
+    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    var products = await db_api.show_cart(user_id);
+    products.forEach(async (product) => {
+      var name = "quantity_" + product.id;
+      if (product.quantity != req.query[name]) {
+        await db_api.edit_cart(user_id, product.id, req.query[name]);
+  }});
+    res.redirect('/cart');
   } catch (err) {
     console.log(err);
   }

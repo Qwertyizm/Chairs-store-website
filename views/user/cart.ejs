@@ -21,6 +21,7 @@
 <body>
     <%- include('../navbar', { user_cookie: user_cookie }) %>
     <div class="content-container">
+        <form action="/cart/save" method="GET">
         <% products.forEach(product => { %>
             <div class="product-container-2" data-name="<%= product.name %>">
                 <a href="/product/<%= product.id %>" style="display: block">
@@ -29,51 +30,33 @@
                 </a>
 
                 <div class="quantity-options">
-                    <input type='number' name='Quantity' id="quantityInput" required="true" value="<%= product.quantity %>" min="1" />
+                    <input type='number' name='quantity_<%= product.id%>' id="quantity_<%= product.id%>" required="true" value="<%= product.quantity %>" min="1" />
                     <a href ="/cart/delete/<%= product.id %>" class="delete-button"> delete </a>
                 </div>
             </div>
         <% }); %>
 
-        <a href="/cart/save">
-            <div class="submit-button">
-                Save changes
-            </div>
-        </a>
+        
+        <input type="submit" class="submit-button" style="width: 100px" value="Save changes">
 
-        <div class="break"></div>
+        <br />
+        <br />
+
         <a href="cart/submit">
             <div class="submit-button">
                 Submit
             </div>
         </a>
 
-        <div class="break"></div>
+        <br />
 
         <a href="/cart/clear">
             <div class="submit-button">
                 Clear all
             </div>
         </a>
+        </form>
     </div>
 
 </body>
 </html>
-
-<script>
-
-    var quantityInput = document.getElementById('quantityInput');
-
-    quantityInput.addEventListener('keyup', function(event) {
-    // Sprawdź, czy naciśnięty klawisz to "Enter" (kod klawisza 13)
-    if (event.key === 'Enter' || event.keyCode === 13) {
-        // Pobierz wartość z pola input
-        var newQuantity = quantityInput.value;
-
-        // Wyświetl wartość w konsoli (możesz dostosować to do swoich potrzeb)
-        console.log('New Quantity:', newQuantity);
-
-        // Tutaj możesz dodać kod obsługi nowej wartości, np. wysłać ją na serwer
-    }
-});
-</script>
