@@ -62,6 +62,23 @@ th {
     margin-right: 30px;
 }
 
+#login {
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#login div {
+    margin-bottom: 15px;
+}
+
+#login input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
 .navbar-title {
     font-size: 2em;
     margin: 0 auto;

@@ -3,7 +3,6 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var db_api = require('./db_api');
 var authorize = require('./authorize');
-const { utimesSync } = require('fs');
 
 var app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -230,7 +229,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
     var products = await db_api.ordered_products(order_id);
     var price = 0;
     products.forEach(async (product) => {
-      price += product.price;
+      price += parseFloat(product.price);
     });
     var order_details = await db_api.get_order_details(order_id);
     res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
