@@ -30,9 +30,25 @@
                 <p>Material: <%= product.material %></p>
 
                 
-                <a href = "/cart/add/<%= product.id %>?returnUrl=<%= url %>" >
-                    <button class="button" action="post">Add to Cart</button>
-                </a>
+                <% if(user_role=="user"){ %>
+                    <div class="button-container">
+                        <a href="/cart/add/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                            <button class="button" action="post">Add to Cart</button>
+                        </a>
+                    </div>
+                <% } else { %>
+                    <div class="button-container">
+                        <a href="/modify/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                            <button class="button" action="post">Modify</button>
+                        </a>
+                    </div> 
+                    <br>
+                    <div class="button-container">
+                        <a href="/delete/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                            <button class="button" action="post">Delete</button>
+                        </a>
+                    </div>
+                <% } %>
             </div>
         </div>
     </div>
