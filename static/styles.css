@@ -60,23 +60,20 @@ body {
 }
 
 .submit-button {
+    box-sizing: border-box;
     background-color: rgba(95, 23, 60, 1);
-
     color: rgb(240, 240, 245);
     padding: 10px 180px;
+    text-align: center; /* Center-align text */
     text-decoration: none;
     font-family: 'Arial', sans-serif;
     font-size: 1em;
     cursor: pointer;
-    align-items: center;
-    max-width: 150px;
-    display: block;
+    max-width: 190px;
     margin: 0 auto;
+    white-space: nowrap;
 }
 
-.break {
-    height: 25px;
-}
 
 a {
     color: black;
