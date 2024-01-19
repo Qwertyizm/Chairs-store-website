@@ -145,7 +145,7 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
 
 app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{
-    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    var user_id = req.signedCookies.id;
     var products = await db_api.show_cart(user_id);
     products.forEach(async (product) => {
       var name = "quantity_" + product.id;
@@ -237,7 +237,7 @@ app.get('/users', authorize.authorize_admin, async (req, res) => {
 app.get('/order', authorize.authorize_user, async (req, res) => {
   try {
 
-    const id=db_api.get_user_id(req.signedCookies.user);
+    const id=req.signedCookies.id;
     const order = await db_api.get_order_details(id); // You should replace this with your actual method to fetch order details
 
     res.render('order', { order, user_cookie: req.signedCookies.user,delivery_form: req.query.delivery});
