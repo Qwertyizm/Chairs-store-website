@@ -169,19 +169,6 @@ app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
   }
 });
 
-// to do
-app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
-  try {
-    var id = req.signedCookies.id;
-    var date = Date(Date.now()).toISOString().slice(0, 10);
-    var type = "in_store"; // wybor uzytkownika w formularzu
-    await db_api.new_order(id, date, type);
-    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 app.get('/settings', authorize.authorize_user, async (req, res) => {
   res.render('user/settings');
 });
@@ -245,6 +232,27 @@ app.get('/order', authorize.authorize_user, async (req, res) => {
   } catch (error) {
     console.error('Error fetching order details:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
+  }
+});
+
+app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
+  try {
+    var id = req.signedCookies.id;
+    var date = new Date().toISOString().split('T')[0];
+    var type = req.query.delivery;
+    var order_id = await db_api.new_order(id, date, type);
+    var products = await db_api.show_cart(id);
+    await db_api.clear_cart(id);
+    products.forEach(async (product) => {
+      await db_api.add_to_ordered(order_id, product.id, product.quantity);
+      await db_api.edit_product(order_id, product.id, product.quantity);
+      await db_api.decrease_product_quantity(product.id, product.amount);
+    });
+    var order_details = await db_api.get_order_details(order_id);
+    const order = await db_api.get_order_details(order_id); 
+    res.render('user/order', { order : order_details, products, user_cookie: req.signedCookies.user});
+  } catch (err) {
+    console.log(err);
   }
 });
 

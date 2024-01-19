@@ -18,21 +18,21 @@
         <h2>Order Confirmation</h2>
         <p>Thank you for your order! Below are the details of your order:</p>
 
-        <% if (order && order.products && order.products.length > 0) { %>
+        <% if (products && products.length > 0) { %>
             <ul>
-                <% order.products.forEach(item => { %>
+                <% products.forEach(item => { %>
                     <li>
-                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: <%= item.product.price %> zł
+                        <%= item.name %> - Quantity: <%= item.quantity %> - Price: <%= item.price %> zł
                     </li>
                 <% }); %>
             </ul>
-            <p>Total Price: <%= order.totalPrice %> zł</p>
+            <p>Total Price: <%= totalPrice %> zł</p>
         <% } else { %>
             <p>No products found in the order.</p>
         <% } %>
 
-        <p>Delivery Method: <%= order.delivery_form || 'Not specified' %></p>
-        <p>Order Date: <%= order.orderDate || 'Not specified' %></p>
+        <p>Delivery Method: <%= order.order_type || 'Not specified' %></p>
+        <p>Order Date: <%= order.date || 'Not specified' %></p>
 
         <p>Thank you for shopping with us!</p>
     </div>
