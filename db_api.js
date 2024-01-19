@@ -368,9 +368,10 @@ async function delete_from_ordered(order_id) {
 
 async function ordered_products(order_id) {
     try{
-        await pool.query('SELECT * FROM Ordered where order_id = $1', 
+        var {rows} = await pool.query('SELECT * FROM Ordered, Products\
+                                         where order_id = $1 and ordered.product_id = products.id', 
             [order_id]);
-        return;
+        return rows;
     }
     catch  (error) {
         console.error('Error getting from ordered:', error);
