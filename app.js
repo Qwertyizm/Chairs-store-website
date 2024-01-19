@@ -49,7 +49,7 @@ app.post('/login', async (req, res) => {
       );
     }
   }catch(error){
-    res.render('error',{message: "Server "})
+    res.render('error',{message: "Server"})
   }
 });
 
