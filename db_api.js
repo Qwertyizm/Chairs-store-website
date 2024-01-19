@@ -140,9 +140,9 @@ async function edit_product(id,name,quantity,price,category,colour,height,width,
 async function decrease_product_quantity(id, delta){
     try{
         await pool.query('UPDATE products \
-                            SET amount = amount + $1, \
-                            WHERE products.id=$1',
-                        [id]);
+                            SET quantity = quantity - $2 \
+                            WHERE id=$1',
+                        [id, delta]);
     }
     catch (error){
         console.error("Error updating product's data:", error);
