@@ -12,9 +12,12 @@
 </head>
 
 <body>
-    <%- include('navbar', { user_cookie: user_cookie , title: "Product Details"}) %>
+    <%- include('navbar', { user_cookie: user_cookie , title: "Product Details", searchContainer: true}) %>
 
     <div class="content-container">
+        <div style="left: 0%;">
+            <a href="/products">&lt&lt&ltGo back</a>
+        </div>
         <div style="display:flex;">
             <img src="<%= product.image %>" alt="<%= product.name %>" style="max-height: 50%;max-width:50%;object-fit: contain;">
             <div style="width:50vw;display:flex; place-content: center;flex-direction: column;justify-content: flex-start; gap:0px;">

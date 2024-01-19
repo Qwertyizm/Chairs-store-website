@@ -84,7 +84,6 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
   try {
     var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
-    console.log(products);
     res.render('user/cart', { products: products, user_cookie: req.signedCookies.user });
   } catch (err) {
     console.log(err);
