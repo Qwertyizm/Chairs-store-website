@@ -104,7 +104,7 @@ async function get_product(id){
 async function new_product(name,quantity,price,category,colour,height,width,depth,style,material,image){
     try{
         await pool.query('INSERT INTO products \
-                            (name,quanitty,price,category,colour,height,width,depth,style,material,image) \
+                            (name,quantity,price,category,colour,height,width,depth,style,material,image) \
                             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
                         [name,quantity,price,category,colour,height,width,depth,style,material,image]);
     }

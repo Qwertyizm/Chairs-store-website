@@ -248,6 +248,38 @@ app.get('/order', authorize.authorize_user, async (req, res) => {
   }
 });
 
+app.get('/add_product',authorize.authorize_admin, (req, res) => {
+  res.render('admin/add_product', { user_cookie: req.cookies.user });
+});
+
+
+
+app.post('/add_product', authorize.authorize_admin, async (req, res) => {
+  // Sprawdź, czy użytkownik jest administratorem
+  
+    // Pobierz dane z formularza
+    var name = req.body.productName;
+    var quantity = req.body.quantity;
+    var price = req.body.price;
+    var category = req.body.category;
+    var colour = req.body.colour;
+    var height = req.body.height;
+    var width = req.body.width;
+    var depth = req.body.depth;
+    var style = req.body.style;
+    var material = req.body.material;
+    var image = req.body.image;
+
+    try {
+      // Dodaj nowy produkt do bazy danych
+      await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
+      res.redirect('/products'); // Przekieruj na stronę z produktami po dodaniu produktu
+    } catch (err) {
+      console.error('Error adding product:', err);
+      res.render('error', { message: 'Error adding product' });
+    }
+});
+
 app.use(async (req, res, next) => {
   res.render('404', { url: req.url, user_cookie: req.signedCookies.user });
 });
