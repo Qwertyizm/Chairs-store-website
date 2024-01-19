@@ -227,13 +227,17 @@ app.get('/users', authorize.authorize_admin, async (req, res) => {
 
 
 //order
-app.get('/order', authorize.authorize_user, async (req, res) => {
+app.get('/order/:id', authorize.authorize_user, async (req, res) => {
   try {
-
-    const id=req.signedCookies.id;
-    const order = await db_api.get_order_details(id); // You should replace this with your actual method to fetch order details
-
-    res.render('user/order', { order, user_cookie: req.signedCookies.user, delivery_form: req.query.delivery });
+    const user_id = req.signedCookies.id;
+    const order_id = req.params.id;
+    var products = await db_api.ordered_products(order_id);
+    var price = 0;
+    products.forEach(async (product) => {
+      price += product.price;
+    });
+    var order_details = await db_api.get_order_details(order_id);
+    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
   } catch (error) {
     console.error('Error fetching order details:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
@@ -247,15 +251,16 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     var type = req.query.delivery;
     var order_id = await db_api.new_order(id, date, type);
     var products = await db_api.show_cart(id);
-    var price = 0;
+    // var price = 0;
     await db_api.clear_cart(id);
     products.forEach(async (product) => {
       await db_api.add_to_ordered(order_id, product.id, product.quantity);
       await db_api.decrease_product_quantity(product.id, product.quantity);
-      price += product.price;
+      // price += product.price;
     });
-    var order_details = await db_api.get_order_details(order_id);
-    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
+    // var order_details = await db_api.get_order_details(order_id);
+    res.redirect('/order/' + order_id)
+    // res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
   } catch (err) {
     console.log(err);
   }
