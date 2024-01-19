@@ -311,7 +311,7 @@ async function delete_from_ordered(order_id) {
 //----CART-----------------------------
 async function show_cart(user_id){
     try{
-        const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image \
+        const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image, products.price \
                                         FROM cart, products\
                                         WHERE user_id=$1\
                                         and cart.product_id=products.id',
