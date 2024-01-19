@@ -297,6 +297,31 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
     }
 });
 
+app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
+  try {
+    var product_id = req.params.id;
+    var product = await db_api.get_product(product_id);
+    res.render('admin/modify', { user_cookie: req.cookies.user, product: product});
+  } catch (err) {
+  console.error('Error adding product:', err);
+  res.render('error', { message: 'Error adding product' });
+}
+});
+
+app.get('/admin/delete/:id',authorize.authorize_admin, (req, res) => {
+  res.render('admin/modify', { user_cookie: req.cookies.user });
+});
+
+app.get('/admin/users',authorize.authorize_admin, (req, res) => {
+  var users = db_api.
+  res.render('admin/modify', { user_cookie: req.cookies.user });
+});
+
+app.get('/admin/orders',authorize.authorize_admin, (req, res) => {
+  res.render('admin/modify', { user_cookie: req.cookies.user });
+});
+
+
 app.use(async (req, res, next) => {
   res.render('404', { url: req.url, user_cookie: req.signedCookies.user });
 });
