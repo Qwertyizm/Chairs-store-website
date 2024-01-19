@@ -8,96 +8,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="/styles.css"> <!-- Zaktualizowana ścieżka -->
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            text-align: center;
-        }
-
-        .form-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        #register {
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #register div {
-            margin-bottom: 15px;
-        }
-
-        #register input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        button {
-            background-color: rgba(95, 23, 60, 1);
-            color: rgba(191, 187, 220, 1);
-            border: none;
-            padding: 10px 20px;
-            text-decoration: none;
-            font-family: 'Arial', sans-serif;
-            font-size: 1em;
-            cursor: pointer;
-        }
-
-        .message {
-            color: red;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="../styles.css"> <!-- Zaktualizowana ścieżka -->
 </head>
 
 <body>
     <%- include('navbar', { user_cookie: user_cookie }) %>
-
-    <div class="form-container">
-        <form method="POST" id="register">
-            <div>
-                <label for="txtUser">Username:</label>
-                <input type="text" name="txtUser" id="txtUser" minlength="6" required>
-            </div>
-            <div>
-                <label for="txtPwd">Password:</label>
-                <input type="password" name="txtPwd" id="txtPwd" minlength="8" required>
-            </div>
-            <div>
-                <label for="txtAdr">Address:</label>
-                <input type="text" name="txtAdr" id="txtAdr" required>
-            </div>
-            <div>
-                <label for="txtEmail">Email:</label>
-                <input type="email" name="txtEmail" id="txtEmail" required>
-            </div>
-            <div>
-                <label for="txtName">Name:</label>
-                <input type="text" name="txtName" id="txtName" required pattern="[a-zA-Z0-9!@#$%^&*:;,.]*">
-            </div>
-            <div>
-                <label for="txtDOB">Date of Birth:</label>
-                <input type="date" name="txtDOB" id="txtDOB" required>
-            </div>
-            <div>
-                <button type="submit">Register</button>
-            </div>
-            <% if (locals.message) { %>
-                <div class='message'>
-                    <%= locals.message %>
+    <div class="content-container">
+        <div class="form-container">
+            <form method="POST" id="register">
+                <div>
+                    <label for="txtUser">Username:</label>
+                    <input type="text" name="txtUser" id="txtUser" minlength="6" required>
                 </div>
-            <% } %>
-        </form>
+                <div>
+                    <label for="txtPwd">Password:</label>
+                    <input type="password" name="txtPwd" id="txtPwd" minlength="8" required>
+                </div>
+                <div>
+                    <label for="txtAdr">Address:</label>
+                    <input type="text" name="txtAdr" id="txtAdr" required>
+                </div>
+                <div>
+                    <label for="txtEmail">Email:</label>
+                    <input type="email" name="txtEmail" id="txtEmail" required>
+                </div>
+                <div>
+                    <label for="txtName">Name:</label>
+                    <input type="text" name="txtName" id="txtName" required pattern="[a-zA-Z0-9!@#$%^&*:;,.]*">
+                </div>
+                <div>
+                    <label for="txtDOB">Date of Birth:</label>
+                    <input type="date" name="txtDOB" id="txtDOB" required>
+                </div>
+                <div>
+                    <button type="submit">Register</button>
+                </div>
+                <% if (locals.message) { %>
+                    <div class='message'>
+                        <%= locals.message %>
+                    </div>
+                <% } %>
+            </form>
+        </div>
     </div>
 </body>
 

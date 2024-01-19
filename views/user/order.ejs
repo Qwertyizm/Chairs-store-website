@@ -22,7 +22,10 @@
             <ul>
                 <% products.forEach(item => { %>
                     <li>
-                        <%= item.name %> - Quantity: <%= item.quantity %> - Price: <%= item.price %> zł
+                        <a href = "/product/<%= item.id%>" style = "text-decoration: underline;"> 
+                            <%= item.name %> 
+                        </a>
+                         <br> Quantity: <%= item.quantity %> <br> Price: <%= item.price %> zł <br> <br>
                     </li>
                 <% }); %>
             </ul>
