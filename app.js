@@ -70,6 +70,7 @@ app.post('/sign_up', async (req, res) => {
     await db_api.new_login(id, username, pwd);
   }
   catch (err) {
+    res.render('error',{message: "Unable to add new user"});
   }
   res.redirect('/login');
 });
