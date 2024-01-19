@@ -29,6 +29,7 @@ app.post('/login', async (req, res) => {
   var pwd = req.body.txtPwd;
   if (await db_api.correct_pwd(username, pwd)) {
     res.cookie('user', username, { signed: true });
+    res.cookie('id',await db_api.get_user_id(username),{signed: true});
     if (await db_api.is_admin(username)) {
       res.cookie('role', 'admin', { signed: true });
     }
@@ -77,7 +78,7 @@ app.post('/sign_up', async (req, res) => {
 
 app.get('/cart', authorize.authorize_user, async (req, res) => {
   try {
-    var id = await db_api.get_user_id(req.signedCookies.user);
+    var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
     res.render('user/cart', { products: products, user_cookie: req.signedCookies.user });
   } catch (err) {
@@ -87,7 +88,7 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
 
 app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
   try {
-    var id = await db_api.get_user_id(req.signedCookies.user);
+    var id = req.signedCookies.id;
     await db_api.clear_cart(id);
     res.redirect('/cart');
   }catch(err) {
@@ -98,7 +99,7 @@ app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
 app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
   try{
     var product_id = req.params.id;
-    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    var user_id = req.signedCookies.id;
     var quantity = await db_api.get_quantity_from_cart(user_id, product_id);
 
     if (quantity){
@@ -123,7 +124,7 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
 app.get('/cart/delete/:id',authorize.authorize_user, async (req, res) => {
   try{
     var product_id = req.params.id;
-    var user_id = await db_api.get_user_id(req.signedCookies.user);
+    var user_id = req.signedCookies.id;
     await db_api.delete_from_cart(user_id, product_id);
     res.redirect('/cart');
   }catch(err) {
@@ -133,7 +134,7 @@ app.get('/cart/delete/:id',authorize.authorize_user, async (req, res) => {
 
 app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
   try{
-    var id = await db_api.get_user_id(req.signedCookies.user);
+    var id = req.signedCookies.id;
     var date = Date(Date.now()).toISOString().slice(0, 10);
     var products = await db_api.show_cart(id);
     await db_api.new_order(id, date,)
@@ -145,7 +146,7 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
 
 app.get('/cart/submit',authorize.authorize_user, async (req, res) => {
   try{
-    var id = await db_api.get_user_id(req.signedCookies.user);
+    var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
     res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user });
   } catch (err) {
@@ -156,7 +157,7 @@ app.get('/cart/submit',authorize.authorize_user, async (req, res) => {
 // to do
 app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
   try {
-    var id = await db_api.get_user_id(req.signedCookies.user);
+    var id = req.signedCookies.id;
     var date = Date(Date.now()).toISOString().slice(0, 10);
     var type = "in_store"; // wybor uzytkownika w formularzu
     await db_api.new_order(id, date, type);
