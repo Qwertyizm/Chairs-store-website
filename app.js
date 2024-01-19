@@ -29,7 +29,7 @@ app.post('/login', async (req, res) => {
   var pwd = req.body.txtPwd;
   if (await db_api.correct_pwd(username, pwd)) {
     res.cookie('user', username, { signed: true });
-    res.cookie('id',await db_api.get_user_id(username),{signed: true});
+    res.cookie('id', await db_api.get_user_id(username), { signed: true });
     if (await db_api.is_admin(username)) {
       res.cookie('role', 'admin', { signed: true });
     }
@@ -71,7 +71,7 @@ app.post('/sign_up', async (req, res) => {
     await db_api.new_login(id, username, pwd);
   }
   catch (err) {
-    res.render('error',{message: "Unable to add new user"});
+    res.render('error', { message: "Unable to add new user" });
   }
   res.redirect('/login');
 });
@@ -86,53 +86,53 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.get('/cart/clear',authorize.authorize_user, async (req, res) => {
+app.get('/cart/clear', authorize.authorize_user, async (req, res) => {
   try {
     var id = req.signedCookies.id;
     await db_api.clear_cart(id);
     res.redirect('/cart');
-  }catch(err) {
+  } catch (err) {
     console.log(err);
   }
 });
 
 app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
-  try{
+  try {
     var product_id = req.params.id;
     var user_id = req.signedCookies.id;
     var quantity = await db_api.get_quantity_from_cart(user_id, product_id);
 
-    if (quantity){
+    if (quantity) {
       await db_api.edit_cart(user_id, product_id, quantity + 1);
     }
-    else{
+    else {
       await db_api.add_to_cart(user_id, product_id, 1);
     }
     var returnUrl = req.query.returnUrl;
-    if(returnUrl){
+    if (returnUrl) {
       res.redirect("" + returnUrl);
     }
-    else{
+    else {
       res.redirect('/');
     }
-  }catch(err) {
+  } catch (err) {
     console.log(err);
   }
 });
 
-app.get('/cart/delete/:id',authorize.authorize_user, async (req, res) => {
-  try{
+app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
+  try {
     var product_id = req.params.id;
     var user_id = req.signedCookies.id;
     await db_api.delete_from_cart(user_id, product_id);
     res.redirect('/cart');
-  }catch(err) {
+  } catch (err) {
     console.log(err);
   }
 });
 
-app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
-  try{
+app.post('/cart/submit', authorize.authorize_user, async (req, res) => {
+  try {
     var id = req.signedCookies.id;
     var date = Date(Date.now()).toISOString().slice(0, 10);
     var products = await db_api.show_cart(id);
@@ -143,23 +143,24 @@ app.post('/cart/submit',authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.get('/cart/save',authorize.authorize_user, async (req, res) => {
-  try{
+app.get('/cart/save', authorize.authorize_user, async (req, res) => {
+  try {
     var user_id = await db_api.get_user_id(req.signedCookies.user);
     var products = await db_api.show_cart(user_id);
     products.forEach(async (product) => {
       var name = "quantity_" + product.id;
       if (product.quantity != req.query[name]) {
         await db_api.edit_cart(user_id, product.id, req.query[name]);
-  }});
+      }
+    });
     res.redirect('/cart');
   } catch (err) {
     console.log(err);
   }
 });
 
-app.get('/cart/submit',authorize.authorize_user, async (req, res) => {
-  try{
+app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
+  try {
     var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
     res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user });
@@ -214,13 +215,13 @@ app.get('/search', async (req, res) => {
 
 app.get('/product/:id', async (req, res) => {
   try {
-    const username=req.signedCookies.user;
+    const username = req.signedCookies.user;
     const productId = req.params.id;
     const rows = await db_api.get_product(productId);
     if (rows.length === 0) {
       return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
     }
-    res.render('product', { product: rows[0], user_cookie: username, url : req.url });
+    res.render('product', { product: rows[0], user_cookie: username, url: req.url });
   } catch (error) {
     console.error('Error fetching product:', error);
     res.status(500).render('error', { message: 'Internal Server Error', user_cookie: username });
@@ -237,18 +238,18 @@ app.get('/users', authorize.authorize_admin, async (req, res) => {
 app.get('/order', authorize.authorize_user, async (req, res) => {
   try {
 
-    const id=db_api.get_user_id(req.signedCookies.user);
+    const id = req.signedCookies.id;
     const order = await db_api.get_order_details(id); // You should replace this with your actual method to fetch order details
 
-    res.render('order', { order, user_cookie: req.signedCookies.user,delivery_form: req.query.delivery});
+    res.render('user/order', { order, user_cookie: req.signedCookies.user, delivery_form: req.query.delivery });
   } catch (error) {
     console.error('Error fetching order details:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
   }
 });
 
-app.use(async (req,res,next)=>{
-  res.render('404',{url:req.url,user_cookie: req.signedCookies.user});
+app.use(async (req, res, next) => {
+  res.render('404', { url: req.url, user_cookie: req.signedCookies.user });
 });
 
 http.createServer(app).listen(3000);
