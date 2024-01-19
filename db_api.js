@@ -356,7 +356,7 @@ async function ordered_products(order_id) {
 //----CART-----------------------------
 async function show_cart(user_id){
     try{
-        const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image, products.price \
+        const {rows} = await pool.query('SELECT cart.quantity, products.id, products.name, products.image, products.price, products.quantity as max_nr  \
                                         FROM cart, products\
                                         WHERE user_id=$1\
                                         and cart.product_id=products.id',

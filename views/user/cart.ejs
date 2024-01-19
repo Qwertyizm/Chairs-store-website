@@ -31,7 +31,7 @@
                 </a>
 
                 <div class="quantity-options">
-                    <input type='number' name='quantity_<%= product.id%>' id="quantity_<%= product.id%>" required="true" value="<%= product.quantity %>" min="1" />
+                    <input type='number' name='quantity_<%= product.id%>' id="quantity_<%= product.id%>" required="true" value="<%= product.quantity %>" min="1" max="<%= product.max_nr %>"/>
                     <a href ="/cart/delete/<%= product.id %>" class="delete-button"> delete </a>
                 </div>
             </div>
