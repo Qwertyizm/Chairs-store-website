@@ -162,7 +162,7 @@ h2 {
 }
 
 .search-container {
-    margin-right: 20px; /* Dodaj margines dla estetyki */
+    
 }
 
 
@@ -182,7 +182,6 @@ h2 {
 
 .add-to-cart-button {
     background-color: rgba(95, 23, 60, 1);
-
     color: white; /* White text color */
     padding: 10px 20px; /* Padding around the text */
     border: none; /* No border */
@@ -205,4 +204,53 @@ h2 {
     border-radius: 5px; /* Zaokrąglenie rogów */
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s; /* Animacja zmiany koloru */
+}
+.courier-button {
+    background-color: rgba(95, 23, 60, 1);
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+.in-store-button {
+    background-color: rgba(95, 23, 60, 1);
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+.in-store-button.active {
+    background-color: rgba(191, 187, 220, 1);
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+.courier-button.active {
+    background-color: rgba(191, 187, 220, 1);
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+.confirm-order-button {
+    background-color: rgba(95, 23, 60, 1);
+    color: white; /* White text color */
+    padding: 10px 20px; /* Padding around the text */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 16px; /* Font size */
 }
