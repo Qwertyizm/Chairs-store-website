@@ -1,0 +1,41 @@
+<!-- views/order_confirmation.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+
+<body>
+    <%- include('../navbar', { user_cookie: user_cookie }) %>
+
+    <div class="content-container">
+        <h2>Order Confirmation</h2>
+        <p>Thank you for your order! Below are the details of your order:</p>
+
+        <% if (order && order.products && order.products.length > 0) { %>
+            <ul>
+                <% order.products.forEach(item => { %>
+                    <li>
+                        <%= item.product.name %> - Quantity: <%= item.quantity %> - Price: <%= item.product.price %> zł
+                    </li>
+                <% }); %>
+            </ul>
+            <p>Total Price: <%= order.totalPrice %> zł</p>
+        <% } else { %>
+            <p>No products found in the order.</p>
+        <% } %>
+
+        <p>Delivery Method: <%= order.deliveryMethod || 'Not specified' %></p>
+        <p>Order Date: <%= order.orderDate || 'Not specified' %></p>
+
+        <p>Thank you for shopping with us!</p>
+    </div>
+</body>
+
+</html>

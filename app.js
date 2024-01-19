@@ -101,7 +101,7 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
     var quantity = await db_api.get_quantity_from_cart(user_id, product_id);
 
     if (quantity){
-      await db_api.edit_cart(user_id, product_id, qantity + 1);
+      await db_api.edit_cart(user_id, product_id, quantity + 1);
     }
     else{
       await db_api.add_to_cart(user_id, product_id, 1);
@@ -221,4 +221,18 @@ app.use(async (req,res,next)=>{
 http.createServer(app).listen(3000);
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
+});
+
+//order
+app.get('/order', authorize.authorize_user, async (req, res) => {
+  try {
+    // Fetch order details from your database or any other source
+    // For now, let's assume you have the order details stored in a variable named 'order'
+    const order = await db_api.getOrderDetails(req.signedCookies.user); // You should replace this with your actual method to fetch order details
+
+    res.render('order', { order, user_cookie: req.signedCookies.user });
+  } catch (error) {
+    console.error('Error fetching order details:', error);
+    res.status(500).render('error', { message: 'Internal Server Error' });
+  }
 });

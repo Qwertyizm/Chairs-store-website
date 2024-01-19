@@ -326,11 +326,11 @@ async function show_cart(user_id){
 
 async function get_quantity_from_cart(user_id, product_id) {
     try{
-        const { rows } = await pool.query('SELECT qantity FROM Cart\
+        const { rows } = await pool.query('SELECT quantity FROM Cart\
                                             WHERE user_id = $1\
                                             and product_id = $2',
                                             [user_id, product_id]);
-        if (rows){
+        if (rows.length > 0){
             return rows[0].quantity;
         } 
         return 0;
@@ -378,9 +378,9 @@ async function clear_cart(user_id) {
 async function edit_cart(user_id, product_id, quantity) {
     try {
         var result = await pool.query('UPDATE Cart \
-                                        SET quantity = $1 \
-                                        WHERE users.id = $2 \
-                                        and product_id = $3',
+                                        SET quantity = $3 \
+                                        WHERE user_id = $1 \
+                                        and product_id = $2',
             [user_id, product_id, quantity]);
         return result;
     }
