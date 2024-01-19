@@ -108,7 +108,7 @@ async function get_product(id){
 async function new_product(name,quantity,price,category,colour,height,width,depth,style,material,image){
     try{
         await pool.query('INSERT INTO products \
-                            (name,quanitty,price,category,colour,height,width,depth,style,material,image) \
+                            (name,quantity,price,category,colour,height,width,depth,style,material,image) \
                             VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
                         [name,quantity,price,category,colour,height,width,depth,style,material,image]);
     }
@@ -134,6 +134,19 @@ async function edit_product(id,name,quantity,price,category,colour,height,width,
                             SET image=$11, \
                             WHERE products.id=$12',
                         [name,quantity,price,category,colour,height,width,depth,style,material,image,id]);
+    }
+    catch (error){
+        console.error("Error updating product's data:", error);
+        throw error;
+    }
+}
+
+async function decrease_product_quantity(id, delta){
+    try{
+        await pool.query('UPDATE products \
+                            SET quantity = quantity - $2 \
+                            WHERE id=$1',
+                        [id, delta]);
     }
     catch (error){
         console.error("Error updating product's data:", error);
@@ -293,6 +306,22 @@ async function delete_order(order_id) {
     }
 }
 
+async function get_order_details(order_id) {
+    try{
+        const { rows } = await pool.query('SELECT * FROM Orders\
+                                            WHERE id = $1',
+                                            [order_id]);
+        if (rows.length > 0){
+            return rows[0];
+        } 
+        return null;
+    }
+    catch  (error) {
+        console.error('Error getting order details:', error);
+        throw error;
+    }
+}
+
 //----ORDERED--------------------------
 //
 async function add_to_ordered(order_id, product_id, quantity) {
@@ -319,75 +348,20 @@ async function delete_from_ordered(order_id) {
     }
 }
 
-//-----------------------------
-async function place_order(user_id, delivery_method) {
-    try {
-        // Create a new order for the user
-        const currentDate = new Date().toISOString().split('T')[0]; // Get current date in 'YYYY-MM-DD' format
-        const orderResult = await new_order(user_id, currentDate, delivery_method);
-        const orderId = orderResult.rows[0].id;
-
-        // Get the items from the user's cart
-        const cartItems = await show_cart(user_id);
-
-        // Add each item from the cart to the ordered table
-        for (const item of cartItems) {
-            await add_to_ordered(orderId, item.id, item.quantity);
-
-            // Update the product quantity in the products table (subtract the ordered quantity)
-            const remainingQuantity = item.quantity;
-            await pool.query('UPDATE products SET quantity = quantity - $1 WHERE id = $2', [remainingQuantity, item.id]);
-        }
-
-        // Clear the user's cart after placing the order
-        await clear_cart(user_id);
-
-        return orderId;
-    } catch (error) {
-        console.error('Error placing order:', error);
+async function ordered_products(order_id) {
+    try{
+        await pool.query('SELECT * FROM Ordered where order_id = $1', 
+            [order_id]);
+        return;
+    }
+    catch  (error) {
+        console.error('Error getting from ordered:', error);
         throw error;
     }
 }
 
-async function get_order_details(userId) {
-    try {
-      // Fetch order details from your database
-      const orderQuery = {
-        text: 'SELECT * FROM orders WHERE user_id = $1',
-        values: [userId],
-      };
-  
-      const orderResult = await pool.query(orderQuery);
-  
-      if (orderResult.rows.length === 0) {
-        // No order found for the user
-        return null;
-      }
-  
-      const orderId = orderResult.rows[0].id;
-  
-      // Fetch ordered items for the order
-      const orderedItemsQuery = {
-        text: 'SELECT products.*, ordered.quantity FROM ordered JOIN products ON ordered.product_id = products.id WHERE ordered.order_id = $1',
-        values: [orderId],
-      };
-  
-      const orderedItemsResult = await pool.query(orderedItemsQuery);
-  
-      const orderDetails = {
-        orderId: orderId,
-        user_id: userId,
-        date: orderResult.rows[0].date,
-        order_type: orderResult.rows[0].order_type,
-        items: orderedItemsResult.rows,
-      };
-  
-      return orderDetails;
-    } catch (error) {
-      console.error('Error fetching order details:', error);
-      throw error;
-    }
-  }
+//-----------------------------
+
 
 //----CART-----------------------------
 async function show_cart(user_id){
@@ -481,6 +455,7 @@ module.exports = {
     new_product,
     edit_product,
     delete_product,
+    decrease_product_quantity,
     correct_pwd,
     is_admin,
     new_login,
@@ -491,7 +466,7 @@ module.exports = {
     delete_order,
     add_to_ordered,
     delete_from_ordered,
-    place_order,
+    ordered_products,
     get_order_details,
     get_quantity_from_cart,
     add_to_cart,

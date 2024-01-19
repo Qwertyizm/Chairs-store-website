@@ -173,19 +173,6 @@ app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
   }
 });
 
-// to do
-app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
-  try {
-    var id = req.signedCookies.id;
-    var date = Date(Date.now()).toISOString().slice(0, 10);
-    var type = "in_store"; // wybor uzytkownika w formularzu
-    await db_api.new_order(id, date, type);
-    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
-  } catch (err) {
-    console.log(err);
-  }
-});
-
 app.get('/settings', authorize.authorize_user, async (req, res) => {
   res.render('user/settings');
 });
@@ -250,6 +237,59 @@ app.get('/order', authorize.authorize_user, async (req, res) => {
     console.error('Error fetching order details:', error);
     res.status(500).render('error', { message: 'Internal Server Error' });
   }
+});
+
+app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
+  try {
+    var id = req.signedCookies.id;
+    var date = new Date().toISOString().split('T')[0];
+    var type = req.query.delivery;
+    var order_id = await db_api.new_order(id, date, type);
+    var products = await db_api.show_cart(id);
+    var price = 0;
+    await db_api.clear_cart(id);
+    products.forEach(async (product) => {
+      await db_api.add_to_ordered(order_id, product.id, product.quantity);
+      await db_api.decrease_product_quantity(product.id, product.quantity);
+      price += product.price;
+    });
+    var order_details = await db_api.get_order_details(order_id);
+    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get('/add_product',authorize.authorize_admin, (req, res) => {
+  res.render('admin/add_product', { user_cookie: req.cookies.user });
+});
+
+
+
+app.post('/add_product', authorize.authorize_admin, async (req, res) => {
+  // Sprawdź, czy użytkownik jest administratorem
+  
+    // Pobierz dane z formularza
+    var name = req.body.productName;
+    var quantity = req.body.quantity;
+    var price = req.body.price;
+    var category = req.body.category;
+    var colour = req.body.colour;
+    var height = req.body.height;
+    var width = req.body.width;
+    var depth = req.body.depth;
+    var style = req.body.style;
+    var material = req.body.material;
+    var image = req.body.image;
+
+    try {
+      // Dodaj nowy produkt do bazy danych
+      await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
+      res.redirect('/products'); // Przekieruj na stronę z produktami po dodaniu produktu
+    } catch (err) {
+      console.error('Error adding product:', err);
+      res.render('error', { message: 'Error adding product' });
+    }
 });
 
 app.use(async (req, res, next) => {

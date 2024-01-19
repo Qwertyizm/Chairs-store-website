@@ -82,7 +82,7 @@
                         });
 
                         // Redirect to the order view
-                        window.location.href = `/order?delivery=${selectedDeliveryMethod}`;
+                        window.location.href = `/order_confirm?delivery=${selectedDeliveryMethod}`;
                     } catch (error) {
                         console.error('Error placing order:', error);
                         alert('Error placing order. Please try again.');

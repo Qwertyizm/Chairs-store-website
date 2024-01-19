@@ -1,0 +1,76 @@
+<!-- views/add_product.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+
+<body>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "Add Product" }) %>
+    <br><br>
+    <br><br>
+    <br><br>
+    <div class="form-container">
+        <form method="POST" action="/add_product" enctype="multipart/form-data">
+            <div>
+                <label for="productName">Product Name:</label>
+                <input type="text" name="productName" id="productName" required>
+            </div>
+            <div>
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" required>
+            </div>
+            <div>
+                <label for="price">Price (zł):</label>
+                <input type="number" name="price" id="price" step="0.01" required>
+            </div>
+            <div>
+                <label for="category">Category:</label>
+                <input type="text" name="category" id="category">
+            </div>
+            <div>
+                <label for="colour">Colour:</label>
+                <input type="text" name="colour" id="colour">
+            </div>
+            <div>
+                <label for="height">Height (cm):</label>
+                <input type="number" name="height" id="height" step="0.01">
+            </div>
+            <div>
+                <label for="width">Width (cm):</label>
+                <input type="number" name="width" id="width" step="0.01">
+            </div>
+            <div>
+                <label for="depth">Depth (cm):</label>
+                <input type="number" name="depth" id="depth" step="0.01">
+            </div>
+            <div>
+                <label for="style">Style:</label>
+                <input type="text" name="style" id="style">
+            </div>
+            <div>
+                <label for="material">Material:</label>
+                <input type="text" name="material" id="material">
+            </div>
+            <div>
+                <label for="image">Image URL:</label>
+                <input type="text" name="image" id="image">
+            </div>
+            <div>
+                <label for="imageFile">Image File:</label>
+                <input type="file" name="imageFile" id="imageFile">
+            </div>
+            <div>
+                <button type="submit">Add Product</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
