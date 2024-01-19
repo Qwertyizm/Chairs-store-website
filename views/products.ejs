@@ -43,21 +43,27 @@
 
 
     <div class="content-container">
-
         <div class="product-container">
             <% products.forEach(product=> { %>
-                <a href="/product/<%= product.id %>" class="product-tile" data-name="<%= product.name %>"
-                    data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
-                    data-height="<%= product.height %>" data-width="<%= product.width %>"
-                    data-depth="<%= product.depth %>" data-color="<%= product.colour %>">
-                    <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 100%; height: auto;">
-                    <h2>
-                        <%= product.name %>
-                    </h2>
-                    <p>Price: <%= product.price %> zł</p>
-                    <p>Quantity: <%= product.quantity %></p>
-                </a>
-                <% }); %>
+                <div class="product-tile">
+                    <a href="/product/<%= product.id %>" class="product-link" data-name="<%= product.name %>"
+                        data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
+                        data-height="<%= product.height %>" data-width="<%= product.width %>"
+                        data-depth="<%= product.depth %>" data-color="<%= product.colour %>">
+                        <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                        <h2>
+                            <%= product.name %>
+                        </h2>
+                        <p>Price: <%= product.price %> zł</p>
+                        <p>Quantity: <%= product.quantity %></p>
+                    </a>
+                    <div class="cart-button-container">
+                        <a href="/cart/add/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                            <button class="add-to-cart-button" action="post">Add to Cart</button>
+                        </a>
+                    </div>
+                </div>
+            <% }); %>
         </div>
     </div>
 

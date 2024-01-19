@@ -22,6 +22,24 @@ async function get_users() {
         throw error;
     }
 }
+
+// get user id by his login
+async function get_user_id(login){
+    try{
+        var {rows} = await pool.query('SELECT user_id FROM Logins \
+                            WHERE login = $1',
+                            [login]);
+        if(rows.length<=0){
+            throw "User does not exist: " + login; 
+        }
+        return rows[0].user_id;
+    }
+    catch (error) {
+        console.error('Error removing use from database:', error);
+        throw error;
+    }
+}
+
 // create new user and return his id
 async function new_user(name, dob, mail, address, pwd) {
     try {
@@ -447,6 +465,7 @@ async function edit_cart(user_id, product_id, quantity) {
 
 module.exports = { 
     get_users,
+    get_user_id,
     new_user,
     edit_user,
     delete_user,
