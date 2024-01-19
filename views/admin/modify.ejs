@@ -1,5 +1,4 @@
-<!-- views/add_product.ejs -->
-
+<!-- views/admin/modify.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,65 +6,65 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Product</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <title>Modify Product</title>
+    <link rel="stylesheet" type="text/css" href="../../styles.css">
 </head>
 
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie, title: "Add Product" }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "Modify Product" }) %>
 
     <div class="form-container">
-        <form method="POST" action="/add_product" enctype="multipart/form-data">
+        <form method="POST" action="/modify_product/<%= product.id %>" enctype="multipart/form-data">
             <div>
                 <label for="productName">Product Name:</label>
-                <input type="text" name="productName" id="productName" required>
+                <input type="text" name="productName" id="productName" value="<%= product.name %>" required>
             </div>
             <div>
                 <label for="quantity">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" required>
+                <input type="number" name="quantity" id="quantity" value="<%= product.quantity %>" required>
             </div>
             <div>
                 <label for="price">Price (zł):</label>
-                <input type="number" name="price" id="price" step="0.01" required>
+                <input type="number" name="price" id="price" step="0.01" value="<%= product.price %>" required>
             </div>
             <div>
                 <label for="category">Category:</label>
-                <input type="text" name="category" id="category">
+                <input type="text" name="category" id="category" value="<%= product.category %>">
             </div>
             <div>
                 <label for="colour">Colour:</label>
-                <input type="text" name="colour" id="colour">
+                <input type="text" name="colour" id="colour" value="<%= product.colour %>">
             </div>
             <div>
                 <label for="height">Height (cm):</label>
-                <input type="number" name="height" id="height" step="0.01">
+                <input type="number" name="height" id="height" step="0.01" value="<%= product.height %>">
             </div>
             <div>
                 <label for="width">Width (cm):</label>
-                <input type="number" name="width" id="width" step="0.01">
+                <input type="number" name="width" id="width" step="0.01" value="<%= product.width %>">
             </div>
             <div>
                 <label for="depth">Depth (cm):</label>
-                <input type="number" name="depth" id="depth" step="0.01">
+                <input type="number" name="depth" id="depth" step="0.01" value="<%= product.depth %>">
             </div>
             <div>
                 <label for="style">Style:</label>
-                <input type="text" name="style" id="style">
+                <input type="text" name="style" id="style" value="<%= product.style %>">
             </div>
             <div>
                 <label for="material">Material:</label>
-                <input type="text" name="material" id="material">
+                <input type="text" name="material" id="material" value="<%= product.material %>">
             </div>
             <div>
                 <label for="image">Image URL:</label>
-                <input type="text" name="image" id="image">
+                <input type="text" name="image" id="image" value="<%= product.image %>">
             </div>
             <div>
                 <label for="imageFile">Image File:</label>
                 <input type="file" name="imageFile" id="imageFile">
             </div>
             <div>
-                <button type="submit">Add Product</button>
+                <button type="submit">Modify Product</button>
             </div>
         </form>
     </div>

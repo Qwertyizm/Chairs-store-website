@@ -41,13 +41,13 @@
                     </div>
                 <% } else { %>
                     <div class="button-container">
-                        <a href="/modify/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                        <a href="/admin/modify/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
                             <button class="button" action="post">Modify</button>
                         </a>
                     </div> 
                     <br>
                     <div class="button-container">
-                        <a href="/delete/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
+                        <a href="/admin/delete/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
                             <button class="button" action="post">Delete</button>
                         </a>
                     </div>
