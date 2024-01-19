@@ -19,13 +19,14 @@
 </head>
 
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "Your Cart" }) %>
     <div class="content-container">
         <% products.forEach(product => { %>
             <div class="product-container-2" data-name="<%= product.name %>">
                 <a href="/product/<%= product.id %>" style="display: block">
                     <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto; margin-bottom: 10px;">
-                    <h2><%= product.name %></h2>
+                    <h2> <%= product.name %>  <br> Price: <%= product.price %> zł</h2>
+                            
                 </a>
 
                 <div class="quantity-options">
@@ -34,6 +35,11 @@
                 </div>
             </div>
         <% }); %>
+        <p>Total Price: 
+            <span id="totalPrice">
+                <%= products.reduce((acc, product) => acc + (product.price * product.quantity), 0) %>
+            </span> zł</p>
+            <br>
 
         <a href="/cart/save">
             <div class="submit-button">
