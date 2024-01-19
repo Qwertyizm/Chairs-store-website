@@ -17,7 +17,7 @@ async function get_users() {
         const {rows} = await pool.query('SELECT users.*, logins.login\
                                         FROM Users, Logins\
                                         WHERE users.id = logins.user_id\
-                                        and logins.role = "user"', []);
+                                        and logins.role = $1', ["user"]);
         return rows;
     }
     catch (error) {

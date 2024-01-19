@@ -3,7 +3,6 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var db_api = require('./db_api');
 var authorize = require('./authorize');
-const { utimesSync } = require('fs');
 
 var app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -227,9 +226,6 @@ app.get('/product/:id', async (req, res) => {
   }
 });
 
-app.get('/users', authorize.authorize_admin, async (req, res) => {
-  res.render('admin/users');
-});
 
 
 
@@ -241,7 +237,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
     var products = await db_api.ordered_products(order_id);
     var price = 0;
     products.forEach(async (product) => {
-      price += product.price;
+      price += parseFloat(product.price);
     });
     var order_details = await db_api.get_order_details(order_id);
     res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
@@ -328,10 +324,10 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   }
 });
 
-app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
+app.get('/users',authorize.authorize_admin, async (req, res) => {
   try{
     var users = await db_api.get_users();
-    res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
+    res.render('admin/users', { user_cookie: req.signedCookies.user, users: users });
   } catch (err) {
     console.error('Error showing users:', err);
     res.render('error', { message: 'Error showing users' });
@@ -341,7 +337,7 @@ app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
 app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
   try{
     var orders = await db_api.get_orders();
-    res.render('admin/orders', { user_cookie: req.cookies.user, orders : orders });
+    res.render('admin/orders', { user_cookie: req.signedCookies.user, orders : orders });
   } catch (err) {
     console.error('Error showing orders:', err);
     res.render('error', { message: 'Error showing orders' });

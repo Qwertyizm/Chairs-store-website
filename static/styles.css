@@ -4,6 +4,27 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     text-align: center;
+    flex-direction: column;
+    display: flex;
+
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Add margin for spacing */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
 }
 
 .product-tile img {
@@ -39,6 +60,23 @@ body {
     font-size: 1em;
     cursor: pointer;
     margin-right: 30px;
+}
+
+#login {
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#login div {
+    margin-bottom: 15px;
+}
+
+#login input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .navbar-title {
