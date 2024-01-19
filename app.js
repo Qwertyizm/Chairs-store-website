@@ -45,11 +45,11 @@ app.post('/login', async (req, res) => {
         res.redirect('/');
       }
     } else {
-      res.render('login', { message: "Zła nazwa logowania lub hasło" }
-      );
+      res.render('login', { message: 'Incorrect username or password' });
     }
-  }catch(error){
-    res.render('error',{message: "Server"})
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.render('error', { message: 'An error occurred during login. Please try again.' });
   }
 });
 
@@ -75,6 +75,7 @@ app.post('/sign_up', async (req, res) => {
     await db_api.new_login(id, username, pwd);
   }
   catch (err) {
+    console.error('Error during sign up:', err);
     res.render('error', { message: "Unable to add new user" });
   }
   res.redirect('/login');
@@ -86,7 +87,8 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
     var products = await db_api.show_cart(id);
     res.render('user/cart', { products: products, user_cookie: req.signedCookies.user });
   } catch (err) {
-    console.log(err);
+    console.error('Error showing cart:', err);
+    res.render('error', { message: 'Unable to show cart' });
   }
 });
 
@@ -96,7 +98,8 @@ app.get('/cart/clear', authorize.authorize_user, async (req, res) => {
     await db_api.clear_cart(id);
     res.redirect('/cart');
   } catch (err) {
-    console.log(err);
+    console.error('Error clearing cart:', err);
+    res.render('error', { message: 'Unable to clear cart. Please try again.' });
   }
 });
 
@@ -120,7 +123,8 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
       res.redirect('/');
     }
   } catch (err) {
-    console.log(err);
+    console.error('Error adding to cart:', err);
+    res.render('error', { message: 'Unable to add to cart. Please try again.' });
   }
 });
 
@@ -131,7 +135,8 @@ app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
     await db_api.delete_from_cart(user_id, product_id);
     res.redirect('/cart');
   } catch (err) {
-    console.log(err);
+    console.error('Error deleting from cart:', err);
+    res.render('error', { message: 'Unable to delete from cart. Please try again.' });
   }
 });
 
@@ -143,7 +148,8 @@ app.post('/cart/submit', authorize.authorize_user, async (req, res) => {
     await db_api.new_order(id, date,)
     res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user });
   } catch (err) {
-    console.log(err);
+    console.error('Error submitting cart:', err);
+    res.render('error', { message: 'Unable to submit cart. Please try again.' });
   }
 });
 
@@ -159,7 +165,8 @@ app.get('/cart/save',authorize.authorize_user, async (req, res) => {
     });
     res.redirect('/cart');
   } catch (err) {
-    console.log(err);
+    console.error('Error saving cart:', err);
+    res.render('error', { message: 'Unable to save cart. Please try again.' });
   }
 });
 
@@ -169,7 +176,8 @@ app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
     var products = await db_api.show_cart(id);
     res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user });
   } catch (err) {
-    console.log(err);
+    console.error('Error rendering cart submission page:', err);
+    res.render('error', { message: 'Unable to render cart submission page. Please try again.' });
   }
 });
 
@@ -261,7 +269,8 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     res.redirect('/order/' + order_id)
     // res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
   } catch (err) {
-    console.log(err);
+    console.error('Error processing order:', err);
+    res.render('error', { message: 'Unable to process the order. Please try again.' });
   }
 });
 
@@ -303,8 +312,8 @@ app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
     var product = await db_api.get_product(product_id);
     res.render('admin/modify', { user_cookie: req.cookies.user, product: product});
   } catch (err) {
-  console.error('Error adding product:', err);
-  res.render('error', { message: 'Error adding product' });
+  console.error('Error modifying product:', err);
+  res.render('error', { message: 'Error modifying product' });
 }
 });
 
@@ -314,8 +323,8 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
     await db_api.delete_product(product_id);
     res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
   } catch (err) {
-    console.error('Error adding product:', err);
-    res.render('error', { message: 'Error adding product' });
+    console.error('Error deleting product:', err);
+    res.render('error', { message: 'Error deleting product' });
   }
 });
 
@@ -324,8 +333,8 @@ app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
     var users = await db_api.get_users();
     res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
   } catch (err) {
-    console.error('Error adding product:', err);
-    res.render('error', { message: 'Error adding product' });
+    console.error('Error showing users:', err);
+    res.render('error', { message: 'Error showing users' });
   }
 });
 
@@ -334,8 +343,8 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
     var orders = await db_api.get_orders();
     res.render('admin/orders', { user_cookie: req.cookies.user, orders : orders });
   } catch (err) {
-    console.error('Error adding product:', err);
-    res.render('error', { message: 'Error adding product' });
+    console.error('Error showing orders:', err);
+    res.render('error', { message: 'Error showing orders' });
   }
 });
 
