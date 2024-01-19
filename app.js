@@ -101,7 +101,7 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
     var quantity = await db_api.get_quantity_from_cart(user_id, product_id);
 
     if (quantity){
-      await db_api.edit_cart(user_id, product_id, qantity + 1);
+      await db_api.edit_cart(user_id, product_id, quantity + 1);
     }
     else{
       await db_api.add_to_cart(user_id, product_id, 1);

@@ -27,7 +27,9 @@
         <p>Style: <%= product.style %></p>
         <p>Material: <%= product.material %></p>
 
-        <button class="add-to-cart-button">Add to Cart</button>
+        <a href = "/cart/add/<%= product.id %>" >
+        <button class="add-to-cart-button" action="post">Add to Cart</button>
+        </a>
     </div>
 </body>
 
