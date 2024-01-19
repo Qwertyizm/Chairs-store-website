@@ -144,9 +144,9 @@ h2 {
     padding: 20px;
     border: 3px solid #7c1966;
     margin-top: 50px;
-    margin-left: 600px;
+    margin-left: 33vw;
     /* Zmniejsz odstęp z lewej strony */
-    margin-right: 600px;
+    margin-right: 33vw;
     /* Zmniejsz odstęp z prawej strony */
     margin-bottom: 20px;
     /* Dodaj margines na dole dla estetyki */
@@ -295,4 +295,8 @@ h2 {
     /* Cursor on hover */
     font-size: 16px;
     /* Font size */
+}
+
+p{
+    margin:8px;
 }
