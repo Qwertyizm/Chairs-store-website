@@ -304,5 +304,169 @@ VALUES (
     'https://pics.craiyon.com/2023-12-05/qfS4LiHkQe6MIUKnzky77Q.webp'
 );
 
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Elegant blue velvet armchair',
+    15,
+    249.99,
+    'living room',
+    'blue',
+    90.0,
+    70.0,
+    80.0,
+    'elegant',
+    'velvet',
+    'https://pics.craiyon.com/2023-11-01/64ea59733b9f4b17948a3379fb8986c3.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern grey leather sofa',
+    10,
+    399.99,
+    'living room',
+    'grey',
+    120.0,
+    90.0,
+    100.0,
+    'modern',
+    'leather',
+    'https://pics.craiyon.com/2023-11-24/f4oF5U2uRpaxzoKkHARwrQ.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Vintage green velvet dining chair',
+    8,
+    129.99,
+    'dining room',
+    'green',
+    85.0,
+    50.0,
+    60.0,
+    'vintage',
+    'velvet',
+    'https://pics.craiyon.com/2023-10-06/eda3c464dfdf4886a520331574b3818c.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Red leather recliner chair',
+    12,
+    299.99,
+    'living room',
+    'red',
+    100.0,
+    80.0,
+    90.0,
+    'modern',
+    'leather',
+    'https://pics.craiyon.com/2023-11-18/CJjUcd9zRKWjoiF4BUKvmQ.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Sleek black metal bar stool',
+    20,
+    79.99,
+    'kitchen',
+    'black',
+    75.0,
+    40.0,
+    40.0,
+    'sleek',
+    'metal',
+    'https://pics.craiyon.com/2023-11-04/2afb6cee2ae244a3a715c2fda7fa525f.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Yellow leather ottoman',
+    15,
+    149.99,
+    'living room',
+    'yellow',
+    50.0,
+    50.0,
+    50.0,
+    'modern',
+    'leather',
+    'https://pics.craiyon.com/2023-09-27/1d0d4f8e229b465880eb196e4390a9bc.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Pink velvet vanity chair',
+    18,
+    89.99,
+    'bedroom',
+    'pink',
+    80.0,
+    60.0,
+    70.0,
+    'elegant',
+    'velvet',
+    'https://pics.craiyon.com/2023-10-26/7a0922c320e34628b77b087bdffe46f3.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Turquoise fabric accent chair',
+    22,
+    119.99,
+    'living room',
+    'turquoise',
+    95.0,
+    70.0,
+    80.0,
+    'modern',
+    'fabric',
+    'https://pics.craiyon.com/2023-12-02/QndfTZA9TEGVJ0nRg9h7pg.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Wooden rocking chair in natural finish',
+    10,
+    179.99,
+    'living room',
+    'natural wood',
+    100.0,
+    80.0,
+    120.0,
+    'rustic',
+    'wood',
+    'https://pics.craiyon.com/2024-01-20/JouKiNLeSgqPHSez1QIQNg.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Teal plastic outdoor chair',
+    18,
+    69.99,
+    'outdoor',
+    'teal',
+    85.0,
+    60.0,
+    70.0,
+    'modern',
+    'plastic',
+    'https://pics.craiyon.com/2023-09-29/38b64dd910cd4443bba1624b950de08e.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Sunflower yellow fabric sofa',
+    12,
+    329.99,
+    'living room',
+    'yellow',
+    120.0,
+    90.0,
+    150.0,
+    'modern',
+    'fabric',
+    'https://pics.craiyon.com/2023-09-26/5d29b084a44c47ed9c96da8f71ffcce3.webp'
+);
 
 --psql -d lkea
