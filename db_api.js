@@ -64,9 +64,9 @@ async function edit_user(id,name,dob,mail,address){
     try{
         await pool.query('UPDATE users \
                             SET name=$1, \
-                            SET dob=$2, \
-                            SET email=$3, \
-                            SET address=$4 \
+                                dob=$2, \
+                                email=$3, \
+                                address=$4 \
                             WHERE users.id=$5',
                         [name,dob,mail,address,id]);
     }
@@ -143,16 +143,16 @@ async function edit_product(id,name,quantity,price,category,colour,height,width,
     try{
         await pool.query('UPDATE products \
                             SET name=$1, \
-                            SET quantity=$2, \
-                            SET price=$3, \
-                            SET category=$4, \
-                            SET colour=$5, \
-                            SET height=$6, \
-                            SET wodth=$7, \
-                            SET depth=$8, \
-                            SET style=$9, \
-                            SET material=$10, \
-                            SET image=$11, \
+                                quantity=$2, \
+                                price=$3, \
+                                category=$4, \
+                                colour=$5, \
+                                height=$6, \
+                                width=$7, \
+                                depth=$8, \
+                                style=$9, \
+                                material=$10, \
+                                image=$11 \
                             WHERE products.id=$12',
                         [name,quantity,price,category,colour,height,width,depth,style,material,image,id]);
     }
@@ -265,7 +265,7 @@ async function edit_login(id,usr,pwd){
     try{
         await pool.query('UPDATE logins \
                             SET login=$1, \
-                            SET password=$2, \
+                                password=$2 \
                             WHERE logins.id=$3',
                         [id,usr,pwd]);
     }

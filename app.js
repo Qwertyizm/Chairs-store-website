@@ -300,6 +300,28 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
     }
 });
 
+app.post('/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
+  var name = req.body.productName;
+    var quantity = req.body.quantity;
+    var price = req.body.price;
+    var category = req.body.category;
+    var colour = req.body.colour;
+    var height = req.body.height;
+    var width = req.body.width;
+    var depth = req.body.depth;
+    var style = req.body.style;
+    var material = req.body.material;
+    var image = req.body.image;
+
+    try {
+      await db_api.edit_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
+      res.redirect('/product/:id');
+    } catch (err) {
+      console.error('Error updating product:', err);
+      res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error adding product' });
+    }
+});
+
 app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
   try {
     var product_id = req.params.id;
