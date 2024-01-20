@@ -52,7 +52,7 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.get('/logout', authorize.authorize_user, (req, res) => {
+app.get('/logout', (req, res) => {
   res.cookie('user', '', { maxAge: -1 });
   res.cookie('role', '', { maxAge: -1 });
   res.cookie('id','',{maxAge: -1});
