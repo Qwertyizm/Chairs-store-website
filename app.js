@@ -156,12 +156,12 @@ app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{
     var user_id = req.signedCookies.id;
     var products = await db_api.show_cart(user_id);
-    products.forEach(async (product) => {
+    for (const product of products) {
       var name = "quantity_" + product.id;
       if (product.quantity != req.query[name]) {
         await db_api.edit_cart(user_id, product.id, req.query[name]);
       }
-    });
+    }
     res.redirect('/cart');
   } catch (err) {
     console.error('Error saving cart:', err);
@@ -226,9 +226,6 @@ app.get('/product/:id', async (req, res) => {
   }
 });
 
-
-
-
 //order
 app.get('/order/:id', authorize.authorize_user, async (req, res) => {
   try {
@@ -254,16 +251,12 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     var type = req.query.delivery;
     var order_id = await db_api.new_order(id, date, type);
     var products = await db_api.show_cart(id);
-    // var price = 0;
     await db_api.clear_cart(id);
-    products.forEach(async (product) => {
+    for (const product of products) {
       await db_api.add_to_ordered(order_id, product.id, product.quantity);
       await db_api.decrease_product_quantity(product.id, product.quantity);
-      // price += product.price;
-    });
-    // var order_details = await db_api.get_order_details(order_id);
+    }
     res.redirect('/order/' + order_id)
-    // res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
   } catch (err) {
     console.error('Error processing order:', err);
     res.render('error', { message: 'Unable to process the order. Please try again.' });
@@ -274,12 +267,7 @@ app.get('/add_product',authorize.authorize_admin, (req, res) => {
   res.render('admin/add_product', { user_cookie: req.cookies.user });
 });
 
-
-
 app.post('/add_product', authorize.authorize_admin, async (req, res) => {
-  // Sprawdź, czy użytkownik jest administratorem
-  
-    // Pobierz dane z formularza
     var name = req.body.productName;
     var quantity = req.body.quantity;
     var price = req.body.price;
@@ -293,9 +281,8 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
     var image = req.body.image;
 
     try {
-      // Dodaj nowy produkt do bazy danych
       await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
-      res.redirect('/products'); // Przekieruj na stronę z produktami po dodaniu produktu
+      res.redirect('/products');
     } catch (err) {
       console.error('Error adding product:', err);
       res.render('error', { message: 'Error adding product' });
@@ -336,7 +323,10 @@ app.get('/users',authorize.authorize_admin, async (req, res) => {
 
 app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
   try{
-    var orders = await db_api.get_orders();
+    var orders = await db_api.get_all_orders();
+    for (const order of orders) {
+      order.products = await db_api.ordered_products(order.id);
+    }
     res.render('admin/orders', { user_cookie: req.signedCookies.user, orders : orders });
   } catch (err) {
     console.error('Error showing orders:', err);
