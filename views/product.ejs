@@ -12,12 +12,9 @@
 </head>
 
 <body>
-    <%- include('navbar', { user_cookie: user_cookie, role:role , title: "Product Details", searchContainer: true}) %>
+    <%- include('navbar', { user_cookie: user_cookie, role: role, title: "Product Details", searchContainer: true }) %>
 
     <div class="content-container">
-        <div style="left: 0%;">
-            <a href="/products">&lt&lt&ltGo back</a>
-        </div>
         <div style="display:flex;">
             <img src="<%= product.image %>" alt="<%= product.name %>" style="max-height: 50%;max-width:50%;object-fit: contain;">
             <div style="width:50vw;display:flex; place-content: center;flex-direction: column;justify-content: flex-start; gap:0px;">
@@ -32,7 +29,6 @@
                 <p>Style: <%= product.style %></p>
                 <p>Material: <%= product.material %></p>
 
-                
                 <% if(role=="user"){ %>
                     <div class="button-container">
                         <a href="/cart/add/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
@@ -44,7 +40,7 @@
                         <a href="/admin/modify/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
                             <button class="button" action="post">Modify</button>
                         </a>
-                    </div> 
+                    </div>
                     <br>
                     <div class="button-container">
                         <a href="/admin/delete/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
@@ -52,6 +48,18 @@
                         </a>
                     </div>
                 <% } %>
+                <br>
+                <div class="button-container">
+                    <br>
+
+                    <button onclick="goBack()">Go back</button>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
+                </div>
+                
             </div>
         </div>
     </div>
