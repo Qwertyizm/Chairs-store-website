@@ -38,8 +38,10 @@
         <% }); %>
         <p>Total Price: 
             <span id="totalPrice">
-                <%= products.reduce((acc, product) => acc + (product.price * product.quantity), 0) %>
-            </span> zł</p>
+                <%= products.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2) %>
+            </span> zł
+        </p>
+        
             <br>
 
         
