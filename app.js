@@ -315,7 +315,7 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   try{
     var product_id = req.params.id;
     await db_api.delete_product(product_id);
-    res.render('admin/modify', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, users: users });
+    res.redirect('/products');
   } catch (err) {
     console.error('Error deleting product:', err);
     res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error deleting product' });
