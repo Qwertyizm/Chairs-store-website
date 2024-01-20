@@ -197,7 +197,7 @@ app.get('/products', async (req, res) => {
 });
 app.get('/search', async (req, res) => {
   try {
-    const searchTerm = req.query.search; // Assuming you are getting the search term from the query parameter
+    const searchTerm = req.query.search; 
     const searchResults = await db_api.searchProducts(searchTerm);
 
     res.render('search', { searchTerm, searchResults, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
@@ -259,14 +259,12 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
   }
 });
 
-// Dodaj poniższy kod do pliku app.js
 
 app.get('/user/orders', authorize.authorize_user, async (req, res) => {
   try {
     const userId = req.signedCookies.id;
     const orders = await db_api.get_orders(userId);
 
-    // Dla każdego zamówienia, pobierz szczegóły zamówienia oraz produkty zamówione w tym zamówieniu
     for (const order of orders) {
       order.details = await db_api.get_order_details(order.id);
       order.details.date = parse_date(order.details.date);
