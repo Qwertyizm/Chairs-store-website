@@ -38,6 +38,20 @@ CREATE TABLE products (
     image VARCHAR(255)
 );
 
+CREATE TABLE ordered_products (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    category VARCHAR(50),
+    colour VARCHAR(50),
+    height DECIMAL(6, 2),
+    width DECIMAL(6, 2),
+    depth DECIMAL(6, 2),
+    style VARCHAR(50),
+    material VARCHAR(50),
+    image VARCHAR(255)
+);
+
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
     user_id INTEGER REFERENCES users(id) NOT NULL,
@@ -59,8 +73,6 @@ CREATE TABLE cart (
     PRIMARY KEY (user_id, product_id)
 );
 
-
-
 -- Relacja między tabelą cart a tabelą users
 ALTER TABLE cart
 ADD CONSTRAINT fk_cart_user
@@ -79,8 +91,7 @@ FOREIGN KEY (order_id) REFERENCES orders(id);
 -- Relacja między tabelą ordered a tabelą products
 ALTER TABLE ordered
 ADD CONSTRAINT fk_ordered_product
-FOREIGN KEY (product_id) REFERENCES products(id);
-
+FOREIGN KEY (product_id) REFERENCES ordered_products(id);
 
 INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
 VALUES (

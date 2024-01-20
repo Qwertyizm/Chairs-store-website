@@ -140,18 +140,6 @@ app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.post('/cart/submit', authorize.authorize_user, async (req, res) => {
-  try {
-    var id = req.signedCookies.id;
-    var date = Date(Date.now()).toISOString().slice(0, 10);
-    var products = await db_api.show_cart(id);
-    await db_api.new_order(id, date,)
-    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
-  } catch (err) {
-    console.error('Error submitting cart:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to submit cart. Please try again.' });
-  }
-});
 
 app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{
@@ -264,6 +252,28 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
   }
 });
 
+// Dodaj poniższy kod do pliku app.js
+
+app.get('/user/orders', authorize.authorize_user, async (req, res) => {
+  try {
+    const userId = req.signedCookies.id;
+    const orders = await db_api.get_orders(userId);
+
+    // Dla każdego zamówienia, pobierz szczegóły zamówienia oraz produkty zamówione w tym zamówieniu
+    for (const order of orders) {
+      order.details = await db_api.get_order_details(order.id);
+      order.products = await db_api.ordered_products(order.id);
+      
+    }
+
+    res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
+  } catch (err) {
+    console.error('Error fetching user orders:', err);
+    res.render('error', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, message: 'Error fetching user orders' });
+  }
+});
+
+
 app.get('/add_product',authorize.authorize_admin, (req, res) => {
   res.render('admin/add_product', { user_cookie: req.signedCookies.user, role:req.signedCookies.role });
 });
@@ -305,7 +315,7 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   try{
     var product_id = req.params.id;
     await db_api.delete_product(product_id);
-    res.render('admin/modify', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, users: users });
+    res.redirect('/products');
   } catch (err) {
     console.error('Error deleting product:', err);
     res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error deleting product' });
