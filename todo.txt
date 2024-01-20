@@ -1,9 +1,8 @@
 adresy tajemnic
-posty do modify, add product i modify
+posty do modify, add product
 Stasiowi sie nie podoba sie order.ejs
-Delete stworzyc
 produkty i admin sie gryza
 nie moge sie wylogowac z admina
 zamowienia uzytkownika 
-
+user orders
 filtrowanie
