@@ -46,10 +46,11 @@
                 <div style="border: 1px solid #ccc; border-radius: 5px; background-color: #9a758a; font-weight: bold;display: grid;place-content: center;padding:10px">
                     <%= user_cookie %>
                 </div>
-
-                <a href="/cart">
-                    <img src="../Koszyk.png" alt="Cart" height="60">
-                </a>
+                <% if(role=="user") {%>
+                    <a href="/cart">
+                        <img src="../Koszyk.png" alt="Cart" height="60">
+                    </a>
+                <% } %>
 
                 <a href="/logout" style="display:grid;place-content: center;">
                     <div class="login-button">

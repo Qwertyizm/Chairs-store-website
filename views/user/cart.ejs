@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie, title: "Your Cart" }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, role:role, title: "Your Cart" }) %>
     <div class="content-container">
         <form action="/cart/save" method="GET">
         <% products.forEach(product => { %>

@@ -301,6 +301,18 @@ async function get_orders(user_id) {
     };
 }
 
+async function get_all_orders() {
+    try{
+        const { rows } = await pool.query('SELECT * FROM Orders', 
+                                           []);
+        return rows;
+    }
+    catch (error) {
+        console.error('Error showing orders:', error);
+        throw error;
+    };
+}
+
 // make new order and return it's id
 async function new_order(user_id, date, type) {
     try {
@@ -485,6 +497,7 @@ module.exports = {
     edit_login,
     delete_login,
     get_orders,
+    get_all_orders,
     new_order,
     delete_order,
     add_to_ordered,
