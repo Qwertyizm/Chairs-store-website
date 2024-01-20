@@ -218,7 +218,7 @@ app.get('/product/:id', async (req, res) => {
     const productId = req.params.id;
     const rows = await db_api.get_product(productId);
     if (!rows) {
-      return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
+      return res.status(404).render('404', { role:req.signedCookies.role,message: 'Product not found', user_cookie: username });
     }
     res.render('product', { product: rows, user_cookie: username, url: req.url, user_role:req.signedCookies.role  });
   } catch (error) {
