@@ -202,16 +202,15 @@ app.get('/search', async (req, res) => {
 
 app.get('/product/:id', async (req, res) => {
   try {
-    const username = req.signedCookies.user;
     const productId = req.params.id;
     const rows = await db_api.get_product(productId);
     if (!rows) {
-      return res.status(404).render('404', { role:req.signedCookies.role,message: 'Product not found', user_cookie: username });
+      return res.status(404).render('404', { role:req.signedCookies.role,message: 'Product not found', user_cookie: req.signedCookies.user });
     }
-    res.render('product', { product: rows, user_cookie: username, url: req.url, role:req.signedCookies.role  });
+    res.render('product', { product: rows, user_cookie: req.signedCookies.user, url: req.url, role:req.signedCookies.role  });
   } catch (error) {
     console.error('Error fetching product:', error);
-    res.status(500).render('error', { role:req.signedCookies.role,message: 'Internal Server Error', user_cookie: username });
+    res.status(500).render('error', { role:req.signedCookies.role,message: 'Internal Server Error', user_cookie: req.signedCookies.user });
   }
 });
 
@@ -301,24 +300,23 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
 });
 
 app.post('/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
-  var name = req.body.productName;
-    var quantity = req.body.quantity;
-    var price = req.body.price;
-    var category = req.body.category;
-    var colour = req.body.colour;
-    var height = req.body.height;
-    var width = req.body.width;
-    var depth = req.body.depth;
-    var style = req.body.style;
-    var material = req.body.material;
-    var image = req.body.image;
-
-    try {
-      await db_api.edit_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
-      res.redirect('/product/:id');
+  try {
+      var name = req.body.productName;
+      var quantity = parseFloat(req.body.quantity);
+      var price = parseFloat(req.body.price);
+      var category = req.body.category;
+      var colour = req.body.colour;
+      var height = parseFloat(req.body.height);
+      var width = parseFloat(req.body.width);
+      var depth = parseFloat(req.body.depth);
+      var style = req.body.style;
+      var material = req.body.material;
+      var image = req.body.image;
+      await db_api.edit_product(req.params.id,name, quantity, price, category, colour, height, width, depth, style, material, image);
+      res.redirect('/product/'+req.params.id);
     } catch (err) {
       console.error('Error updating product:', err);
-      res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error adding product' });
+      res.render('error', { user_cookie:req.signedCookies.user, message: 'Error adding product' });
     }
 });
 
