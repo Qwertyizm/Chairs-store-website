@@ -88,6 +88,7 @@ app.post('/sign_up', async (req, res) => {
   res.redirect('/login');
 });
 
+//----CART--------------------------- 
 app.get('/cart', authorize.authorize_user, async (req, res) => {
   try {
     var id = req.signedCookies.id;
@@ -147,7 +148,6 @@ app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
   }
 });
 
-
 app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{
     var user_id = req.signedCookies.id;
@@ -176,14 +176,7 @@ app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.get('/settings', authorize.authorize_user, async (req, res) => {
-  res.render('user/settings');
-});
-
-app.get('/orders', authorize.authorize_admin, async (req, res) => {
-  res.render('admin/orders');
-});
-
+//----PRODUCTS---------------------------
 app.get('/products', async (req, res) => {
   try {
     const products = await db_api.get_products();
@@ -195,6 +188,7 @@ app.get('/products', async (req, res) => {
     res.status(500).render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Internal Server Error' });
   }
 });
+
 app.get('/search', async (req, res) => {
   try {
     const searchTerm = req.query.search; 
@@ -221,7 +215,26 @@ app.get('/product/:id', async (req, res) => {
   }
 });
 
-//order
+//----ORDERS---------------------------
+app.get('/orders', authorize.authorize_user, async (req, res) => {
+  try {
+    const userId = req.signedCookies.id;
+    const orders = await db_api.get_orders(userId);
+
+    for (const order of orders) {
+      order.details = await db_api.get_order_details(order.id);
+      order.details.date = parse_date(order.details.date);
+      order.products = await db_api.ordered_products(order.id);
+    }
+
+    res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
+  } catch (err) {
+    console.error('Error fetching user orders:', err);
+    res.render('error', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, message: 'Error fetching user orders' });
+  }
+});
+
+//----ORDER---------------------------
 app.get('/order/:id', authorize.authorize_user, async (req, res) => {
   try {
     const user_id = req.signedCookies.id;
@@ -259,31 +272,12 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
   }
 });
 
-
-app.get('/user/orders', authorize.authorize_user, async (req, res) => {
-  try {
-    const userId = req.signedCookies.id;
-    const orders = await db_api.get_orders(userId);
-
-    for (const order of orders) {
-      order.details = await db_api.get_order_details(order.id);
-      order.details.date = parse_date(order.details.date);
-      order.products = await db_api.ordered_products(order.id);
-    }
-
-    res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
-  } catch (err) {
-    console.error('Error fetching user orders:', err);
-    res.render('error', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, message: 'Error fetching user orders' });
-  }
-});
-
-
-app.get('/add_product',authorize.authorize_admin, (req, res) => {
+//----ADMIN---------------------------
+app.get('/admin/add_product',authorize.authorize_admin, (req, res) => {
   res.render('admin/add_product', { user_cookie: req.signedCookies.user, role:req.signedCookies.role });
 });
 
-app.post('/add_product', authorize.authorize_admin, async (req, res) => {
+app.post('/admin/add_product', authorize.authorize_admin, async (req, res) => {
   var name = req.body.productName;
   var quantity = req.body.quantity;
   var price = req.body.price;
@@ -305,7 +299,7 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
     }
 });
 
-app.post('/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
+app.post('/admin/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
   try {
       var name = req.body.productName;
       var quantity = parseFloat(req.body.quantity);
@@ -348,7 +342,7 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   }
 });
 
-app.get('/users',authorize.authorize_admin, async (req, res) => {
+app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
   try{
     var users = await db_api.get_users();
     for (var user of users) {
@@ -365,7 +359,7 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
   try{
     var orders = await db_api.get_all_orders();
     for (const order of orders) {
-      order_details.date = parse_date(order_details.date);  
+      order.date = parse_date(order.date);  
       order.products = await db_api.ordered_products(order.id);
     }
     res.render('admin/orders', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, orders : orders });

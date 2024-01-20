@@ -13,7 +13,7 @@
     <%- include('../navbar', { user_cookie: user_cookie, role:role, title: "Add Product" }) %>
 
     <div class="form-container">
-        <form method="POST" action="/add_product">
+        <form method="POST" action="admin/add_product">
             <div>
                 <label for="productName">Product Name:</label>
                 <input type="text" name="productName" id="productName" required>
