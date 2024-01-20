@@ -1,5 +1,4 @@
 adresy tajemnic
-dodac pasek dla admina (usunac przycisk koszyka, dodac przycisk do add_products, user listy, user zamowien)
 dodac widok listy zamowien
 posty do modify, add product i modify
 Stasiowi sie nie podoba sie order.ejs
@@ -7,3 +6,4 @@ Delete stworzyc
 produkty i admin sie gryza
 nie moge sie wylogowac z admina
 zamowienia uzytkownika 
+zamawiamy tylko z niepustych koszykow !

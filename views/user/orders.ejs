@@ -1,0 +1,43 @@
+<!-- views/user/orders.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Orders</title>
+    <link rel="stylesheet" type="text/css" href="../styles.css">
+</head>
+
+<body>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "Your Orders" }) %>
+
+    <div class="content-container">
+        <% if (orders.length === 0) { %>
+            <p>You haven't placed any orders yet.</p>
+        <% } else { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Delivery Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.id %></td>
+                            <td><%= order.date %></td>
+                            <td><%= order.order_type %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
+    </div>
+</body>
+
+</html>
