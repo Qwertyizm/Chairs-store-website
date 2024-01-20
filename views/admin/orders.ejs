@@ -1,4 +1,4 @@
-<!-- views/admin/users.ejs -->
+<!-- views/admin/orders.ejs -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,35 +7,53 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users List</title>
+    <title>All Orders</title>
     <link rel="stylesheet" type="text/css" href="../../styles.css">
 </head>
 
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie, title: "Users List" }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, title: "All Orders" }) %>
 
     <div class="content-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Date of Birth</th>
-                    <th>Email</th>
-                    <th>Address</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% orders.forEach(user) => { %>
+        <% if (orders.length === 0) { %>
+            <p>No orders have been placed yet.</p>
+        <% } else { %>
+            <table>
+                <thead>
                     <tr>
-                        <td>
-                            <%= user.products %>
-                        </td>
-                       
+                        <th>Order ID</th>
+                        <th>User ID</th>
+                        <th>Date</th>
+                        <th>Delivery Method</th>
+                        <th>Ordered Products</th>
                     </tr>
-                <% }); %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><%= order.id %></td>
+                            <td><%= order.user_id %></td>
+                            <td><%= order.date %></td>
+                            <td><%= order.order_type %></td>
+                            <td class="product-tile-row">
+                                <% if (order.products.length > 0) { %>
+                                    <% order.products.forEach(product => { %>
+                                        <div class="product-tile" data-name="<%= product.name %>">
+                                            <a href="/product/<%= product.id %>" style="display: block">
+                                                <img src="<%= product.image %>" alt="<%= product.name %>" style="max-width: 25%; height: auto; margin-bottom: 10px;">
+                                                <h2><%= product.name %> - Quantity: <%= product.quantity %></h2>
+                                            </a>
+                                        </div>
+                                    <% }); %>
+                                <% } else { %>
+                                    No products ordered.
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } %>
     </div>
 </body>
 

@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <%- include('navbar', { user_cookie: user_cookie, title: "Error 404" }) %>
+    <%- include('navbar', { user_cookie: user_cookie, role:role, title: "Error 404" }) %>
     <div class="content-container">
         <% if(locals.url){ %>
             Strona <%= locals.url %> nie została znaleziona.

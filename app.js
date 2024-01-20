@@ -16,7 +16,7 @@ app.set('views', './views');
 
 
 app.get('/', async (req, res) => {
-  res.render('index', { user_cookie: req.signedCookies.user });
+  res.render('index', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
 });
 
 app.get('/login', (req, res) => {
@@ -44,22 +44,23 @@ app.post('/login', async (req, res) => {
         res.redirect('/');
       }
     } else {
-      res.render('login', { message: 'Incorrect username or password' });
+      res.render('login', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Incorrect username or password' });
     }
   } catch (error) {
     console.error('Error during login:', error);
-    res.render('error', { message: 'An error occurred during login. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'An error occurred during login. Please try again.' });
   }
 });
 
 app.get('/logout', authorize.authorize_user, (req, res) => {
   res.cookie('user', '', { maxAge: -1 });
   res.cookie('role', '', { maxAge: -1 });
+  res.cookie('id','',{maxAge: -1});
   res.redirect('/')
 });
 
 app.get('/sign_up', async (req, res) => {
-  res.render('sign_up', { user_cookie: req.signedCookies.user });
+  res.render('sign_up', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
 });
 
 app.post('/sign_up', async (req, res) => {
@@ -75,7 +76,7 @@ app.post('/sign_up', async (req, res) => {
   }
   catch (err) {
     console.error('Error during sign up:', err);
-    res.render('error', { message: "Unable to add new user" });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: "Unable to add new user" });
   }
   res.redirect('/login');
 });
@@ -84,10 +85,10 @@ app.get('/cart', authorize.authorize_user, async (req, res) => {
   try {
     var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
-    res.render('user/cart', { products: products, user_cookie: req.signedCookies.user });
+    res.render('user/cart', { products: products, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
   } catch (err) {
     console.error('Error showing cart:', err);
-    res.render('error', { message: 'Unable to show cart' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to show cart' });
   }
 });
 
@@ -98,7 +99,7 @@ app.get('/cart/clear', authorize.authorize_user, async (req, res) => {
     res.redirect('/cart');
   } catch (err) {
     console.error('Error clearing cart:', err);
-    res.render('error', { message: 'Unable to clear cart. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to clear cart. Please try again.' });
   }
 });
 
@@ -123,7 +124,7 @@ app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
     }
   } catch (err) {
     console.error('Error adding to cart:', err);
-    res.render('error', { message: 'Unable to add to cart. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to add to cart. Please try again.' });
   }
 });
 
@@ -135,9 +136,10 @@ app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
     res.redirect('/cart');
   } catch (err) {
     console.error('Error deleting from cart:', err);
-    res.render('error', { message: 'Unable to delete from cart. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to delete from cart. Please try again.' });
   }
 });
+
 
 app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{
@@ -152,7 +154,7 @@ app.get('/cart/save',authorize.authorize_user, async (req, res) => {
     res.redirect('/cart');
   } catch (err) {
     console.error('Error saving cart:', err);
-    res.render('error', { message: 'Unable to save cart. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to save cart. Please try again.' });
   }
 });
 
@@ -160,10 +162,10 @@ app.get('/cart/submit', authorize.authorize_user, async (req, res) => {
   try {
     var id = req.signedCookies.id;
     var products = await db_api.show_cart(id);
-    res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user });
+    res.render('user/cart_submit', { cart: products, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
   } catch (err) {
     console.error('Error rendering cart submission page:', err);
-    res.render('error', { message: 'Unable to render cart submission page. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to render cart submission page. Please try again.' });
   }
 });
 
@@ -180,10 +182,10 @@ app.get('/products', async (req, res) => {
     const products = await db_api.get_products();
     const colors = await db_api.get_colors();
 
-    res.render('products', { products, colors, user_cookie: req.signedCookies.user, url: req.url, user_role:req.signedCookies.role });
+    res.render('products', { products, colors, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, url: req.url, role:req.signedCookies.role });
   } catch (error) {
     console.error('Error fetching products or colors:', error);
-    res.status(500).render('error', { message: 'Internal Server Error' });
+    res.status(500).render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Internal Server Error' });
   }
 });
 app.get('/search', async (req, res) => {
@@ -191,10 +193,10 @@ app.get('/search', async (req, res) => {
     const searchTerm = req.query.search; // Assuming you are getting the search term from the query parameter
     const searchResults = await db_api.searchProducts(searchTerm);
 
-    res.render('search', { searchTerm, searchResults, user_cookie: req.signedCookies.user });
+    res.render('search', { searchTerm, searchResults, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
   } catch (error) {
     console.error('Error fetching search results:', error);
-    res.status(500).render('error', { message: 'Internal Server Error' });
+    res.status(500).render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Internal Server Error' });
   }
 });
 
@@ -203,13 +205,13 @@ app.get('/product/:id', async (req, res) => {
     const username = req.signedCookies.user;
     const productId = req.params.id;
     const rows = await db_api.get_product(productId);
-    if (rows.length === 0) {
-      return res.status(404).render('404', { message: 'Product not found', user_cookie: username });
+    if (!rows) {
+      return res.status(404).render('404', { role:req.signedCookies.role,message: 'Product not found', user_cookie: username });
     }
-    res.render('product', { product: rows[0], user_cookie: username, url: req.url, user_role:req.signedCookies.role  });
+    res.render('product', { product: rows, user_cookie: username, url: req.url, role:req.signedCookies.role  });
   } catch (error) {
     console.error('Error fetching product:', error);
-    res.status(500).render('error', { message: 'Internal Server Error', user_cookie: username });
+    res.status(500).render('error', { role:req.signedCookies.role,message: 'Internal Server Error', user_cookie: username });
   }
 });
 
@@ -224,10 +226,10 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
       price += parseFloat(product.price);
     });
     var order_details = await db_api.get_order_details(order_id);
-    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user});
+    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role});
   } catch (error) {
     console.error('Error fetching order details:', error);
-    res.status(500).render('error', { message: 'Internal Server Error' });
+    res.status(500).render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Internal Server Error' });
   }
 });
 
@@ -246,12 +248,12 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     res.redirect('/order/' + order_id)
   } catch (err) {
     console.error('Error processing order:', err);
-    res.render('error', { message: 'Unable to process the order. Please try again.' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to process the order. Please try again.' });
   }
 });
 
 app.get('/add_product',authorize.authorize_admin, (req, res) => {
-  res.render('admin/add_product', { user_cookie: req.cookies.user });
+  res.render('admin/add_product', { user_cookie: req.signedCookies.user, role:req.signedCookies.role });
 });
 
 app.post('/add_product', authorize.authorize_admin, async (req, res) => {
@@ -272,7 +274,7 @@ app.post('/add_product', authorize.authorize_admin, async (req, res) => {
       res.redirect('/products');
     } catch (err) {
       console.error('Error adding product:', err);
-      res.render('error', { message: 'Error adding product' });
+      res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error adding product' });
     }
 });
 
@@ -280,10 +282,10 @@ app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
   try {
     var product_id = req.params.id;
     var product = await db_api.get_product(product_id);
-    res.render('admin/modify', { user_cookie: req.cookies.user, product: product});
+    res.render('admin/modify', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, product: product});
   } catch (err) {
   console.error('Error modifying product:', err);
-  res.render('error', { message: 'Error modifying product' });
+  res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error modifying product' });
 }
 });
 
@@ -291,20 +293,20 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   try{
     var product_id = req.params.id;
     await db_api.delete_product(product_id);
-    res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
+    res.render('admin/modify', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, users: users });
   } catch (err) {
     console.error('Error deleting product:', err);
-    res.render('error', { message: 'Error deleting product' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error deleting product' });
   }
 });
 
 app.get('/users',authorize.authorize_admin, async (req, res) => {
   try{
     var users = await db_api.get_users();
-    res.render('admin/users', { user_cookie: req.signedCookies.user, users: users });
+    res.render('admin/users', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, users: users });
   } catch (err) {
     console.error('Error showing users:', err);
-    res.render('error', { message: 'Error showing users' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error showing users' });
   }
 });
 
@@ -314,16 +316,16 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
     for (const order of orders) {
       order.products = await db_api.ordered_products(order.id);
     }
-    res.render('admin/orders', { user_cookie: req.signedCookies.user, orders : orders });
+    res.render('admin/orders', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, orders : orders });
   } catch (err) {
     console.error('Error showing orders:', err);
-    res.render('error', { message: 'Error showing orders' });
+    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error showing orders' });
   }
 });
 
 
 app.use(async (req, res, next) => {
-  res.render('404', { url: req.url, user_cookie: req.signedCookies.user });
+  res.render('404', { url: req.url, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
 });
 
 http.createServer(app).listen(3000);

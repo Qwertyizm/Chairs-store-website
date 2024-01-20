@@ -47,9 +47,32 @@
                     <%= user_cookie %>
                 </div>
 
-                <a href="/cart">
-                    <img src="../Koszyk.png" alt="Cart" height="60">
-                </a>
+                <% if(role=="user") {%>
+                    <a href="/user/orders" style="display:grid;place-content: center;">
+                        <div class="button">
+                            Orders
+                        </div>
+                    </a>
+                    <a href="/cart">
+                        <img src="../Koszyk.png" alt="Cart" height="60">
+                    </a>
+                <% } else { %>
+                    <a href="/add_product" style="display:grid;place-content: center;">
+                        <div class="button">
+                            Add product
+                        </div>
+                    </a>
+                    <a href="/admin/orders" style="display:grid;place-content: center;">
+                        <div class="button">
+                            Orders
+                        </div>
+                    </a>
+                    <a href="/users" style="display:grid;place-content: center;">
+                        <div class="button">
+                            Users
+                        </div>
+                    </a>
+                <% } %>
 
                 <a href="/logout" style="display:grid;place-content: center;">
                     <div class="login-button">
