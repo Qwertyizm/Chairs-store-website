@@ -220,7 +220,7 @@ app.get('/product/:id', async (req, res) => {
     if (!rows) {
       return res.status(404).render('404', { role:req.signedCookies.role,message: 'Product not found', user_cookie: username });
     }
-    res.render('product', { product: rows, user_cookie: username, url: req.url, user_role:req.signedCookies.role  });
+    res.render('product', { product: rows, user_cookie: username, url: req.url, role:req.signedCookies.role  });
   } catch (error) {
     console.error('Error fetching product:', error);
     res.status(500).render('error', { role:req.signedCookies.role,message: 'Internal Server Error', user_cookie: username });
