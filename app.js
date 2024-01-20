@@ -141,7 +141,7 @@ app.get('/cart/clear', authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.post('/cart/add/:id', authorize.authorize_user, async (req, res) => {
+app.get('/cart/add/:id', authorize.authorize_user, async (req, res) => {
   try {
     var product_id = req.params.id;
     var user_id = req.signedCookies.id;
