@@ -468,5 +468,475 @@ VALUES (
     'fabric',
     'https://pics.craiyon.com/2023-09-26/5d29b084a44c47ed9c96da8f71ffcce3.webp'
 );
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract patterned throw pillow set',
+    25,
+    39.99,
+    'living room',
+    'multi-color',
+    20.0,
+    20.0,
+    5.0,
+    'modern',
+    'fabric',
+    'https://pics.craiyon.com/2023-12-04/aR-NR0xmT5CrWMjmJhB0OA.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Vintage floral patterned rug',
+    15,
+    129.99,
+    'living room',
+    'multi-color',
+    160.0,
+    230.0,
+    1.0,
+    'vintage',
+    'fabric',
+    'https://pics.craiyon.com/2023-09-21/72f5ba9052e7419fa2632d85bdc46bbb.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Geometric glass coffee table',
+    8,
+    299.99,
+    'living room',
+    'clear',
+    40.0,
+    120.0,
+    70.0,
+    'modern',
+    'glass',
+    'https://pics.craiyon.com/2023-09-28/2bfcecc7de534f16801261808ba8648c.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract wall art with vibrant colors',
+    20,
+    89.99,
+    'decor',
+    'multi-color',
+    80.0,
+    120.0,
+    3.0,
+    'modern',
+    'canvas',
+    'https://pics.craiyon.com/2023-11-05/cacc2702ade243cbb0c9d500b4581a19.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Sleek black desk with gold accents',
+    12,
+    179.99,
+    'office',
+    'black',
+    75.0,
+    120.0,
+    60.0,
+    'modern',
+    'wood',
+    'https://pics.craiyon.com/2023-10-02/265695c0f72d47d0a97a0dd493355702.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Elegant chandelier with crystal accents',
+    10,
+    399.99,
+    'lighting',
+    'silver',
+    60.0,
+    40.0,
+    40.0,
+    'elegant',
+    'crystal',
+    'https://pics.craiyon.com/2023-11-04/65fbbb07ee3b4fc2b4323f69cb0a61c9.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Rustic wooden bookshelf',
+    15,
+    149.99,
+    'office',
+    'natural wood',
+    180.0,
+    80.0,
+    30.0,
+    'rustic',
+    'wood',
+    'https://pics.craiyon.com/2023-10-14/ae9a8710483f4dfbb7bd39414128596a.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Minimalistic black wall clock',
+    22,
+    29.99,
+    'decor',
+    'black',
+    40.0,
+    40.0,
+    2.0,
+    'minimalistic',
+    'plastic',
+    'https://pics.craiyon.com/2023-11-27/qRLNSerOTkGr0MpWWn1Q7g.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Round glass dining table',
+    18,
+    349.99,
+    'dining room',
+    'clear',
+    75.0,
+    150.0,
+    150.0,
+    'modern',
+    'glass',
+    'https://pics.craiyon.com/2023-11-27/qRLNSerOTkGr0MpWWn1Q7g.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Elegant gold-plated vase',
+    10,
+    69.99,
+    'decor',
+    'gold',
+    30.0,
+    15.0,
+    15.0,
+    'elegant',
+    'metal',
+    'https://pics.craiyon.com/2023-09-21/1969f855a5494510ab61284152ec5687.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern abstract wall mirror',
+    12,
+    129.99,
+    'decor',
+    'silver',
+    90.0,
+    60.0,
+    2.0,
+    'modern',
+    'glass',
+    'https://pics.craiyon.com/2023-12-02/yGCzEOJmRLaDOBbYR6TaMg.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Ceramic plant pot in pastel tones',
+    20,
+    49.99,
+    'decor',
+    'pastel',
+    25.0,
+    20.0,
+    20.0,
+    'modern',
+    'ceramic',
+    'https://pics.craiyon.com/2023-09-29/68fadc309ae147c492e228d23ea4eb01.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern pendant light with brass accents',
+    15,
+    89.99,
+    'lighting',
+    'brass',
+    120.0,
+    20.0,
+    20.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-10-24/fbbfb054563d484d908e0994623f5c21.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Minimalistic white ceramic table lamp',
+    18,
+    59.99,
+    'lighting',
+    'white',
+    50.0,
+    30.0,
+    30.0,
+    'minimalistic',
+    'ceramic',
+    'https://pics.craiyon.com/2023-10-21/e4dd672bcc3b4fbc85d705f47f181191.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract metal wall sculpture',
+    22,
+    79.99,
+    'decor',
+    'silver',
+    60.0,
+    40.0,
+    3.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-10-20/04ce3811881b40a5a12e947f18404ad0.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Ceramic serving bowl set in earth tones',
+    18,
+    39.99,
+    'kitchen',
+    'earth tones',
+    15.0,
+    30.0,
+    30.0,
+    'modern',
+    'ceramic',
+    'https://pics.craiyon.com/2023-10-02/b68de58d2dba46a696251db13aa702f3.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Wooden console table with black metal legs',
+    25,
+    119.99,
+    'living room',
+    'natural wood',
+    80.0,
+    120.0,
+    30.0,
+    'modern',
+    'wood',
+    'https://pics.craiyon.com/2023-10-29/7dc49f90fc2e4178b0fa902212550b4d.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Glass vase with dried flower arrangement',
+    15,
+    69.99,
+    'decor',
+    'clear',
+    40.0,
+    20.0,
+    20.0,
+    'modern',
+    'glass',
+    'https://pics.craiyon.com/2023-10-12/57e0fbe1d5b14e4197f87ee8e1efe28d.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract canvas wall art with gold accents',
+    20,
+    99.99,
+    'decor',
+    'multi-color',
+    80.0,
+    120.0,
+    2.0,
+    'modern',
+    'canvas',
+    'https://pics.craiyon.com/2023-11-13/ax6JdJKORzLazNyXVN2goQ.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Marble-patterned ceramic coasters set',
+    10,
+    19.99,
+    'kitchen',
+    'marble',
+    5.0,
+    5.0,
+    0.5,
+    'modern',
+    'ceramic',
+    'https://pics.craiyon.com/2023-09-22/fc6f5dd90c56459da624811b1ca68090.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern black and gold table lamp',
+    12,
+    49.99,
+    'lighting',
+    'black, gold',
+    30.0,
+    15.0,
+    15.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-10-09/a803af17507b4cf480f1742990c06adb.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract metal wall clock',
+    18,
+    79.99,
+    'decor',
+    'silver',
+    60.0,
+    40.0,
+    2.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-11-13/GjcEycbkSk6KroAbBPQFdw.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Wooden wall shelf with hanging hooks',
+    15,
+    59.99,
+    'decor',
+    'natural wood',
+    40.0,
+    60.0,
+    15.0,
+    'rustic',
+    'wood',
+    'https://pics.craiyon.com/2023-10-25/c8694c0394ab4b68a5df2ab619a29500.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern ceramic planter with wooden stand',
+    18,
+    34.99,
+    'decor',
+    'white',
+    30.0,
+    20.0,
+    20.0,
+    'modern',
+    'ceramic, wood',
+    'https://pics.craiyon.com/2023-09-21/0cdd332ed9df4164a39a467294ece2b1.webp'
+);
+
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Abstract metal wall sculpture',
+    22,
+    89.99,
+    'decor',
+    'silver',
+    60.0,
+    40.0,
+    3.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-10-14/fc6863f3bec94ef788008571d6a89c9d.webp'
+);
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Modern cylindrical-shaped chair in gray',
+    15,
+    179.99,
+    'living room',
+    'gray',
+    95.0,
+    65.0,
+    75.0,
+    'modern',
+    'metal',
+    'https://pics.craiyon.com/2023-10-28/81f4c38c419c44aebfb8475fd169d70c.webp'
+);
+
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Elegant white and gold coffee table',
+    10,
+    249.99,
+    'living room',
+    'white, gold',
+    50.0,
+    120.0,
+    70.0,
+    'elegant',
+    'wood',
+    'https://pics.craiyon.com/2023-09-21/e91b87d606dc415680052f5e33f98743.webp'
+);
+
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Sleek black leather recliner',
+    8,
+    299.99,
+    'living room',
+    'black',
+    110.0,
+    80.0,
+    90.0,
+    'modern',
+    'leather',
+    'https://pics.craiyon.com/2023-11-13/r_JZdQ_HQbCCstKK7wVlMg.webp'
+);
+
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Rustic wooden bookshelf with ladder',
+    12,
+    179.99,
+    'office',
+    'natural wood',
+    180.0,
+    80.0,
+    30.0,
+    'rustic',
+    'wood',
+    'https://pics.craiyon.com/2023-10-24/626c0bf265314b8aafc16c9c4a29af4d.webp'
+);
+
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Luxurious velvet armchair in burgundy',
+    6,
+    399.99,
+    'living room',
+    'burgundy',
+    120.0,
+    100.0,
+    90.0,
+    'luxury',
+    'velvet',
+    'https://pics.craiyon.com/2023-11-21/0XH1j669T-GHHR1FDbWy_g.webp'
+);
+
+-- Dodanie nowego produktu
+INSERT INTO products (name, quantity, price, category, colour, height, width, depth, style, material, image)
+VALUES (
+    'Contemporary marble dining table',
+    10,
+    599.99,
+    'dining room',
+    'white, gray',
+    75.0,
+    150.0,
+    90.0,
+    'contemporary',
+    'marble',
+    'https://pics.craiyon.com/2023-11-13/Xf-uRFFLRn-oC-HSBz5sbg.webp'
+);
+
 
 --psql -d lkea
