@@ -33,7 +33,7 @@
                 <p>Material: <%= product.material %></p>
 
                 
-                <% if(user_role=="user"){ %>
+                <% if(role=="user"){ %>
                     <div class="button-container">
                         <a href="/cart/add/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
                             <button class="button" action="post">Add to Cart</button>
