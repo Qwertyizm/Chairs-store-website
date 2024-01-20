@@ -1,2 +1,1 @@
-posty do modify, add product
-Stasiowi sie nie podoba sie order.ejs
+posty do modify

@@ -15,18 +15,18 @@
     <%- include('../navbar', { user_cookie: user_cookie, role:role, title: "Add Product" }) %>
 
     <div class="form-container">
-        <form method="POST" action="/add_product" enctype="multipart/form-data">
+        <form method="POST" action="/add_product">
             <div>
                 <label for="productName">Product Name:</label>
                 <input type="text" name="productName" id="productName" required>
             </div>
             <div>
                 <label for="quantity">Quantity:</label>
-                <input type="number" name="quantity" id="quantity" required>
+                <input type="number" name="quantity" id="quantity" required min="0">
             </div>
             <div>
                 <label for="price">Price (zł):</label>
-                <input type="number" name="price" id="price" step="0.01" required>
+                <input type="number" name="price" id="price" step="0.01" required min="0.01">
             </div>
             <div>
                 <label for="category">Category:</label>
@@ -38,15 +38,15 @@
             </div>
             <div>
                 <label for="height">Height (cm):</label>
-                <input type="number" name="height" id="height" step="0.01">
+                <input type="number" name="height" id="height" step="0.01" min="0">
             </div>
             <div>
                 <label for="width">Width (cm):</label>
-                <input type="number" name="width" id="width" step="0.01">
+                <input type="number" name="width" id="width" step="0.01" min="0">
             </div>
             <div>
                 <label for="depth">Depth (cm):</label>
-                <input type="number" name="depth" id="depth" step="0.01">
+                <input type="number" name="depth" id="depth" step="0.01" min = "0">
             </div>
             <div>
                 <label for="style">Style:</label>
