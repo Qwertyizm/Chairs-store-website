@@ -454,7 +454,11 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
 
 
 app.use(async (req, res, next) => {
-  res.render('404', { url: req.url, user_cookie: req.signedCookies.user, role:req.signedCookies.role });
+  res.render('404', { 
+                      url: req.url, 
+                      user_cookie: req.signedCookies.user, 
+                      role:req.signedCookies.role 
+                    });
 });
 
 http.createServer(app).listen(3000);

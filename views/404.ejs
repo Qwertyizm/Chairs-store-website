@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link rel="stylesheet" type="text/css" href="../../styles.css">
 </head>
 
 <body>
-    <%- include('navbar', { user_cookie: user_cookie, role:role, title: "Error 404" }) %>
+    <%- include('navbar', { user_cookie: user_cookie, role:role, title: "Error 404" , koszyk:locals.koszyk}) %>
     <div class="content-container">
         <% if(locals.url){ %>
             Strona <%= locals.url %> nie została znaleziona.
