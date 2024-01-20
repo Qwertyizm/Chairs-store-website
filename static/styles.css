@@ -4,19 +4,16 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     text-align: center;
- 
-
 }
-
-
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Add margin for spacing */
+    margin-top: 20px;
 }
 
-th, td {
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
@@ -125,7 +122,7 @@ th {
     background-color: rgba(95, 23, 60, 1);
     color: rgb(240, 240, 245);
     padding: 10px 180px;
-    text-align: center; /* Center-align text */
+    text-align: center;
     text-decoration: none;
     font-family: 'Arial', sans-serif;
     font-size: 1em;
@@ -145,8 +142,6 @@ a {
     margin-top: 10px;
 }
 
-/* Additional styles (if any) */
-
 #welcome-container {
     max-width: 800px;
     margin: 50px auto;
@@ -163,7 +158,6 @@ h2 {
     color: #666;
 }
 
-/* Sort and Filter Bar (if any) */
 .filter-bar {
     position: fixed;
     top: 60px;
@@ -205,17 +199,12 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Wyśrodkuj elementy w osi X */
     padding: 20px;
     border: 3px solid #7c1966;
     margin-top: 30px;
     margin-left: 33vw;
-    /* Zmniejsz odstęp z lewej strony */
     margin-right: 33vw;
-    /* Zmniejsz odstęp z prawej strony */
     margin-bottom: 20px;
-    /* Dodaj margines na dole dla estetyki */
-
 }
 
 .product-tile {
@@ -226,44 +215,18 @@ h2 {
     max-width: 200px;
 }
 
-
-
-
-.search-button {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-}
-
-.search-button img {
-    max-width: 30px;
-    /* Ustaw maksymalną szerokość na 20px */
-    height: auto;
-    /* Zachowaj proporcje */
-}
-
-/* styles.css */
-
 .button {
     background-color: rgba(95, 23, 60, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
 .add-to-cart-button:hover {
     background-color: #45a049;
-    /* Darker green on hover */
 }
 
 button {
@@ -283,101 +246,66 @@ button {
     margin-top: 10px;
     background-color: rgba(191, 187, 220, 1);
     color: #fff;
-    /* Kolor tekstu przycisku */
     border: 1px solid #5a0368;
-    /* Grubość i kolor obramowania */
     border-radius: 5px;
-    /* Zaokrąglenie rogów */
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
-    /* Animacja zmiany koloru */
 }
 
 .courier-button {
     background-color: rgba(95, 23, 60, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
 .in-store-button {
     background-color: rgba(95, 23, 60, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
 .in-store-button.active {
     background-color: rgba(191, 187, 220, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
 .courier-button.active {
     background-color: rgba(191, 187, 220, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
 .confirm-order-button {
     background-color: rgba(95, 23, 60, 1);
     color: white;
-    /* White text color */
     padding: 10px 20px;
-    /* Padding around the text */
     border: none;
-    /* No border */
     border-radius: 5px;
-    /* Rounded corners */
     cursor: pointer;
-    /* Cursor on hover */
     font-size: 16px;
-    /* Font size */
 }
 
-p{
-    margin:8px;
+p {
+    margin: 8px;
 }
 
-/* Dodaj poniższe style na koniec pliku styles.css */
 
 .filter-bar {
     position: fixed;
@@ -389,7 +317,7 @@ p{
     border-radius: 5px;
     z-index: 999;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 180px; /* Dostosuj szerokość według potrzeb */
+    width: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
