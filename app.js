@@ -140,18 +140,6 @@ app.get('/cart/delete/:id', authorize.authorize_user, async (req, res) => {
   }
 });
 
-app.post('/cart/submit', authorize.authorize_user, async (req, res) => {
-  try {
-    var id = req.signedCookies.id;
-    var date = Date(Date.now()).toISOString().slice(0, 10);
-    var products = await db_api.show_cart(id);
-    await db_api.new_order(id, date,)
-    res.render('user/cart', { products: {}, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
-  } catch (err) {
-    console.error('Error submitting cart:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to submit cart. Please try again.' });
-  }
-});
 
 app.get('/cart/save',authorize.authorize_user, async (req, res) => {
   try{

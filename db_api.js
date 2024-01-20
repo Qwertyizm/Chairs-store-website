@@ -180,6 +180,9 @@ async function delete_product(id){
         await pool.query('DELETE FROM products \
                           WHERE products.id=$1',
                           [id]);
+        await pool.query('DELETE FROM Cart \
+                            WHERE product_id=$1',
+                            [id]);
     }
     catch (error){
         console.error('Error removing product from database:', error);
@@ -357,10 +360,53 @@ async function get_order_details(order_id) {
 
 //----ORDERED--------------------------
 //
+async function get_ordered_product_id(product){    
+    const { rows } = await pool.query(
+      'SELECT id FROM Ordered_products WHERE \
+       name = $1 AND price = $2 AND \
+       category = $3 AND colour = $4 AND \
+       height = $5 AND width = $6 AND \
+       depth = $7 AND style = $8 AND \
+       material = $9 AND image = $10',
+      [
+        product.name,
+        product.price,
+        product.category,
+        product.colour,
+        product.height,
+        product.width,
+        product.depth,
+        product.style,
+        product.material,
+        product.image
+      ]
+    );
+    return rows[0];
+}
+
+async function new_ordered_product(product){
+    try{
+        await pool.query('INSERT INTO Ordered_products \
+                            (name,price,category,colour,height,width,depth,style,material,image) \
+                            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
+                            [product.name, product.price, product.category, product.colour, product.height, product.width, product.depth, product.style, product.material, product.image]);
+    }
+    catch (error){
+        console.error('Error creating new product:', error);
+        throw error;
+    }
+}
+
+
 async function add_to_ordered(order_id, product_id, quantity) {
     try{
+        const product = await this.get_product(product_id);
+        const ordered_product_id = await this.get_ordered_product_id(product);
+        if (!ordered_product_id){
+            ordered_product_id = await this.new_ordered_product(product);
+        }
         const { rows } = await pool.query('INSERT INTO Ordered Values($1, $2, $3)', 
-                                            [order_id, product_id, quantity]);
+                                            [order_id, ordered_product_id, quantity]);
         return rows;
     }
     catch  (error) {
@@ -383,7 +429,7 @@ async function delete_from_ordered(order_id) {
 
 async function ordered_products(order_id) {
     try{
-        var {rows} = await pool.query('SELECT * FROM Ordered, Products\
+        var {rows} = await pool.query('SELECT * FROM Ordered, Ordered_products\
                                          where order_id = $1 and ordered.product_id = products.id', 
             [order_id]);
         return rows;
