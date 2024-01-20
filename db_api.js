@@ -381,16 +381,21 @@ async function get_ordered_product_id(product){
         product.image
       ]
     );
-    return rows[0];
+    if(rows.length > 0) {
+        return rows[0].id;
+    };
+    return null;
 }
 
 async function new_ordered_product(product){
     try{
-        await pool.query('INSERT INTO Ordered_products \
+        var {rows} = await pool.query('INSERT INTO Ordered_products\
                             (name,price,category,colour,height,width,depth,style,material,image) \
-                            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)',
+                            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)\
+                            RETURNING id',
                             [product.name, product.price, product.category, product.colour, product.height, product.width, product.depth, product.style, product.material, product.image]);
-    }
+        return rows[0].id;
+                        }
     catch (error){
         console.error('Error creating new product:', error);
         throw error;
@@ -401,7 +406,7 @@ async function new_ordered_product(product){
 async function add_to_ordered(order_id, product_id, quantity) {
     try{
         const product = await this.get_product(product_id);
-        const ordered_product_id = await this.get_ordered_product_id(product);
+        var ordered_product_id = await this.get_ordered_product_id(product);
         if (!ordered_product_id){
             ordered_product_id = await this.new_ordered_product(product);
         }
@@ -430,7 +435,8 @@ async function delete_from_ordered(order_id) {
 async function ordered_products(order_id) {
     try{
         var {rows} = await pool.query('SELECT * FROM Ordered, Ordered_products\
-                                         where order_id = $1 and ordered.product_id = products.id', 
+                                         where ordered.order_id = $1\
+                                          and ordered.product_id = ordered_products.id', 
             [order_id]);
         return rows;
     }
@@ -547,6 +553,8 @@ module.exports = {
     new_order,
     delete_order,
     add_to_ordered,
+    get_ordered_product_id,
+    new_ordered_product,
     delete_from_ordered,
     ordered_products,
     get_order_details,
