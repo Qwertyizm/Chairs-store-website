@@ -28,7 +28,7 @@
                     <% orders.forEach(order => { %>
                         <tr>
                             <td><a href="/order/<%= order.id %>"  style = "text-decoration: underline;"><%= order.id %></a></td>
-                            <td><%= order.date %></td>
+                            <td><%= order.details.date %></td>
                             <td><%= order.order_type %></td>
                         </tr>
                     <% }); %>

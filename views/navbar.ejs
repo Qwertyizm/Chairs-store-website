@@ -11,36 +11,36 @@
         <% } %>
 
         <div style="display:flex; gap: 1rem;">
-        <% if(locals.searchContainer){ %>
-            <div style="display:grid;place-content:center">
-                <div class="search-container">
-                    <input type="text" id="searchInput" placeholder="Search...">
-                    <button onclick="searchProducts()">Search</button>
+            <% if(locals.searchContainer){ %>
+                <div style="display:grid;place-content:center">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search...">
+                        <button onclick="searchProducts()">Search</button>
+                    </div>
                 </div>
-            </div>
-        <% } %>
+            <% } %>
 
-        <% if(locals.sortDropdown){ %>
-            <div class="sort-dropdown" style="display:grid;place-content: center; grid-template-columns: 1fr 1fr;">
-                <label for="sort">Sort by: </label>
-                <select id="sort" onchange="sortProducts()">
-                <option value="name">By name</option>
-                <option value="price">By price</option>
-                <option value="quantity">By quantity</option>
-                <option value="height">By height</option>
-                <option value="width">By width</option>
-                <option value="depth">By depth</option>
-                </select>
-            </div>
-        <% } %>
-
-        <% if (!user_cookie) { %>
-            <a href="/login">
-                <div class="login-button">
-                    Log in
+            <% if(locals.sortDropdown){ %>
+                <div class="sort-dropdown" style="display:grid;place-content: center; grid-template-columns: 1fr 1fr;">
+                    <label for="sort">Sort by: </label>
+                    <select id="sort" onchange="sortProducts()">
+                    <option value="name">By name</option>
+                    <option value="price">By price</option>
+                    <option value="quantity">By quantity</option>
+                    <option value="height">By height</option>
+                    <option value="width">By width</option>
+                    <option value="depth">By depth</option>
+                    </select>
                 </div>
-            </a>
-        <% } else { %>
+            <% } %>
+
+            <% if (!user_cookie) { %>
+                <a href="/login">
+                    <div class="login-button">
+                        Log in
+                    </div>
+                </a>
+            <% } else { %>
                 <div style="border: 1px solid #ccc; border-radius: 5px; background-color: #9a758a; font-weight: bold;display: grid;place-content: center;padding:10px">
                     <%= user_cookie %>
                 </div>
@@ -77,6 +77,6 @@
                         Log out
                     </div>
                 </a>
-        <% } %>
+            <% } %>
         </div>
     </div>
