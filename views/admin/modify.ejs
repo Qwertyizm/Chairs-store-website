@@ -13,11 +13,11 @@
 <body>
     <%- include('../navbar', { user_cookie: user_cookie, title: "Modify Product" }) %>
 
-    <div class="form-container">
+    <div class="form-container"> 
         <form method="POST" action="/modify_product/<%= product.id %>" enctype="multipart/form-data">
-            <div>
+             <div>
                 <label for="productName">Product Name:</label>
-                <input type="text" name="productName" id="productName" value="<%= product.name %>" required>
+                <input type="text" name="productName" id="productName" value="<%= product.name || 'kwa' %>" required>
             </div>
             <div>
                 <label for="quantity">Quantity:</label>
@@ -60,13 +60,10 @@
                 <input type="text" name="image" id="image" value="<%= product.image %>">
             </div>
             <div>
-                <label for="imageFile">Image File:</label>
-                <input type="file" name="imageFile" id="imageFile">
-            </div>
-            <div>
                 <button type="submit">Modify Product</button>
             </div>
         </form>
+        
     </div>
 </body>
 

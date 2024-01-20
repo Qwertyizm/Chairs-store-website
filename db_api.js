@@ -118,7 +118,7 @@ async function get_product(id){
         const {rows} = await pool.query('SELECT * FROM products \
                                         WHERE products.id=$1',
                                         [id]);
-        return rows;
+        return rows[0];
     }
     catch (error){
         console.error('Error showing product',error);
