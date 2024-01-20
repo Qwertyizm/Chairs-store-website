@@ -271,7 +271,7 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
 });
 
 app.get('/add_product',authorize.authorize_admin, (req, res) => {
-  res.render('admin/add_product', { user_cookie: req.cookies.user });
+  res.render('admin/add_product', { user_cookie: req.signedCookies.user });
 });
 
 
@@ -306,7 +306,7 @@ app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
   try {
     var product_id = req.params.id;
     var product = await db_api.get_product(product_id);
-    res.render('admin/modify', { user_cookie: req.cookies.user, product: product});
+    res.render('admin/modify', { user_cookie: req.signedCookies.user, product: product});
   } catch (err) {
   console.error('Error modifying product:', err);
   res.render('error', { message: 'Error modifying product' });
@@ -317,7 +317,7 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   try{
     var product_id = req.params.id;
     await db_api.delete_product(product_id);
-    res.render('admin/modify', { user_cookie: req.cookies.user, users: users });
+    res.render('admin/modify', { user_cookie: req.signedCookies.user, users: users });
   } catch (err) {
     console.error('Error deleting product:', err);
     res.render('error', { message: 'Error deleting product' });
