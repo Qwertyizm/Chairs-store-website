@@ -35,7 +35,7 @@
                             <button class="button" action="post">Add to Cart</button>
                         </a>
                     </div>
-                <% } else { %>
+                <% } else if (role == "admin")  { %>
                     <div class="button-container">
                         <a href="/admin/modify/<%= product.id %>?returnUrl=<%= url %>" class="cart-button-link">
                             <button class="button" action="post">Modify</button>
