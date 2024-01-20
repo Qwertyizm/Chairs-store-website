@@ -264,6 +264,28 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
   }
 });
 
+// Dodaj poniższy kod do pliku app.js
+
+app.get('/user/orders', authorize.authorize_user, async (req, res) => {
+  try {
+    const userId = req.signedCookies.id;
+    const orders = await db_api.get_orders(userId);
+
+    // Dla każdego zamówienia, pobierz szczegóły zamówienia oraz produkty zamówione w tym zamówieniu
+    for (const order of orders) {
+      order.details = await db_api.get_order_details(order.id);
+      order.products = await db_api.ordered_products(order.id);
+      
+    }
+
+    res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
+  } catch (err) {
+    console.error('Error fetching user orders:', err);
+    res.render('error', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, message: 'Error fetching user orders' });
+  }
+});
+
+
 app.get('/add_product',authorize.authorize_admin, (req, res) => {
   res.render('admin/add_product', { user_cookie: req.signedCookies.user, role:req.signedCookies.role });
 });
