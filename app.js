@@ -213,7 +213,7 @@ app.get('/search', async (req, res) => {
 
 app.get('/product/:id', async (req, res) => {
   try {
-    const username = req.signedCookies.user, role:req.signedCookies.role;
+    const username = req.signedCookies.user;
     const productId = req.params.id;
     const rows = await db_api.get_product(productId);
     if (rows.length === 0) {
