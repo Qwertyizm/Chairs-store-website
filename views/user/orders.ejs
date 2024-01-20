@@ -29,7 +29,7 @@
                 <tbody>
                     <% orders.forEach(order => { %>
                         <tr>
-                            <td><%= order.id %></td>
+                            <td><a href="/order/<%= order.id %>"  style = "text-decoration: underline;"><%= order.id %></a></td>
                             <td><%= order.date %></td>
                             <td><%= order.order_type %></td>
                         </tr>
@@ -38,6 +38,15 @@
             </table>
         <% } %>
     </div>
+
+    <!-- Dodany skrypt do formatowania daty -->
+    <script>
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        }
+    </script>
 </body>
 
 </html>
