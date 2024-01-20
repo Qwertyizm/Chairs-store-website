@@ -40,7 +40,7 @@
                 <br>
                 <p>Total Price: 
                     <span id="totalPrice">
-                        <%= cart.reduce((acc, product) => acc + (product.price * product.quantity), 0) %>
+                        <%= cart.reduce((acc, product) => acc + (product.price * product.quantity), 0).toFixed(2) %>
                     </span> zł
                 </p>
                 <br>

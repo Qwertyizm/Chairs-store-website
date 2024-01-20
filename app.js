@@ -244,6 +244,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
     products.forEach(async (product) => {
       price += parseFloat(product.price);
     });
+    price = price.toFixed(2);
     var order_details = await db_api.get_order_details(order_id);
     order_details.date = parse_date(order_details.date);
     res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role});
