@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <%- include('../navbar', { user_cookie: user_cookie, title: "Modify Product" }) %>
+    <%- include('../navbar', { user_cookie: user_cookie, role:role, title: "Modify Product" }) %>
 
     <div class="form-container"> 
         <form method="POST" action="/modify_product/<%= product.id %>" enctype="multipart/form-data">
