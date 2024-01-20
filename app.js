@@ -278,17 +278,17 @@ app.get('/add_product',authorize.authorize_admin, (req, res) => {
 });
 
 app.post('/add_product', authorize.authorize_admin, async (req, res) => {
-    var name = req.body.productName;
-    var quantity = req.body.quantity;
-    var price = req.body.price;
-    var category = req.body.category;
-    var colour = req.body.colour;
-    var height = req.body.height;
-    var width = req.body.width;
-    var depth = req.body.depth;
-    var style = req.body.style;
-    var material = req.body.material;
-    var image = req.body.image;
+  var name = req.body.productName;
+  var quantity = req.body.quantity;
+  var price = req.body.price;
+  var category = req.body.category === "" ? null : req.body.category;
+  var colour = req.body.colour === "" ? null : req.body.colour;
+  var height = req.body.height === "" ? null : req.body.height;
+  var width = req.body.width === "" ? null : req.body.width;
+  var depth = req.body.depth === "" ? null : req.body.depth;
+  var style = req.body.style === "" ? null : req.body.style;
+  var material = req.body.material === "" ? null : req.body.material;
+  var image = req.body.image === "" ? null : req.body.image;
 
     try {
       await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
