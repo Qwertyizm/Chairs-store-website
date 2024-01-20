@@ -68,7 +68,7 @@ app.post('/sign_up', async (req, res) => {
   var email = req.body.txtEmail;
   var name = req.body.txtName;
   var dob = req.body.txtDOB;
-  var address = req.body.txtAddress;
+  var address = req.body.txtAdr;
   var pwd = req.body.txtPwd;
   try {
     var id = await db_api.new_user(name, dob, email, address);
