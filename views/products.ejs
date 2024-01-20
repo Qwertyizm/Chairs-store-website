@@ -45,11 +45,11 @@
     <div class="content-container">
         <div class="product-container">
             <% products.forEach(product=> { %>
-                <div class="product-tile">
-                    <a href="/product/<%= product.id %>" class="product-link" data-name="<%= product.name %>"
-                        data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
-                        data-height="<%= product.height %>" data-width="<%= product.width %>"
-                        data-depth="<%= product.depth %>" data-color="<%= product.colour %>">
+                <div class="product-tile" data-name="<%= product.name %>"
+                    data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
+                    data-height="<%= product.height %>" data-width="<%= product.width %>"
+                    data-depth="<%= product.depth %>" data-color="<%= product.colour %>">
+                    <a href="/product/<%= product.id %>" class="product-link">
                         <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
                         <h2>
                             <%= product.name %>
