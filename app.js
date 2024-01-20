@@ -14,6 +14,13 @@ var port = 5000;
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
+function parse_date(date){
+  return date.toLocaleDateString('pl-PL', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric'
+  });
+};
 
 app.get('/', async (req, res) => {
   res.render('index', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role });
@@ -225,6 +232,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
       price += parseFloat(product.price);
     });
     var order_details = await db_api.get_order_details(order_id);
+    order_details.date = parse_date(order_details.date);
     res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role});
   } catch (error) {
     console.error('Error fetching order details:', error);
@@ -259,8 +267,8 @@ app.get('/user/orders', authorize.authorize_user, async (req, res) => {
 
     for (const order of orders) {
       order.details = await db_api.get_order_details(order.id);
+      order.details.date = parse_date(order.details.date);
       order.products = await db_api.ordered_products(order.id);
-      
     }
 
     res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
@@ -343,6 +351,9 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
 app.get('/users',authorize.authorize_admin, async (req, res) => {
   try{
     var users = await db_api.get_users();
+    for (var user of users) {
+      user.dob = parse_date(user.dob);
+    }
     res.render('admin/users', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, users: users });
   } catch (err) {
     console.error('Error showing users:', err);
@@ -354,6 +365,7 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
   try{
     var orders = await db_api.get_all_orders();
     for (const order of orders) {
+      order_details.date = parse_date(order_details.date);  
       order.products = await db_api.ordered_products(order.id);
     }
     res.render('admin/orders', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, orders : orders });
