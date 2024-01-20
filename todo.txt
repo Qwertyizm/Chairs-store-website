@@ -1,3 +1,2 @@
-adresy tajemnic
 posty do modify, add product
 Stasiowi sie nie podoba sie order.ejs

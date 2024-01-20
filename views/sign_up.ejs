@@ -18,11 +18,11 @@
             <form method="POST" id="register">
                 <div>
                     <label for="txtUser">Username:</label>
-                    <input type="text" name="txtUser" id="txtUser" minlength="6" required>
+                    <input type="text" name="txtUser" id="txtUser" minlength="6" required pattern="[a-zA-Z0-9]*">
                 </div>
                 <div>
                     <label for="txtPwd">Password:</label>
-                    <input type="password" name="txtPwd" id="txtPwd" minlength="8" required>
+                    <input type="password" name="txtPwd" id="txtPwd" minlength="8" required pattern="[a-zA-Z0-9!@#$%^&*:;,.]*">
                 </div>
                 <div>
                     <label for="txtAdr">Address:</label>
@@ -34,7 +34,7 @@
                 </div>
                 <div>
                     <label for="txtName">Name:</label>
-                    <input type="text" name="txtName" id="txtName" required pattern="[a-zA-Z0-9!@#$%^&*:;,.]*">
+                    <input type="text" name="txtName" id="txtName" required pattern="[a-zA-Z]*">
                 </div>
                 <div>
                     <label for="txtDOB">Date of Birth:</label>
