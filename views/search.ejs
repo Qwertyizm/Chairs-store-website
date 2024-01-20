@@ -1,5 +1,3 @@
-<!-- views/search.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css"> <!-- Zaktualizowana ścieżka -->
+    <link rel="stylesheet" type="text/css" href="../styles.css"> 
 </head>
 
 <body>
@@ -33,7 +31,6 @@
             <% } else { %>
                 <div class="product-container">
                     <% searchResults.forEach(product => { %>
-                        <!-- Dodaj kod HTML do wyświetlenia każdego produktu w wynikach wyszukiwania -->
                         <a href="/product/<%= product.id %>" class="product-tile" data-name="<%= product.name %>"
                             data-price="<%= product.price %>" data-quantity="<%= product.quantity %>"
                             data-height="<%= product.height %>" data-width="<%= product.width %>"

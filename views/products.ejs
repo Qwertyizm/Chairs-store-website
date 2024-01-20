@@ -1,5 +1,3 @@
-<!-- views/products.ejs -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css"> <!-- Zaktualizowana ścieżka -->
+    <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
 
 <body>
@@ -24,7 +22,6 @@
         <h3>Filter</h3>
         <p>By Colour</p>
 
-        <!-- Wyświetl listę kolorów z bazy danych z odpowiednimi checkboxami -->
         <div class="color-filter">
             <div class="color-filter">
                 <% colors.forEach(color=> { %>
@@ -100,18 +97,14 @@
                 var bValue = b.getAttribute(`data-${attribute}`);
 
                 if (isNaN(aValue) || isNaN(bValue)) {
-                    // If values are not numeric, perform string comparison
                     return aValue.localeCompare(bValue);
                 } else {
-                    // If values are numeric, perform numeric comparison
                     return parseFloat(aValue) - parseFloat(bValue);
                 }
             });
 
-            // Remove existing products from container
             productsContainer.innerHTML = '';
 
-            // Append sorted products to container
             products.forEach(function (product) {
                 productsContainer.appendChild(product);
             });
@@ -136,8 +129,6 @@
         }
         function searchProducts() {
             var searchInput = document.getElementById('searchInput').value;
-
-            // Przekieruj użytkownika do nowego adresu URL, aby uruchomić wyszukiwanie
             window.location.href = '/search?search=' + searchInput;
         }
 
