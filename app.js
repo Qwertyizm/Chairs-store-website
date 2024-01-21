@@ -360,12 +360,12 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     var type = req.query.delivery;
     var order_id = await db_api.new_order(id, date, type);
     var products = await db_api.show_cart(id);
-    await db_api.clear_cart(id);
     for (const product of products) {
       const ordered_product_id = await db_api.new_ordered_product(product);
       await db_api.add_to_ordered(order_id, ordered_product_id, product.quantity);
       await db_api.decrease_product_quantity(product.id, product.quantity);
     }
+    await db_api.clear_cart(id);
     res.redirect('/order/' + order_id)
   } catch (err) {
     console.error('Error processing order:', err);
@@ -398,7 +398,19 @@ app.post('/admin/add_product', authorize.authorize_admin, async (req, res) => {
     var style = req.body.style === "" ? null : req.body.style;
     var material = req.body.material === "" ? null : req.body.material;
     var image = req.body.image === "" ? null : req.body.image;
-    await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
+    await db_api.new_product(
+                              name, 
+                              quantity, 
+                              price, 
+                              category, 
+                              colour, 
+                              height, 
+                              width, 
+                              depth, 
+                              style, 
+                              material, 
+                              image
+                            );
     res.redirect('/products');
   } catch (err) {
     console.error('Error adding product:', err);
@@ -423,22 +435,46 @@ app.post('/admin/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
       var style = req.body.style;
       var material = req.body.material;
       var image = req.body.image;
-      await db_api.edit_product(req.params.id,name, quantity, price, category, colour, height, width, depth, style, material, image);
+      await db_api.edit_product(
+                                req.params.id,name, 
+                                quantity, 
+                                price, 
+                                category, 
+                                colour, 
+                                height, 
+                                width, 
+                                depth, 
+                                style, 
+                                material, 
+                                image
+                              );
       res.redirect('/product/'+req.params.id);
-    } catch (err) {
-      console.error('Error updating product:', err);
-      res.render('error', { user_cookie:req.signedCookies.user, message: 'Error adding product' });
-    }
+  } catch (err) {
+    console.error('Error updating product:', err);
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Error adding product' 
+                        });
+  }
 });
 
 app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
   try {
     var product_id = req.params.id;
     var product = await db_api.get_product(product_id);
-    res.render('admin/modify', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, product: product});
+    res.render('admin/modify', { 
+                                product     : product,
+                                user_cookie : req.signedCookies.user, 
+                                role        : req.signedCookies.role
+                              });
   } catch (err) {
   console.error('Error modifying product:', err);
-  res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error modifying product' });
+  res.render('error', { 
+                        user_cookie : req.signedCookies.user,
+                        role        : req.signedCookies.role, 
+                        message     : 'Error modifying product' 
+                      });
 }
 });
 
@@ -449,7 +485,11 @@ app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
     res.redirect('/products');
   } catch (err) {
     console.error('Error deleting product:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error deleting product' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Error deleting product' 
+                        });
   }
 });
 
@@ -466,7 +506,11 @@ app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
                               });
   } catch (err) {
     console.error('Error showing users:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error showing users' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Error showing users' 
+                        });
   }
 });
 
