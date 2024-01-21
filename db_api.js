@@ -518,7 +518,6 @@ module.exports = {
     new_order,
     delete_order,
     add_to_ordered,
-    get_ordered_product_id,
     new_ordered_product,
     delete_from_ordered,
     ordered_products,

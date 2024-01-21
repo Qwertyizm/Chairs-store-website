@@ -324,7 +324,6 @@ app.get('/orders', authorize.authorize_user, async (req, res) => {
 });
 
 //----ORDER---------------------------
-//  TODO fix
 app.get('/order/:id', authorize.authorize_user, async (req, res) => {
   try {
     const order_id = req.params.id;
