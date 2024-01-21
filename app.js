@@ -338,7 +338,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
     order.date = parse_date(order.date);
     res.render('user/order', { 
                               totalPrice  : price, 
-                              order       : order_details, 
+                              order       : order, 
                               products    : products, 
                               user_cookie : req.signedCookies.user, 
                               role        : req.signedCookies.role
