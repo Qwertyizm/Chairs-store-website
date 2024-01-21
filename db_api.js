@@ -364,7 +364,7 @@ async function new_ordered_product(product){
     try{
         var {rows} = await pool.query('INSERT INTO Ordered_products\
                             (product_id,name,price,category,colour,height,width,depth,style,material,image) \
-                            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)\
+                            VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)\
                             RETURNING id',
                             [product.id,product.name, product.price, product.category, product.colour, product.height, product.width, product.depth, product.style, product.material, product.image]);
         return rows[0].id;
