@@ -40,6 +40,7 @@ CREATE TABLE products (
 
 CREATE TABLE ordered_products (
     id SERIAL PRIMARY KEY,
+    product_id INTEGER,
     name VARCHAR(255) NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     category VARCHAR(50),
