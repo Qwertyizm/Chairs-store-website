@@ -379,29 +379,35 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
 
 //----ADMIN---------------------------
 app.get('/admin/add_product',authorize.authorize_admin, (req, res) => {
-  res.render('admin/add_product', { user_cookie: req.signedCookies.user, role:req.signedCookies.role });
+  res.render('admin/add_product', { 
+                                    user_cookie : req.signedCookies.user, 
+                                    role        : req.signedCookies.role 
+                                  });
 });
 
 app.post('/admin/add_product', authorize.authorize_admin, async (req, res) => {
-  var name = req.body.productName;
-  var quantity = req.body.quantity;
-  var price = req.body.price;
-  var category = req.body.category === "" ? null : req.body.category;
-  var colour = req.body.colour === "" ? null : req.body.colour;
-  var height = req.body.height === "" ? null : req.body.height;
-  var width = req.body.width === "" ? null : req.body.width;
-  var depth = req.body.depth === "" ? null : req.body.depth;
-  var style = req.body.style === "" ? null : req.body.style;
-  var material = req.body.material === "" ? null : req.body.material;
-  var image = req.body.image === "" ? null : req.body.image;
-
-    try {
-      await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
-      res.redirect('/products');
-    } catch (err) {
-      console.error('Error adding product:', err);
-      res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error adding product' });
-    }
+  try {
+    var name = req.body.productName;
+    var quantity = req.body.quantity;
+    var price = req.body.price;
+    var category = req.body.category === "" ? null : req.body.category;
+    var colour = req.body.colour === "" ? null : req.body.colour;
+    var height = req.body.height === "" ? null : req.body.height;
+    var width = req.body.width === "" ? null : req.body.width;
+    var depth = req.body.depth === "" ? null : req.body.depth;
+    var style = req.body.style === "" ? null : req.body.style;
+    var material = req.body.material === "" ? null : req.body.material;
+    var image = req.body.image === "" ? null : req.body.image;
+    await db_api.new_product(name, quantity, price, category, colour, height, width, depth, style, material, image);
+    res.redirect('/products');
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Error adding product' 
+                        });
+  }
 });
 
 app.post('/admin/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
@@ -453,7 +459,11 @@ app.get('/admin/users',authorize.authorize_admin, async (req, res) => {
     for (var user of users) {
       user.dob = parse_date(user.dob);
     }
-    res.render('admin/users', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, role:req.signedCookies.role, users: users });
+    res.render('admin/users', {
+                                users       : users,
+                                user_cookie : req.signedCookies.user,
+                                role        : req.signedCookies.role 
+                              });
   } catch (err) {
     console.error('Error showing users:', err);
     res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error showing users' });
@@ -466,11 +476,22 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
     for (const order of orders) {
       order.date = parse_date(order.date);  
       order.products = await db_api.ordered_products(order.id);
+      for(const product of products){
+        product.id=product.product_id;
+      }
     }
-    res.render('admin/orders', { user_cookie: req.signedCookies.user, role:req.signedCookies.role, orders : orders });
+    res.render('admin/orders', { 
+                                orders      : orders,
+                                user_cookie : req.signedCookies.user, 
+                                role        : req.signedCookies.role
+                              });
   } catch (err) {
     console.error('Error showing orders:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Error showing orders' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Error showing orders' 
+                        });
   }
 });
 
