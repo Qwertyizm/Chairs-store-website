@@ -305,34 +305,52 @@ app.get('/orders', authorize.authorize_user, async (req, res) => {
     const orders = await db_api.get_orders(userId);
 
     for (const order of orders) {
-      order.details = await db_api.get_order_details(order.id);
-      order.details.date = parse_date(order.details.date);
-      order.products = await db_api.ordered_products(order.id);
+      order.date = parse_date(order.date);
     }
 
-    res.render('user/orders', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, orders: orders });
+    res.render('user/orders', { 
+                                orders      : orders,
+                                user_cookie : req.signedCookies.user,
+                                role        : req.signedCookies.role
+                              });
   } catch (err) {
     console.error('Error fetching user orders:', err);
-    res.render('error', { user_cookie: req.signedCookies.user, role: req.signedCookies.role, message: 'Error fetching user orders' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user, 
+                          role        : req.signedCookies.role, 
+                          message     : 'Error fetching user orders' 
+                        });
   }
 });
 
 //----ORDER---------------------------
+//  TODO fix
 app.get('/order/:id', authorize.authorize_user, async (req, res) => {
   try {
     const order_id = req.params.id;
     var products = await db_api.ordered_products(order_id);
     var price = 0.0;
     products.forEach(async (product) => {
+      product.id=product.product_id;
       price += parseFloat(product.price);
     });
     price = price.toFixed(2);
-    var order_details = await db_api.get_order_details(order_id);
-    order_details.date = parse_date(order_details.date);
-    res.render('user/order', { totalPrice : price, order : order_details, products : products, user_cookie: req.signedCookies.user, role:req.signedCookies.role});
+    var order = await db_api.get_order(order_id);
+    order.date = parse_date(order.date);
+    res.render('user/order', { 
+                              totalPrice  : price, 
+                              order       : order_details, 
+                              products    : products, 
+                              user_cookie : req.signedCookies.user, 
+                              role        : req.signedCookies.role
+                            });
   } catch (error) {
     console.error('Error fetching order details:', error);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Internal Server Error' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Internal Server Error' 
+                        });
   }
 });
 
@@ -345,13 +363,18 @@ app.get('/order_confirm', authorize.authorize_user, async (req, res) => {
     var products = await db_api.show_cart(id);
     await db_api.clear_cart(id);
     for (const product of products) {
-      await db_api.add_to_ordered(order_id, product.id, product.quantity);
+      const ordered_product_id = await db_api.new_ordered_product(product);
+      await db_api.add_to_ordered(order_id, ordered_product_id, product.quantity);
       await db_api.decrease_product_quantity(product.id, product.quantity);
     }
     res.redirect('/order/' + order_id)
   } catch (err) {
     console.error('Error processing order:', err);
-    res.render('error', { user_cookie:req.signedCookies.user,role:req.signedCookies.role, message: 'Unable to process the order. Please try again.' });
+    res.render('error', { 
+                          user_cookie : req.signedCookies.user,
+                          role        : req.signedCookies.role, 
+                          message     : 'Unable to process the order. Please try again.' 
+                        });
   }
 });
 
