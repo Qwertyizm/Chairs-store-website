@@ -431,7 +431,7 @@ app.post('/admin/modify_product/:id',authorize.authorize_admin,async(req,res)=>{
     }
 });
 
-app.post('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
+app.get('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
   try {
     var product_id = req.params.id;
     var product = await db_api.get_product(product_id);
@@ -442,7 +442,7 @@ app.post('/admin/modify/:id',authorize.authorize_admin, async (req, res) => {
 }
 });
 
-app.post('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
+app.get('/admin/delete/:id',authorize.authorize_admin, async (req, res) => {
   try{
     var product_id = req.params.id;
     await db_api.delete_product(product_id);
