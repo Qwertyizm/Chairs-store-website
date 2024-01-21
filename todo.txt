@@ -1,1 +1,3 @@
 posty do modify
+wyświetlanie loginu w zakładce Users admina
+wyrównanie wyświetlania obrazu i podpisu w zakładce Orders admina

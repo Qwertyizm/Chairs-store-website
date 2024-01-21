@@ -476,7 +476,7 @@ app.get('/admin/orders',authorize.authorize_admin, async (req, res) => {
     for (const order of orders) {
       order.date = parse_date(order.date);  
       order.products = await db_api.ordered_products(order.id);
-      for(const product of products){
+      for(const product of order.products){
         product.id=product.product_id;
       }
     }
