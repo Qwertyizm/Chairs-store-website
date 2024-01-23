@@ -331,7 +331,7 @@ app.get('/order/:id', authorize.authorize_user, async (req, res) => {
     var price = 0.0;
     products.forEach(async (product) => {
       product.id=product.product_id;
-      price += parseFloat(product.price);
+      price += parseFloat(product.price * product.quantity);
     });
     price = price.toFixed(2);
     var order = await db_api.get_order(order_id);
